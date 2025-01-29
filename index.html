@@ -18,17 +18,17 @@
       <nav>
         <ul>
           <li class="mb-4">
-            <a href="#cadastro" class="menu-item flex items-center p-2 rounded">
+            <a href="#cadastro" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro')">
               <span class="mr-2">📌</span> Cadastro
             </a>
           </li>
           <li class="mb-4">
-            <a href="#consultas" class="menu-item flex items-center p-2 rounded">
+            <a href="#consultas" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas')">
               <span class="mr-2">🗓️</span> Consultas
             </a>
           </li>
           <li class="mb-4">
-            <a href="#pacientes" class="menu-item flex items-center p-2 rounded">
+            <a href="#pacientes" class="menu-item flex items-center p-2 rounded" onclick="showSection('pacientes')">
               <span class="mr-2">👤</span> Pacientes
             </a>
           </li>
@@ -38,31 +38,79 @@
 
     <!-- Conteúdo Principal -->
     <div class="flex-1 p-8">
-      <!-- Formulário de Cadastro de Consultas -->
-      <section id="cadastro" class="mb-12">
-        <h2 class="text-3xl font-bold mb-6">Cadastro de Consultas</h2>
-        <form id="form-consulta" class="glassmorphism p-6 hover-scale">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input type="date" id="data-consulta" class="p-2 border rounded" required>
-            <input type="time" id="horario-consulta" class="p-2 border rounded" required>
-            <select id="nome-paciente" class="p-2 border rounded" required>
-              <option value="">Selecione um paciente</option>
-            </select>
-            <input type="number" id="idade" class="p-2 border rounded" placeholder="Idade" required>
-            <input type="text" id="responsavel" class="p-2 border rounded" placeholder="Responsável">
-            <input type="tel" id="telefone" class="p-2 border rounded" placeholder="Telefone" required>
-            <select id="especialidade" class="p-2 border rounded" required>
-              <option value="">Selecione a especialidade</option>
-            </select>
-            <input type="text" id="consultorio" class="p-2 border rounded" placeholder="Consultório" required>
-            <select id="especialista" class="p-2 border rounded" required>
-              <option value="">Selecione o especialista</option>
-            </select>
+      <!-- Seção de Cadastro -->
+      <section id="cadastro" class="section">
+        <h2 class="text-3xl font-bold mb-6">Cadastro</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Formulário de Especialistas -->
+          <div class="glassmorphism p-6 hover-scale">
+            <h3 class="text-xl font-bold mb-4">Cadastro de Especialistas</h3>
+            <form id="form-especialista">
+              <input type="text" id="nome-especialista" class="p-2 border rounded w-full mb-2" placeholder="Nome do Especialista" required>
+              <input type="text" id="especialidade" class="p-2 border rounded w-full mb-2" placeholder="Especialidade" required>
+              <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                Cadastrar Especialista
+              </button>
+            </form>
           </div>
-          <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-            Agendar Consulta
-          </button>
-        </form>
+
+          <!-- Formulário de Pacientes -->
+          <div class="glassmorphism p-6 hover-scale">
+            <h3 class="text-xl font-bold mb-4">Cadastro de Pacientes</h3>
+            <form id="form-paciente">
+              <input type="text" id="nome-paciente" class="p-2 border rounded w-full mb-2" placeholder="Nome do Paciente" required>
+              <input type="number" id="idade-paciente" class="p-2 border rounded w-full mb-2" placeholder="Idade" required>
+              <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                Cadastrar Paciente
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- Seção de Consultas -->
+      <section id="consultas" class="section hidden">
+        <h2 class="text-3xl font-bold mb-6">Consultas</h2>
+        <div class="glassmorphism p-6 hover-scale">
+          <h3 class="text-xl font-bold mb-4">Agendar Consulta</h3>
+          <form id="form-consulta">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input type="date" id="data-consulta" class="p-2 border rounded" required>
+              <input type="time" id="horario-consulta" class="p-2 border rounded" required>
+              <select id="nome-paciente" class="p-2 border rounded" required>
+                <option value="">Selecione um paciente</option>
+              </select>
+              <select id="especialidade" class="p-2 border rounded" required>
+                <option value="">Selecione a especialidade</option>
+              </select>
+              <select id="especialista" class="p-2 border rounded" required>
+                <option value="">Selecione o especialista</option>
+              </select>
+            </div>
+            <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+              Agendar Consulta
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Seção de Pacientes -->
+      <section id="pacientes" class="section hidden">
+        <h2 class="text-3xl font-bold mb-6">Pacientes</h2>
+        <div class="glassmorphism p-6 hover-scale">
+          <h3 class="text-xl font-bold mb-4">Lista de Pacientes</h3>
+          <table id="tabela-pacientes" class="w-full text-left">
+            <thead>
+              <tr>
+                <th class="p-2">Nome</th>
+                <th class="p-2">Idade</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Dados dos pacientes serão preenchidos aqui -->
+            </tbody>
+          </table>
+        </div>
       </section>
     </div>
   </div>
