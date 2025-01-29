@@ -47,9 +47,12 @@
             <h3 class="text-xl font-bold mb-4">Cadastro de Especialistas</h3>
             <form id="form-especialista">
               <input type="text" id="nome-especialista" class="p-2 border rounded w-full mb-2" placeholder="Nome do Especialista" required>
+              <input type="text" id="cpf-especialista" class="p-2 border rounded w-full mb-2" placeholder="CPF" required>
               <input type="text" id="especialidade" class="p-2 border rounded w-full mb-2" placeholder="Especialidade" required>
+              <input type="tel" id="telefone-especialista" class="p-2 border rounded w-full mb-2" placeholder="Telefone" required>
+              <input type="email" id="email-especialista" class="p-2 border rounded w-full mb-2" placeholder="Email" required>
               <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-                Cadastrar Especialista
+                Confirmar
               </button>
             </form>
           </div>
@@ -60,6 +63,8 @@
             <form id="form-paciente">
               <input type="text" id="nome-paciente" class="p-2 border rounded w-full mb-2" placeholder="Nome do Paciente" required>
               <input type="number" id="idade-paciente" class="p-2 border rounded w-full mb-2" placeholder="Idade" required>
+              <input type="text" id="responsavel-paciente" class="p-2 border rounded w-full mb-2" placeholder="Responsável">
+              <input type="tel" id="telefone-paciente" class="p-2 border rounded w-full mb-2" placeholder="Telefone" required>
               <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
                 Cadastrar Paciente
               </button>
@@ -83,12 +88,15 @@
               <select id="especialidade" class="p-2 border rounded" required>
                 <option value="">Selecione a especialidade</option>
               </select>
+              <select id="consultorio" class="p-2 border rounded" required>
+                <option value="">Selecione um consultório</option>
+              </select>
               <select id="especialista" class="p-2 border rounded" required>
                 <option value="">Selecione o especialista</option>
               </select>
             </div>
             <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-              Agendar Consulta
+              Confirmar
             </button>
           </form>
         </div>
@@ -104,6 +112,8 @@
               <tr>
                 <th class="p-2">Nome</th>
                 <th class="p-2">Idade</th>
+                <th class="p-2">Responsável</th>
+                <th class="p-2">Telefone</th>
               </tr>
             </thead>
             <tbody>
