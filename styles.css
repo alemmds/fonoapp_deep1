@@ -32,3 +32,13 @@
 .hover-scale:hover {
   transform: scale(1.05);
 }
+
+/* Estilos para as seções */
+.section {
+  display: none;
+}
+
+.section.active {
+  display: block;
+  animation: fadeIn 0.5s ease-in-out;
+}
