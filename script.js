@@ -1,5 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const sections = {
+    cadastro: document.getElementById('cadastro'),
+    consultas: document.getElementById('consultas'),
+    pacientes: document.getElementById('pacientes')
+  };
+
   const forms = {
+    especialista: document.getElementById('form-especialista'),
+    paciente: document.getElementById('form-paciente'),
     consulta: document.getElementById('form-consulta')
   };
 
@@ -13,32 +21,52 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem(key, JSON.stringify(data));
   };
 
-  // Função para adicionar uma nova consulta
-  forms.consulta.addEventListener('submit', (e) => {
+  // Função para mostrar uma seção
+  window.showSection = (sectionId) => {
+    Object.values(sections).forEach(section => section.classList.remove('active'));
+    sections[sectionId].classList.add('active');
+  };
+
+  // Função para adicionar um especialista
+  forms.especialista.addEventListener('submit', (e) => {
     e.preventDefault();
-    const consulta = {
-      data: document.getElementById('data-consulta').value,
-      horario: document.getElementById('horario-consulta').value,
-      paciente: document.getElementById('nome-paciente').value,
-      idade: document.getElementById('idade').value,
-      responsavel: document.getElementById('responsavel').value,
-      telefone: document.getElementById('telefone').value,
-      especialidade: document.getElementById('especialidade').value,
-      consultorio: document.getElementById('consultorio').value,
-      especialista: document.getElementById('especialista').value
+    const especialista = {
+      nome: document.getElementById('nome-especialista').value,
+      especialidade: document.getElementById('especialidade').value
     };
-    dbConsultas.consultas.push(consulta);
-    saveData('db_consultas', dbConsultas);
-    updateTables();
-    forms.consulta.reset();
+    dbCadastro.especialistas.push(especialista);
+    saveData('db_cadastro', dbCadastro);
+    forms.especialista.reset();
   });
 
-  // Função para atualizar as tabelas de consultas
-  const updateTables = () => {
-    const consultas = dbConsultas.consultas;
-    // Atualize as tabelas conforme necessário
+  // Função para adicionar um paciente
+  forms.paciente.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const paciente = {
+      nome: document.getElementById('nome-paciente').value,
+      idade: document.getElementById('idade-paciente').value
+    };
+    dbPacientes.pacientes.push(paciente);
+    saveData('db_pacientes', dbPacientes);
+    forms.paciente.reset();
+    updatePacientesTable();
+  });
+
+  // Função para atualizar a tabela de pacientes
+  const updatePacientesTable = () => {
+    const tabelaPacientes = document.getElementById('tabela-pacientes').getElementsByTagName('tbody')[0];
+    tabelaPacientes.innerHTML = '';
+    dbPacientes.pacientes.forEach(paciente => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td class="p-2">${paciente.nome}</td>
+        <td class="p-2">${paciente.idade}</td>
+      `;
+      tabelaPacientes.appendChild(row);
+    });
   };
 
   // Inicialização
-  updateTables();
+  showSection('cadastro'); // Mostra a seção de cadastro por padrão
+  updatePacientesTable(); // Atualiza a tabela de pacientes
 });
