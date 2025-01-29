@@ -32,7 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     const especialista = {
       nome: document.getElementById('nome-especialista').value,
-      especialidade: document.getElementById('especialidade').value
+      cpf: document.getElementById('cpf-especialista').value,
+      especialidade: document.getElementById('especialidade').value,
+      telefone: document.getElementById('telefone-especialista').value,
+      email: document.getElementById('email-especialista').value
     };
     dbCadastro.especialistas.push(especialista);
     saveData('db_cadastro', dbCadastro);
@@ -44,7 +47,9 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     const paciente = {
       nome: document.getElementById('nome-paciente').value,
-      idade: document.getElementById('idade-paciente').value
+      idade: document.getElementById('idade-paciente').value,
+      responsavel: document.getElementById('responsavel-paciente').value,
+      telefone: document.getElementById('telefone-paciente').value
     };
     dbPacientes.pacientes.push(paciente);
     saveData('db_pacientes', dbPacientes);
@@ -61,6 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
       row.innerHTML = `
         <td class="p-2">${paciente.nome}</td>
         <td class="p-2">${paciente.idade}</td>
+        <td class="p-2">${paciente.responsavel}</td>
+        <td class="p-2">${paciente.telefone}</td>
       `;
       tabelaPacientes.appendChild(row);
     });
