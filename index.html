@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FonoClinic</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#3b82f6">
+</head>
+<body class="bg-gray-100 font-sans">
+  <!-- Container Principal -->
+  <div class="flex min-h-screen">
+    <!-- Menu Lateral -->
+    <div class="w-64 bg-blue-900 text-white p-6">
+      <h1 class="text-2xl font-bold mb-8">FonoClinic</h1>
+      <nav>
+        <ul>
+          <li class="mb-4">
+            <a href="#cadastro" class="menu-item flex items-center p-2 rounded">
+              <span class="mr-2">📌</span> Cadastro
+            </a>
+          </li>
+          <li class="mb-4">
+            <a href="#consultas" class="menu-item flex items-center p-2 rounded">
+              <span class="mr-2">🗓️</span> Consultas
+            </a>
+          </li>
+          <li class="mb-4">
+            <a href="#pacientes" class="menu-item flex items-center p-2 rounded">
+              <span class="mr-2">👤</span> Pacientes
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="flex-1 p-8">
+      <!-- Formulário de Cadastro de Consultas -->
+      <section id="cadastro" class="mb-12">
+        <h2 class="text-3xl font-bold mb-6">Cadastro de Consultas</h2>
+        <form id="form-consulta" class="glassmorphism p-6 hover-scale">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input type="date" id="data-consulta" class="p-2 border rounded" required>
+            <input type="time" id="horario-consulta" class="p-2 border rounded" required>
+            <select id="nome-paciente" class="p-2 border rounded" required>
+              <option value="">Selecione um paciente</option>
+            </select>
+            <input type="number" id="idade" class="p-2 border rounded" placeholder="Idade" required>
+            <input type="text" id="responsavel" class="p-2 border rounded" placeholder="Responsável">
+            <input type="tel" id="telefone" class="p-2 border rounded" placeholder="Telefone" required>
+            <select id="especialidade" class="p-2 border rounded" required>
+              <option value="">Selecione a especialidade</option>
+            </select>
+            <input type="text" id="consultorio" class="p-2 border rounded" placeholder="Consultório" required>
+            <select id="especialista" class="p-2 border rounded" required>
+              <option value="">Selecione o especialista</option>
+            </select>
+          </div>
+          <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+            Agendar Consulta
+          </button>
+        </form>
+      </section>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
