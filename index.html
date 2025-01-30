@@ -72,6 +72,14 @@
               <span class="text-xl">Pacientes</span>
             </a>
           </li>
+
+          <!-- Nova Sessão de Profissionais -->
+          <li class="mb-4">
+            <a href="#profissionais" class="menu-item flex items-center p-2 rounded" onclick="showSection('profissionais')">
+              <span class="mr-2 text-3xl">👨‍⚕️</span>
+              <span class="text-xl">Profissionais</span>
+            </a>
+          </li>
         </ul>
       </nav>
     </div>
@@ -157,6 +165,11 @@
                 <th class="p-2">Data</th>
                 <th class="p-2">Horário</th>
                 <th class="p-2">Paciente</th>
+                <th class="p-2">Idade</th>
+                <th class="p-2">Responsável</th>
+                <th class="p-2">Telefone</th>
+                <th class="p-2">Especialidade</th>
+                <th class="p-2">Consultório</th>
                 <th class="p-2">Especialista</th>
                 <th class="p-2">Ações</th>
               </tr>
@@ -175,8 +188,14 @@
           <table id="tabela-consultas-dia" class="w-full text-left">
             <thead>
               <tr>
+                <th class="p-2">Data</th>
                 <th class="p-2">Horário</th>
                 <th class="p-2">Paciente</th>
+                <th class="p-2">Idade</th>
+                <th class="p-2">Responsável</th>
+                <th class="p-2">Telefone</th>
+                <th class="p-2">Especialidade</th>
+                <th class="p-2">Consultório</th>
                 <th class="p-2">Especialista</th>
                 <th class="p-2">Ações</th>
               </tr>
@@ -196,14 +215,40 @@
             <thead>
               <tr>
                 <th class="p-2">Nome</th>
+                <th class="p-2">CPF</th>
                 <th class="p-2">Idade</th>
                 <th class="p-2">Responsável</th>
                 <th class="p-2">Telefone</th>
+                <th class="p-2">Email</th>
+                <th class="p-2">Última Consulta</th>
                 <th class="p-2">Ações</th>
               </tr>
             </thead>
             <tbody>
               <!-- Dados dos pacientes serão preenchidos aqui -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Seção de Profissionais -->
+      <section id="profissionais" class="section hidden">
+        <h2 class="text-3xl font-bold mb-6">Profissionais</h2>
+        <div class="glassmorphism p-6 hover-scale">
+          <table id="tabela-profissionais" class="w-full text-left">
+            <thead>
+              <tr>
+                <th class="p-2">Nome</th>
+                <th class="p-2">CPF</th>
+                <th class="p-2">Especialidade</th>
+                <th class="p-2">Turno</th>
+                <th class="p-2">Telefone</th>
+                <th class="p-2">Email</th>
+                <th class="p-2">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Dados dos profissionais serão preenchidos aqui -->
             </tbody>
           </table>
         </div>
