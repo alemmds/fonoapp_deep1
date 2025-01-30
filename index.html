@@ -17,27 +17,27 @@
         <ul>
           <!-- Sessão de Cadastro -->
           <li class="mb-4">
-            <a href="#cadastro" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro')">
-              <span class="mr-2 text-3xl">📌</span> <!-- Ícone maior -->
-              <span class="text-xl">Cadastro</span> <!-- Texto maior -->
+            <a href="#cadastro" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-pacientes')">
+              <span class="mr-2 text-3xl">📌</span>
+              <span class="text-xl">Cadastro</span>
             </a>
             <ul class="ml-4 mt-2">
               <li>
                 <a href="#cadastro-pacientes" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-pacientes')">
-                  <span class="mr-2 text-2xl">👤</span> <!-- Ícone maior -->
-                  <span class="text-lg">Pacientes</span> <!-- Texto maior -->
+                  <span class="mr-2 text-2xl">👤</span>
+                  <span class="text-lg">Pacientes</span>
                 </a>
               </li>
               <li>
                 <a href="#cadastro-especialistas" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-especialistas')">
-                  <span class="mr-2 text-2xl">👥</span> <!-- Ícone maior -->
-                  <span class="text-lg">Especialistas</span> <!-- Texto maior -->
+                  <span class="mr-2 text-2xl">👥</span>
+                  <span class="text-lg">Especialistas</span>
                 </a>
               </li>
               <li>
                 <a href="#cadastro-consultas" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-consultas')">
-                  <span class="mr-2 text-2xl">🗓️</span> <!-- Ícone maior -->
-                  <span class="text-lg">Consultas</span> <!-- Texto maior -->
+                  <span class="mr-2 text-2xl">🗓️</span>
+                  <span class="text-lg">Consultas</span>
                 </a>
               </li>
             </ul>
@@ -45,21 +45,21 @@
 
           <!-- Sessão de Consultas -->
           <li class="mb-4">
-            <a href="#consultas" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas')">
-              <span class="mr-2 text-3xl">📅</span> <!-- Ícone maior -->
-              <span class="text-xl">Consultas</span> <!-- Texto maior -->
+            <a href="#consultas" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas-gerais')">
+              <span class="mr-2 text-3xl">📅</span>
+              <span class="text-xl">Consultas</span>
             </a>
             <ul class="ml-4 mt-2">
               <li>
                 <a href="#consultas-gerais" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas-gerais')">
-                  <span class="mr-2 text-2xl">📋</span> <!-- Ícone maior -->
-                  <span class="text-lg">Consultas Gerais</span> <!-- Texto maior -->
+                  <span class="mr-2 text-2xl">📋</span>
+                  <span class="text-lg">Consultas Gerais</span>
                 </a>
               </li>
               <li>
                 <a href="#consultas-dia" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas-dia')">
-                  <span class="mr-2 text-2xl">📅</span> <!-- Ícone maior -->
-                  <span class="text-lg">Consultas do Dia</span> <!-- Texto maior -->
+                  <span class="mr-2 text-2xl">📅</span>
+                  <span class="text-lg">Consultas do Dia</span>
                 </a>
               </li>
             </ul>
@@ -68,8 +68,8 @@
           <!-- Sessão de Pacientes -->
           <li class="mb-4">
             <a href="#pacientes" class="menu-item flex items-center p-2 rounded" onclick="showSection('pacientes')">
-              <span class="mr-2 text-3xl">👤</span> <!-- Ícone maior -->
-              <span class="text-xl">Pacientes</span> <!-- Texto maior -->
+              <span class="mr-2 text-3xl">👤</span>
+              <span class="text-xl">Pacientes</span>
             </a>
           </li>
         </ul>
@@ -136,15 +136,9 @@
               <input type="number" id="idade-paciente-consulta" class="p-2 border rounded" placeholder="Idade" required>
               <input type="text" id="responsavel-consulta" class="p-2 border rounded" placeholder="Responsável">
               <input type="tel" id="telefone-consulta" class="p-2 border rounded" placeholder="Telefone" required>
-              <select id="especialidade-consulta" class="p-2 border rounded" required>
-                <option value="">Selecione a especialidade</option>
-              </select>
-              <select id="consultorio-consulta" class="p-2 border rounded" required>
-                <option value="">Selecione o consultório</option>
-              </select>
-              <select id="especialista-consulta" class="p-2 border rounded" required>
-                <option value="">Selecione o especialista</option>
-              </select>
+              <input type="text" id="especialidade-consulta" class="p-2 border rounded" placeholder="Especialidade" required>
+              <input type="text" id="consultorio-consulta" class="p-2 border rounded" placeholder="Consultório" required>
+              <input type="text" id="especialista-consulta" class="p-2 border rounded" placeholder="Especialista" required>
             </div>
             <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
               Agendar Consulta
