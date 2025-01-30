@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Seções da aplicação
   const sections = {
     'cadastro-pacientes': document.getElementById('cadastro-pacientes'),
     'cadastro-especialistas': document.getElementById('cadastro-especialistas'),
@@ -9,14 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
     'pacientes': document.getElementById('pacientes')
   };
 
-  // Formulários
   const forms = {
     paciente: document.getElementById('form-paciente'),
     especialista: document.getElementById('form-especialista'),
     consulta: document.getElementById('form-consulta')
   };
 
-  // Carrega os dados do LocalStorage
+  // Carrega os dados dos arquivos JSON
   let dbCadastro = JSON.parse(localStorage.getItem('db_cadastro')) || { especialistas: [], consultorios: [] };
   let dbPacientes = JSON.parse(localStorage.getItem('db_pacientes')) || { pacientes: [] };
   let dbConsultas = JSON.parse(localStorage.getItem('db_consultas')) || { consultas: [] };
@@ -26,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem(key, JSON.stringify(data));
   };
 
-  // Função para mostrar uma seção específica
+  // Função para mostrar uma seção
   window.showSection = (sectionId) => {
     Object.values(sections).forEach(section => section.classList.remove('active'));
     sections[sectionId].classList.add('active');
@@ -38,12 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const paciente = {
       id: Date.now(), // ID único para cada paciente
       nome: document.getElementById('nome-paciente').value,
-      cpf: document.getElementById('cpf-paciente')?.value || '',
+      cpf: document.getElementById('cpf-paciente').value,
       idade: document.getElementById('idade-paciente').value,
       responsavel: document.getElementById('responsavel-paciente').value,
       telefone: document.getElementById('telefone-paciente').value,
-      email: document.getElementById('email-paciente')?.value || '',
-      ultimaConsulta: document.getElementById('ultima-consulta')?.value || ''
+      email: document.getElementById('email-paciente').value,
+      ultimaConsulta: document.getElementById('ultima-consulta').value
     };
     dbPacientes.pacientes.push(paciente);
     saveData('db_pacientes', dbPacientes);
@@ -59,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
       nome: document.getElementById('nome-especialista').value,
       cpf: document.getElementById('cpf-especialista').value,
       especialidade: document.getElementById('especialidade').value,
-      turno: document.getElementById('turno-especialista')?.value || '',
+      turno: document.getElementById('turno-especialista').value,
       telefone: document.getElementById('telefone-especialista').value,
       email: document.getElementById('email-especialista').value
     };
@@ -76,9 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
       data: document.getElementById('data-consulta').value,
       horario: document.getElementById('horario-consulta').value,
       paciente: document.getElementById('nome-paciente-consulta').value,
-      idade: document.getElementById('idade-paciente-consulta')?.value || '',
-      responsavel: document.getElementById('responsavel-consulta')?.value || '',
-      telefone: document.getElementById('telefone-consulta')?.value || '',
+      idade: document.getElementById('idade-paciente-consulta').value,
+      responsavel: document.getElementById('responsavel-consulta').value,
+      telefone: document.getElementById('telefone-consulta').value,
       especialidade: document.getElementById('especialidade-consulta').value,
       consultorio: document.getElementById('consultorio-consulta').value,
       especialista: document.getElementById('especialista-consulta').value
@@ -100,8 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
         <td class="p-2">${paciente.idade}</td>
         <td class="p-2">${paciente.responsavel}</td>
         <td class="p-2">${paciente.telefone}</td>
-        <td class="p-2">${paciente.email || 'N/A'}</td>
-        <td class="p-2">${paciente.ultimaConsulta || 'N/A'}</td>
         <td class="p-2 flex space-x-2">
           <button onclick="editarPaciente(${paciente.id})" class="bg-yellow-500 text-white px-2 py-1 rounded">Editar</button>
           <button onclick="excluirPaciente(${paciente.id})" class="bg-red-500 text-white px-2 py-1 rounded">Excluir</button>
@@ -116,13 +112,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const paciente = dbPacientes.pacientes.find(p => p.id === id);
     if (paciente) {
       document.getElementById('nome-paciente').value = paciente.nome;
-      document.getElementById('cpf-paciente').value = paciente.cpf || '';
+      document.getElementById('cpf-paciente').value = paciente.cpf;
       document.getElementById('idade-paciente').value = paciente.idade;
       document.getElementById('responsavel-paciente').value = paciente.responsavel;
       document.getElementById('telefone-paciente').value = paciente.telefone;
-      document.getElementById('email-paciente').value = paciente.email || '';
-      document.getElementById('ultima-consulta').value = paciente.ultimaConsulta || '';
-
+      document.getElementById('email-paciente').value = paciente.email;
+      document.getElementById('ultima-consulta').value = paciente.ultimaConsulta;
       // Remove o paciente antigo para evitar duplicação
       dbPacientes.pacientes = dbPacientes.pacientes.filter(p => p.id !== id);
       saveData('db_pacientes', dbPacientes);
@@ -154,18 +149,12 @@ document.addEventListener('DOMContentLoaded', () => {
         <td class="p-2">${consulta.data}</td>
         <td class="p-2">${consulta.horario}</td>
         <td class="p-2">${consulta.paciente}</td>
-        <td class="p-2">${consulta.idade || 'N/A'}</td>
-        <td class="p-2">${consulta.responsavel || 'N/A'}</td>
-        <td class="p-2">${consulta.telefone || 'N/A'}</td>
-        <td class="p-2">${consulta.especialidade || 'N/A'}</td>
-        <td class="p-2">${consulta.consultorio || 'N/A'}</td>
-        <td class="p-2">${consulta.especialista || 'N/A'}</td>
+        <td class="p-2">${consulta.especialista}</td>
         <td class="p-2 flex space-x-2">
           <button onclick="editarConsulta(${consulta.id})" class="bg-yellow-500 text-white px-2 py-1 rounded">Editar</button>
           <button onclick="excluirConsulta(${consulta.id})" class="bg-red-500 text-white px-2 py-1 rounded">Excluir</button>
         </td>
       `;
-
       tabelaConsultasGerais.appendChild(row);
 
       if (consulta.data === hoje) {
@@ -182,13 +171,12 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('data-consulta').value = consulta.data;
       document.getElementById('horario-consulta').value = consulta.horario;
       document.getElementById('nome-paciente-consulta').value = consulta.paciente;
-      document.getElementById('idade-paciente-consulta').value = consulta.idade || '';
-      document.getElementById('responsavel-consulta').value = consulta.responsavel || '';
-      document.getElementById('telefone-consulta').value = consulta.telefone || '';
-      document.getElementById('especialidade-consulta').value = consulta.especialidade || '';
-      document.getElementById('consultorio-consulta').value = consulta.consultorio || '';
-      document.getElementById('especialista-consulta').value = consulta.especialista || '';
-
+      document.getElementById('idade-paciente-consulta').value = consulta.idade;
+      document.getElementById('responsavel-consulta').value = consulta.responsavel;
+      document.getElementById('telefone-consulta').value = consulta.telefone;
+      document.getElementById('especialidade-consulta').value = consulta.especialidade;
+      document.getElementById('consultorio-consulta').value = consulta.consultorio;
+      document.getElementById('especialista-consulta').value = consulta.especialista;
       // Remove a consulta antiga para evitar duplicação
       dbConsultas.consultas = dbConsultas.consultas.filter(c => c.id !== id);
       saveData('db_consultas', dbConsultas);
@@ -210,15 +198,16 @@ document.addEventListener('DOMContentLoaded', () => {
   updatePacientesTable(); // Atualiza a tabela de pacientes
   updateConsultasTables(); // Atualiza as tabelas de consultas
 
-  // Registrar o Service Worker
+  // Registra o Service Worker
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/service-worker.js')
+      navigator.serviceWorker
+        .register('/service-worker.js')
         .then((registration) => {
           console.log('Service Worker registrado com sucesso:', registration);
         })
         .catch((error) => {
-          console.error('Falha ao registrar o Service Worker:', error);
+          console.log('Falha ao registrar o Service Worker:', error);
         });
     });
   }
