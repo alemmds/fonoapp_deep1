@@ -79,8 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
       idade: document.getElementById('idade-paciente-consulta')?.value || '',
       responsavel: document.getElementById('responsavel-consulta')?.value || '',
       telefone: document.getElementById('telefone-consulta')?.value || '',
-      especialidade: document.getElementById('especialidade-consulta')?.value || '',
-      consultorio: document.getElementById('consultorio-consulta')?.value || '',
+      especialidade: document.getElementById('especialidade-consulta').value,
+      consultorio: document.getElementById('consultorio-consulta').value,
       especialista: document.getElementById('especialista-consulta').value
     };
     dbConsultas.consultas.push(consulta);
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <td class="p-2">${consulta.telefone || 'N/A'}</td>
         <td class="p-2">${consulta.especialidade || 'N/A'}</td>
         <td class="p-2">${consulta.consultorio || 'N/A'}</td>
-        <td class="p-2">${consulta.especialista}</td>
+        <td class="p-2">${consulta.especialista || 'N/A'}</td>
         <td class="p-2 flex space-x-2">
           <button onclick="editarConsulta(${consulta.id})" class="bg-yellow-500 text-white px-2 py-1 rounded">Editar</button>
           <button onclick="excluirConsulta(${consulta.id})" class="bg-red-500 text-white px-2 py-1 rounded">Excluir</button>
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('telefone-consulta').value = consulta.telefone || '';
       document.getElementById('especialidade-consulta').value = consulta.especialidade || '';
       document.getElementById('consultorio-consulta').value = consulta.consultorio || '';
-      document.getElementById('especialista-consulta').value = consulta.especialista;
+      document.getElementById('especialista-consulta').value = consulta.especialista || '';
 
       // Remove a consulta antiga para evitar duplicação
       dbConsultas.consultas = dbConsultas.consultas.filter(c => c.id !== id);
@@ -209,4 +209,17 @@ document.addEventListener('DOMContentLoaded', () => {
   showSection('cadastro-pacientes'); // Mostra a seção de cadastro de pacientes por padrão
   updatePacientesTable(); // Atualiza a tabela de pacientes
   updateConsultasTables(); // Atualiza as tabelas de consultas
+
+  // Registrar o Service Worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then((registration) => {
+          console.log('Service Worker registrado com sucesso:', registration);
+        })
+        .catch((error) => {
+          console.error('Falha ao registrar o Service Worker:', error);
+        });
+    });
+  }
 });
