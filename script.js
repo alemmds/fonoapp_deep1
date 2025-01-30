@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <td class="p-2">${paciente.idade}</td>
         <td class="p-2">${paciente.responsavel}</td>
         <td class="p-2">${paciente.telefone}</td>
-        <td class="p-2">
+        <td class="p-2 flex space-x-2">
           <button onclick="editarPaciente(${paciente.id})" class="bg-yellow-500 text-white px-2 py-1 rounded">Editar</button>
           <button onclick="excluirPaciente(${paciente.id})" class="bg-red-500 text-white px-2 py-1 rounded">Excluir</button>
         </td>
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <td class="p-2">${consulta.horario}</td>
         <td class="p-2">${consulta.paciente}</td>
         <td class="p-2">${consulta.especialista}</td>
-        <td class="p-2">
+        <td class="p-2 flex space-x-2">
           <button onclick="editarConsulta(${consulta.id})" class="bg-yellow-500 text-white px-2 py-1 rounded">Editar</button>
           <button onclick="excluirConsulta(${consulta.id})" class="bg-red-500 text-white px-2 py-1 rounded">Excluir</button>
         </td>
