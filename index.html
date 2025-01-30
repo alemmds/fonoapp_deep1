@@ -85,9 +85,12 @@
           <form id="form-paciente">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input type="text" id="nome-paciente" class="p-2 border rounded" placeholder="Nome do Paciente" required>
+              <input type="text" id="cpf-paciente" class="p-2 border rounded" placeholder="CPF" required>
               <input type="number" id="idade-paciente" class="p-2 border rounded" placeholder="Idade" required>
               <input type="text" id="responsavel-paciente" class="p-2 border rounded" placeholder="Responsável">
               <input type="tel" id="telefone-paciente" class="p-2 border rounded" placeholder="Telefone" required>
+              <input type="email" id="email-paciente" class="p-2 border rounded" placeholder="Email" required>
+              <input type="date" id="ultima-consulta" class="p-2 border rounded" placeholder="Última Consulta">
             </div>
             <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
               Cadastrar Paciente
@@ -105,6 +108,12 @@
               <input type="text" id="nome-especialista" class="p-2 border rounded" placeholder="Nome do Especialista" required>
               <input type="text" id="cpf-especialista" class="p-2 border rounded" placeholder="CPF" required>
               <input type="text" id="especialidade" class="p-2 border rounded" placeholder="Especialidade" required>
+              <select id="turno-especialista" class="p-2 border rounded" required>
+                <option value="">Selecione o turno</option>
+                <option value="Manhã">Manhã</option>
+                <option value="Tarde">Tarde</option>
+                <option value="Noite">Noite</option>
+              </select>
               <input type="tel" id="telefone-especialista" class="p-2 border rounded" placeholder="Telefone" required>
               <input type="email" id="email-especialista" class="p-2 border rounded" placeholder="Email" required>
             </div>
@@ -123,16 +132,17 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input type="date" id="data-consulta" class="p-2 border rounded" required>
               <input type="time" id="horario-consulta" class="p-2 border rounded" required>
-              <select id="nome-paciente" class="p-2 border rounded" required>
-                <option value="">Selecione um paciente</option>
-              </select>
-              <select id="especialidade" class="p-2 border rounded" required>
+              <input type="text" id="nome-paciente-consulta" class="p-2 border rounded" placeholder="Nome do Paciente" required>
+              <input type="number" id="idade-paciente-consulta" class="p-2 border rounded" placeholder="Idade" required>
+              <input type="text" id="responsavel-consulta" class="p-2 border rounded" placeholder="Responsável">
+              <input type="tel" id="telefone-consulta" class="p-2 border rounded" placeholder="Telefone" required>
+              <select id="especialidade-consulta" class="p-2 border rounded" required>
                 <option value="">Selecione a especialidade</option>
               </select>
-              <select id="consultorio" class="p-2 border rounded" required>
-                <option value="">Selecione um consultório</option>
+              <select id="consultorio-consulta" class="p-2 border rounded" required>
+                <option value="">Selecione o consultório</option>
               </select>
-              <select id="especialista" class="p-2 border rounded" required>
+              <select id="especialista-consulta" class="p-2 border rounded" required>
                 <option value="">Selecione o especialista</option>
               </select>
             </div>
