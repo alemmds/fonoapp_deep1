@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     'cadastro-consultas': document.getElementById('cadastro-consultas'),
     'consultas-gerais': document.getElementById('consultas-gerais'),
     'consultas-dia': document.getElementById('consultas-dia'),
-    'pacientes': document.getElementById('pacientes')
+    'pacientes': document.getElementById('pacientes'),
+    'profissionais': document.getElementById('profissionais')
   };
 
   const forms = {
@@ -64,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     dbCadastro.especialistas.push(especialista);
     saveData('db_cadastro', dbCadastro);
     forms.especialista.reset();
+    updateProfissionaisTable();
   });
 
   // Função para adicionar uma consulta
@@ -95,9 +97,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const row = document.createElement('tr');
       row.innerHTML = `
         <td class="p-2">${paciente.nome}</td>
+        <td class="p-2">${paciente.cpf}</td>
         <td class="p-2">${paciente.idade}</td>
         <td class="p-2">${paciente.responsavel}</td>
         <td class="p-2">${paciente.telefone}</td>
+        <td class="p-2">${paciente.email}</td>
+        <td class="p-2">${paciente.ultimaConsulta}</td>
         <td class="p-2 flex space-x-2">
           <button onclick="editarPaciente(${paciente.id})" class="bg-yellow-500 text-white px-2 py-1 rounded">Editar</button>
           <button onclick="excluirPaciente(${paciente.id})" class="bg-red-500 text-white px-2 py-1 rounded">Excluir</button>
@@ -149,6 +154,11 @@ document.addEventListener('DOMContentLoaded', () => {
         <td class="p-2">${consulta.data}</td>
         <td class="p-2">${consulta.horario}</td>
         <td class="p-2">${consulta.paciente}</td>
+        <td class="p-2">${consulta.idade}</td>
+        <td class="p-2">${consulta.responsavel}</td>
+        <td class="p-2">${consulta.telefone}</td>
+        <td class="p-2">${consulta.especialidade}</td>
+        <td class="p-2">${consulta.consultorio}</td>
         <td class="p-2">${consulta.especialista}</td>
         <td class="p-2 flex space-x-2">
           <button onclick="editarConsulta(${consulta.id})" class="bg-yellow-500 text-white px-2 py-1 rounded">Editar</button>
@@ -193,10 +203,59 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  // Função para atualizar a tabela de profissionais
+  const updateProfissionaisTable = () => {
+    const tabelaProfissionais = document.getElementById('tabela-profissionais').getElementsByTagName('tbody')[0];
+    tabelaProfissionais.innerHTML = '';
+    dbCadastro.especialistas.forEach(especialista => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td class="p-2">${especialista.nome}</td>
+        <td class="p-2">${especialista.cpf}</td>
+        <td class="p-2">${especialista.especialidade}</td>
+        <td class="p-2">${especialista.turno}</td>
+        <td class="p-2">${especialista.telefone}</td>
+        <td class="p-2">${especialista.email}</td>
+        <td class="p-2 flex space-x-2">
+          <button onclick="editarEspecialista(${especialista.id})" class="bg-yellow-500 text-white px-2 py-1 rounded">Editar</button>
+          <button onclick="excluirEspecialista(${especialista.id})" class="bg-red-500 text-white px-2 py-1 rounded">Excluir</button>
+        </td>
+      `;
+      tabelaProfissionais.appendChild(row);
+    });
+  };
+
+  // Função para editar um especialista
+  window.editarEspecialista = (id) => {
+    const especialista = dbCadastro.especialistas.find(e => e.id === id);
+    if (especialista) {
+      document.getElementById('nome-especialista').value = especialista.nome;
+      document.getElementById('cpf-especialista').value = especialista.cpf;
+      document.getElementById('especialidade').value = especialista.especialidade;
+      document.getElementById('turno-especialista').value = especialista.turno;
+      document.getElementById('telefone-especialista').value = especialista.telefone;
+      document.getElementById('email-especialista').value = especialista.email;
+      // Remove o especialista antigo para evitar duplicação
+      dbCadastro.especialistas = dbCadastro.especialistas.filter(e => e.id !== id);
+      saveData('db_cadastro', dbCadastro);
+      updateProfissionaisTable();
+    }
+  };
+
+  // Função para excluir um especialista
+  window.excluirEspecialista = (id) => {
+    if (confirm('Tem certeza que deseja excluir este especialista?')) {
+      dbCadastro.especialistas = dbCadastro.especialistas.filter(e => e.id !== id);
+      saveData('db_cadastro', dbCadastro);
+      updateProfissionaisTable();
+    }
+  };
+
   // Inicialização
   showSection('cadastro-pacientes'); // Mostra a seção de cadastro de pacientes por padrão
   updatePacientesTable(); // Atualiza a tabela de pacientes
   updateConsultasTables(); // Atualiza as tabelas de consultas
+  updateProfissionaisTable(); // Atualiza a tabela de profissionais
 
   // Registra o Service Worker
   if ('serviceWorker' in navigator) {
@@ -211,5 +270,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
   }
-  
 });
