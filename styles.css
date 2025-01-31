@@ -225,3 +225,37 @@ tr:hover {
     white-space: nowrap;
   }
 }
+
+/* Estilos para o botão de minimizar/maximizar */
+#toggle-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+#menu-icon,
+#close-icon {
+  transition: opacity 0.3s ease;
+}
+
+#menu-icon.hidden,
+#close-icon.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Estilos para o menu lateral minimizado */
+#menu-lateral.minimizado {
+  width: 4rem; /* Largura reduzida */
+  overflow: hidden;
+}
+
+#menu-lateral.minimizado h1,
+#menu-lateral.minimizado nav {
+  display: none; /* Oculta o título e o menu */
+}
+
+#menu-lateral.minimizado #toggle-menu {
+  right: 0.5rem; /* Ajusta a posição do botão */
+}
