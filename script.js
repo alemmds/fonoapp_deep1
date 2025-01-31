@@ -123,10 +123,14 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('telefone-paciente').value = paciente.telefone;
       document.getElementById('email-paciente').value = paciente.email;
       document.getElementById('ultima-consulta').value = paciente.ultimaConsulta;
+
       // Remove o paciente antigo para evitar duplicação
       dbPacientes.pacientes = dbPacientes.pacientes.filter(p => p.id !== id);
       saveData('db_pacientes', dbPacientes);
       updatePacientesTable();
+
+      // Mostra a seção de cadastro de pacientes
+      showSection('cadastro-pacientes');
     }
   };
 
@@ -187,10 +191,14 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('especialidade-consulta').value = consulta.especialidade;
       document.getElementById('consultorio-consulta').value = consulta.consultorio;
       document.getElementById('especialista-consulta').value = consulta.especialista;
+
       // Remove a consulta antiga para evitar duplicação
       dbConsultas.consultas = dbConsultas.consultas.filter(c => c.id !== id);
       saveData('db_consultas', dbConsultas);
       updateConsultasTables();
+
+      // Mostra a seção de cadastro de consultas
+      showSection('cadastro-consultas');
     }
   };
 
@@ -235,10 +243,14 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('turno-especialista').value = especialista.turno;
       document.getElementById('telefone-especialista').value = especialista.telefone;
       document.getElementById('email-especialista').value = especialista.email;
+
       // Remove o especialista antigo para evitar duplicação
       dbCadastro.especialistas = dbCadastro.especialistas.filter(e => e.id !== id);
       saveData('db_cadastro', dbCadastro);
       updateProfissionaisTable();
+
+      // Mostra a seção de cadastro de especialistas
+      showSection('cadastro-especialistas');
     }
   };
 
