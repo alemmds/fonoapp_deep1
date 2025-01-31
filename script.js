@@ -48,23 +48,24 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('register-form').addEventListener('submit', (e) => {
     e.preventDefault();
     const nome = document.getElementById('register-name').value;
+    const email = document.getElementById('register-email').value;
     const senha = document.getElementById('register-password').value;
 
-    if (nome && senha) {
+    if (nome && email && senha) {
       // Verifica se o usuário já existe
-      const usuarioExistente = dbUsuarios.find(u => u.nome === nome);
+      const usuarioExistente = dbUsuarios.find(u => u.email === email);
       if (usuarioExistente) {
-        alert('Usuário já cadastrado!');
+        alert('Email já cadastrado!');
         return;
       }
 
       // Adiciona o novo usuário
-      dbUsuarios.push({ nome, senha });
+      dbUsuarios.push({ nome, email, senha });
       saveData('db_usuarios', dbUsuarios);
 
       alert('Cadastro realizado com sucesso!');
       document.getElementById('register-screen').classList.add('hidden');
-      document.getElementById('login-screen').classList.remove('hidden');
+      document.getElementById('main-container').classList.remove('hidden');
     } else {
       alert('Preencha todos os campos!');
     }
@@ -381,4 +382,18 @@ document.addEventListener('DOMContentLoaded', () => {
   updatePacientesTable(); // Atualiza a tabela de pacientes
   updateConsultasTables(); // Atualiza as tabelas de consultas
   updateProfissionaisTable(); // Atualiza a tabela de profissionais
+
+  // Registra o Service Worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker
+        .register('/service-worker.js')
+        .then((registration) => {
+          console.log('Service Worker registrado com sucesso:', registration);
+        })
+        .catch((error) => {
+          console.log('Falha ao registrar o Service Worker:', error);
+        });
+    });
+  }
 });
