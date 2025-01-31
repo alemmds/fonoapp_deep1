@@ -305,6 +305,10 @@ tr:hover {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
 }
 
 #maximize-icon,
@@ -316,4 +320,77 @@ tr:hover {
 #minimize-icon.hidden {
   opacity: 0;
   pointer-events: none;
+}
+
+/* Estilos para a tela de login/cadastro */
+#login-screen,
+#register-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#login-screen.hidden,
+#register-screen.hidden {
+  display: none;
+}
+
+#login-screen .bg-white,
+#register-screen .bg-white {
+  width: 100%;
+  max-width: 24rem;
+}
+
+#login-screen h2,
+#register-screen h2 {
+  text-align: center;
+}
+
+#login-screen form,
+#register-screen form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#login-screen input,
+#register-screen input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+}
+
+#login-screen button,
+#register-screen button {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#login-screen button:hover,
+#register-screen button:hover {
+  background-color: #1d4ed8;
+}
+
+#login-screen p,
+#register-screen p {
+  text-align: center;
+}
+
+#login-screen a,
+#register-screen a {
+  color: #2563eb;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+#login-screen a:hover,
+#register-screen a:hover {
+  color: #1d4ed8;
 }
