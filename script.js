@@ -48,6 +48,17 @@ document.addEventListener('DOMContentLoaded', () => {
   // Adiciona o evento de clique ao botão de minimizar/maximizar
   document.getElementById('toggle-menu').addEventListener('click', toggleMenu);
 
+  // Função para alternar entre tela cheia e menu lateral
+  document.getElementById('toggle-fullscreen').addEventListener('click', () => {
+    const menuLateral = document.getElementById('menu-lateral');
+    const maximizeIcon = document.getElementById('maximize-icon');
+    const minimizeIcon = document.getElementById('minimize-icon');
+
+    menuLateral.classList.toggle('hidden');
+    maximizeIcon.classList.toggle('hidden');
+    minimizeIcon.classList.toggle('hidden');
+  });
+
   // Função para adicionar/atualizar um paciente
   forms.paciente.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -207,20 +218,53 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
+  // Função para validar horário ocupado
+  const isHorarioOcupado = (data, horario, especialista) => {
+    return dbConsultas.consultas.some(
+      (consulta) =>
+        consulta.data === data &&
+        consulta.horario === horario &&
+        consulta.especialista === especialista
+    );
+  };
+
+  // Função para validar paciente cadastrado
+  const isPacienteCadastrado = (nomePaciente) => {
+    return dbPacientes.pacientes.some((paciente) => paciente.nome === nomePaciente);
+  };
+
   // Função para adicionar/atualizar uma consulta
   forms.consulta.addEventListener('submit', (e) => {
     e.preventDefault();
+
+    const data = document.getElementById('data-consulta').value;
+    const horario = document.getElementById('horario-consulta').value;
+    const especialista = document.getElementById('especialista-consulta').value;
+    const nomePaciente = document.getElementById('nome-paciente-consulta').value;
+
+    // Validação de horário ocupado
+    if (isHorarioOcupado(data, horario, especialista)) {
+      alert('Horário já ocupado para este especialista!');
+      return;
+    }
+
+    // Validação de paciente cadastrado
+    if (!isPacienteCadastrado(nomePaciente)) {
+      alert('Necessário cadastrar o paciente!');
+      return;
+    }
+
     const consulta = {
       id: editingId || Date.now(), // Usa o ID em edição ou gera um novo
-      data: document.getElementById('data-consulta').value,
-      horario: document.getElementById('horario-consulta').value,
-      paciente: document.getElementById('nome-paciente-consulta').value,
+      data: data,
+      horario: horario,
+      paciente: nomePaciente,
       idade: document.getElementById('idade-paciente-consulta').value,
       responsavel: document.getElementById('responsavel-consulta').value,
       telefone: document.getElementById('telefone-consulta').value,
       especialidade: document.getElementById('especialidade-consulta').value,
       consultorio: document.getElementById('consultorio-consulta').value,
-      especialista: document.getElementById('especialista-consulta').value
+      especialista: especialista
     };
 
     if (editingId) {
