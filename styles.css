@@ -38,6 +38,10 @@ body {
   width: 16rem;
 }
 
+.w-16 {
+  width: 4rem;
+}
+
 /* Estilos para o título do menu */
 .text-2xl {
   font-size: 1.5rem;
@@ -227,37 +231,36 @@ tr:hover {
 }
 
 /* Estilos para o botão de minimizar/maximizar */
-#toggle-menu {
+#toggle-fullscreen {
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
 }
 
-#menu-icon,
-#close-icon {
+#maximize-icon,
+#minimize-icon {
   transition: opacity 0.3s ease;
 }
 
-#menu-icon.hidden,
-#close-icon.hidden {
+#maximize-icon.hidden,
+#minimize-icon.hidden {
   opacity: 0;
   pointer-events: none;
 }
 
 /* Estilos para o menu lateral minimizado */
-#menu-lateral.minimizado {
-  width: 4rem; /* Largura reduzida */
-  overflow: hidden;
+#menu-lateral.w-16 h1,
+#menu-lateral.w-16 nav {
+  display: none;
 }
 
-#menu-lateral.minimizado h1,
-#menu-lateral.minimizado nav {
-  display: none; /* Oculta o título e o menu */
-}
-
-#menu-lateral.minimizado #toggle-menu {
-  right: 0.5rem; /* Ajusta a posição do botão */
+#menu-lateral.w-16 #toggle-fullscreen {
+  right: 0.5rem;
 }
 
 /* Estilos para dispositivos móveis */
@@ -297,29 +300,6 @@ tr:hover {
   .md\:grid-cols-2 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
-}
-
-/* Estilos para o botão de tela cheia */
-#toggle-fullscreen {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 10;
-}
-
-#maximize-icon,
-#minimize-icon {
-  transition: opacity 0.3s ease;
-}
-
-#maximize-icon.hidden,
-#minimize-icon.hidden {
-  opacity: 0;
-  pointer-events: none;
 }
 
 /* Estilos para a tela de login/cadastro */
