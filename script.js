@@ -348,6 +348,52 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
+  // Alternar entre telas de login e cadastro
+  document.getElementById('show-register').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('login-screen').classList.add('hidden');
+    document.getElementById('register-screen').classList.remove('hidden');
+  });
+
+  document.getElementById('show-login').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('register-screen').classList.add('hidden');
+    document.getElementById('login-screen').classList.remove('hidden');
+  });
+
+  // Simulação de login (substitua por lógica real)
+  document.getElementById('login-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+
+    // Simulação de autenticação
+    if (email && password) {
+      alert('Login realizado com sucesso!');
+      document.getElementById('login-screen').classList.add('hidden');
+      document.getElementById('main-container').classList.remove('hidden');
+    } else {
+      alert('Preencha todos os campos!');
+    }
+  });
+
+  // Simulação de cadastro (substitua por lógica real)
+  document.getElementById('register-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('register-name').value;
+    const email = document.getElementById('register-email').value;
+    const password = document.getElementById('register-password').value;
+
+    // Simulação de cadastro
+    if (name && email && password) {
+      alert('Cadastro realizado com sucesso!');
+      document.getElementById('register-screen').classList.add('hidden');
+      document.getElementById('login-screen').classList.remove('hidden');
+    } else {
+      alert('Preencha todos os campos!');
+    }
+  });
+
   // Inicialização
   showSection('cadastro-pacientes'); // Mostra a seção de cadastro de pacientes por padrão
   updatePacientesTable(); // Atualiza a tabela de pacientes
