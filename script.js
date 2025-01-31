@@ -1,21 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const sections = {
-    'cadastro-pacientes': document.getElementById('cadastro-pacientes'),
-    'cadastro-especialistas': document.getElementById('cadastro-especialistas'),
-    'cadastro-consultas': document.getElementById('cadastro-consultas'),
-    'consultas-gerais': document.getElementById('consultas-gerais'),
-    'consultas-dia': document.getElementById('consultas-dia'),
-    'pacientes': document.getElementById('pacientes'),
-    'profissionais': document.getElementById('profissionais')
-  };
-
-  const forms = {
-    paciente: document.getElementById('form-paciente'),
-    especialista: document.getElementById('form-especialista'),
-    consulta: document.getElementById('form-consulta')
-  };
-
-  // Carrega os dados dos arquivos JSON
+  // Carrega os dados do localStorage
+  let dbUsuarios = JSON.parse(localStorage.getItem('db_usuarios')) || [];
   let dbCadastro = JSON.parse(localStorage.getItem('db_cadastro')) || { especialistas: [], consultorios: [] };
   let dbPacientes = JSON.parse(localStorage.getItem('db_pacientes')) || { pacientes: [] };
   let dbConsultas = JSON.parse(localStorage.getItem('db_consultas')) || { consultas: [] };
@@ -23,44 +8,87 @@ document.addEventListener('DOMContentLoaded', () => {
   // Variável global para armazenar o ID em edição
   let editingId = null;
 
-  // Função para salvar dados no LocalStorage
+  // Função para salvar dados no localStorage
   const saveData = (key, data) => {
     localStorage.setItem(key, JSON.stringify(data));
   };
 
   // Função para mostrar uma seção
   window.showSection = (sectionId) => {
-    Object.values(sections).forEach(section => section.classList.remove('active'));
-    sections[sectionId].classList.add('active');
+    document.querySelectorAll('.section').forEach(section => section.classList.add('hidden'));
+    document.getElementById(sectionId).classList.remove('hidden');
   };
 
   // Função para alternar o menu lateral
-  const toggleMenu = () => {
-    const menuLateral = document.getElementById('menu-lateral');
-    const menuIcon = document.getElementById('menu-icon');
-    const closeIcon = document.getElementById('close-icon');
-
-    menuLateral.classList.toggle('minimizado');
-    menuIcon.classList.toggle('hidden');
-    closeIcon.classList.toggle('hidden');
-  };
-
-  // Adiciona o evento de clique ao botão de minimizar/maximizar
-  document.getElementById('toggle-menu').addEventListener('click', toggleMenu);
-
-  // Função para alternar entre tela cheia e menu lateral
   document.getElementById('toggle-fullscreen').addEventListener('click', () => {
     const menuLateral = document.getElementById('menu-lateral');
     const maximizeIcon = document.getElementById('maximize-icon');
     const minimizeIcon = document.getElementById('minimize-icon');
 
-    menuLateral.classList.toggle('hidden');
+    menuLateral.classList.toggle('w-64');
+    menuLateral.classList.toggle('w-16');
     maximizeIcon.classList.toggle('hidden');
     minimizeIcon.classList.toggle('hidden');
   });
 
+  // Alternar entre telas de login e cadastro
+  document.getElementById('show-register').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('login-screen').classList.add('hidden');
+    document.getElementById('register-screen').classList.remove('hidden');
+  });
+
+  document.getElementById('show-login').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('register-screen').classList.add('hidden');
+    document.getElementById('login-screen').classList.remove('hidden');
+  });
+
+  // Cadastro de usuário
+  document.getElementById('register-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nome = document.getElementById('register-name').value;
+    const senha = document.getElementById('register-password').value;
+
+    if (nome && senha) {
+      // Verifica se o usuário já existe
+      const usuarioExistente = dbUsuarios.find(u => u.nome === nome);
+      if (usuarioExistente) {
+        alert('Usuário já cadastrado!');
+        return;
+      }
+
+      // Adiciona o novo usuário
+      dbUsuarios.push({ nome, senha });
+      saveData('db_usuarios', dbUsuarios);
+
+      alert('Cadastro realizado com sucesso!');
+      document.getElementById('register-screen').classList.add('hidden');
+      document.getElementById('login-screen').classList.remove('hidden');
+    } else {
+      alert('Preencha todos os campos!');
+    }
+  });
+
+  // Login do usuário
+  document.getElementById('login-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nome = document.getElementById('login-name').value;
+    const senha = document.getElementById('login-password').value;
+
+    // Verifica se o usuário existe e a senha está correta
+    const usuario = dbUsuarios.find(u => u.nome === nome && u.senha === senha);
+    if (usuario) {
+      alert('Login realizado com sucesso!');
+      document.getElementById('login-screen').classList.add('hidden');
+      document.getElementById('main-container').classList.remove('hidden');
+    } else {
+      alert('Nome ou senha incorretos!');
+    }
+  });
+
   // Função para adicionar/atualizar um paciente
-  forms.paciente.addEventListener('submit', (e) => {
+  document.getElementById('form-paciente').addEventListener('submit', (e) => {
     e.preventDefault();
     const paciente = {
       id: editingId || Date.now(), // Usa o ID em edição ou gera um novo
@@ -84,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     saveData('db_pacientes', dbPacientes);
-    forms.paciente.reset();
+    document.getElementById('form-paciente').reset();
     updatePacientesTable();
   });
 
@@ -141,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // Função para adicionar/atualizar um especialista
-  forms.especialista.addEventListener('submit', (e) => {
+  document.getElementById('form-especialista').addEventListener('submit', (e) => {
     e.preventDefault();
     const especialista = {
       id: editingId || Date.now(), // Usa o ID em edição ou gera um novo
@@ -164,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     saveData('db_cadastro', dbCadastro);
-    forms.especialista.reset();
+    document.getElementById('form-especialista').reset();
     updateProfissionaisTable();
   });
 
@@ -234,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // Função para adicionar/atualizar uma consulta
-  forms.consulta.addEventListener('submit', (e) => {
+  document.getElementById('form-consulta').addEventListener('submit', (e) => {
     e.preventDefault();
 
     const data = document.getElementById('data-consulta').value;
@@ -278,7 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     saveData('db_consultas', dbConsultas);
-    forms.consulta.reset();
+    document.getElementById('form-consulta').reset();
     updateConsultasTables();
   });
 
@@ -348,69 +376,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  // Alternar entre telas de login e cadastro
-  document.getElementById('show-register').addEventListener('click', (e) => {
-    e.preventDefault();
-    document.getElementById('login-screen').classList.add('hidden');
-    document.getElementById('register-screen').classList.remove('hidden');
-  });
-
-  document.getElementById('show-login').addEventListener('click', (e) => {
-    e.preventDefault();
-    document.getElementById('register-screen').classList.add('hidden');
-    document.getElementById('login-screen').classList.remove('hidden');
-  });
-
-  // Simulação de login (substitua por lógica real)
-  document.getElementById('login-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-
-    // Simulação de autenticação
-    if (email && password) {
-      alert('Login realizado com sucesso!');
-      document.getElementById('login-screen').classList.add('hidden');
-      document.getElementById('main-container').classList.remove('hidden');
-    } else {
-      alert('Preencha todos os campos!');
-    }
-  });
-
-  // Simulação de cadastro (substitua por lógica real)
-  document.getElementById('register-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = document.getElementById('register-name').value;
-    const email = document.getElementById('register-email').value;
-    const password = document.getElementById('register-password').value;
-
-    // Simulação de cadastro
-    if (name && email && password) {
-      alert('Cadastro realizado com sucesso!');
-      document.getElementById('register-screen').classList.add('hidden');
-      document.getElementById('login-screen').classList.remove('hidden');
-    } else {
-      alert('Preencha todos os campos!');
-    }
-  });
-
   // Inicialização
   showSection('cadastro-pacientes'); // Mostra a seção de cadastro de pacientes por padrão
   updatePacientesTable(); // Atualiza a tabela de pacientes
   updateConsultasTables(); // Atualiza as tabelas de consultas
   updateProfissionaisTable(); // Atualiza a tabela de profissionais
-
-  // Registra o Service Worker
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker
-        .register('/service-worker.js')
-        .then((registration) => {
-          console.log('Service Worker registrado com sucesso:', registration);
-        })
-        .catch((error) => {
-          console.log('Falha ao registrar o Service Worker:', error);
-        });
-    });
-  }
 });
