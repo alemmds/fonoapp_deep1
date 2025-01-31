@@ -259,3 +259,61 @@ tr:hover {
 #menu-lateral.minimizado #toggle-menu {
   right: 0.5rem; /* Ajusta a posição do botão */
 }
+
+/* Estilos para dispositivos móveis */
+@media (max-width: 768px) {
+  .flex {
+    flex-direction: column;
+  }
+
+  .w-64 {
+    width: 100%;
+  }
+
+  .p-6 {
+    padding: 1rem;
+  }
+
+  .menu-item {
+    padding: 0.25rem;
+  }
+
+  .text-xl {
+    font-size: 1rem;
+  }
+
+  .text-2xl {
+    font-size: 1.25rem;
+  }
+
+  .glassmorphism {
+    padding: 1rem;
+  }
+
+  .grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-2 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+/* Estilos para o botão de tela cheia */
+#toggle-fullscreen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+#maximize-icon,
+#minimize-icon {
+  transition: opacity 0.3s ease;
+}
+
+#maximize-icon.hidden,
+#minimize-icon.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
