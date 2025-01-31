@@ -10,8 +10,56 @@
   <meta name="theme-color" content="#1e3a8a">
 </head>
 <body class="bg-gray-100 font-sans">
+  <!-- Tela de Login/Cadastro -->
+  <div id="login-screen" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+      <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+      <form id="login-form">
+        <div class="mb-4">
+          <label for="login-email" class="block text-sm font-medium text-gray-700">Email</label>
+          <input type="email" id="login-email" class="mt-1 p-2 w-full border rounded" required>
+        </div>
+        <div class="mb-6">
+          <label for="login-password" class="block text-sm font-medium text-gray-700">Senha</label>
+          <input type="password" id="login-password" class="mt-1 p-2 w-full border rounded" required>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+          Entrar
+        </button>
+      </form>
+      <p class="mt-4 text-center text-sm text-gray-600">
+        Não tem uma conta? <a href="#" id="show-register" class="text-blue-600 hover:underline">Cadastre-se</a>
+      </p>
+    </div>
+
+    <!-- Tela de Cadastro -->
+    <div id="register-screen" class="bg-white p-8 rounded-lg shadow-lg w-96 hidden">
+      <h2 class="text-2xl font-bold mb-6 text-center">Cadastro</h2>
+      <form id="register-form">
+        <div class="mb-4">
+          <label for="register-name" class="block text-sm font-medium text-gray-700">Nome</label>
+          <input type="text" id="register-name" class="mt-1 p-2 w-full border rounded" required>
+        </div>
+        <div class="mb-4">
+          <label for="register-email" class="block text-sm font-medium text-gray-700">Email</label>
+          <input type="email" id="register-email" class="mt-1 p-2 w-full border rounded" required>
+        </div>
+        <div class="mb-6">
+          <label for="register-password" class="block text-sm font-medium text-gray-700">Senha</label>
+          <input type="password" id="register-password" class="mt-1 p-2 w-full border rounded" required>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+          Cadastrar
+        </button>
+      </form>
+      <p class="mt-4 text-center text-sm text-gray-600">
+        Já tem uma conta? <a href="#" id="show-login" class="text-blue-600 hover:underline">Faça login</a>
+      </p>
+    </div>
+  </div>
+
   <!-- Container Principal -->
-  <div class="flex min-h-screen">
+  <div id="main-container" class="hidden flex min-h-screen">
     <!-- Menu Lateral -->
     <div class="w-64 bg-blue-900 text-white p-6 relative transition-all duration-300" id="menu-lateral">
       <!-- Botão de Minimizar/Maximizar -->
