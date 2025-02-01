@@ -80,25 +80,25 @@
         <ul>
           <!-- Sessão de Cadastro -->
           <li class="mb-4">
-            <a href="#cadastro" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-pacientes')">
+            <a href="#cadastro-pacientes" class="menu-item flex items-center p-2 rounded">
               <span class="mr-2 text-3xl">📌</span>
               <span class="text-xl">Cadastro</span>
             </a>
             <ul class="ml-4 mt-2">
               <li>
-                <a href="#cadastro-pacientes" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-pacientes')">
+                <a href="#cadastro-pacientes" class="menu-item flex items-center p-2 rounded">
                   <span class="mr-2 text-2xl">👤</span>
                   <span class="text-lg">Pacientes</span>
                 </a>
               </li>
               <li>
-                <a href="#cadastro-especialistas" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-especialistas')">
+                <a href="#cadastro-especialistas" class="menu-item flex items-center p-2 rounded">
                   <span class="mr-2 text-2xl">👥</span>
                   <span class="text-lg">Especialistas</span>
                 </a>
               </li>
               <li>
-                <a href="#cadastro-consultas" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-consultas')">
+                <a href="#cadastro-consultas" class="menu-item flex items-center p-2 rounded">
                   <span class="mr-2 text-2xl">🗓️</span>
                   <span class="text-lg">Consultas</span>
                 </a>
@@ -108,19 +108,19 @@
 
           <!-- Sessão de Consultas -->
           <li class="mb-4">
-            <a href="#consultas" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas-gerais')">
+            <a href="#consultas-gerais" class="menu-item flex items-center p-2 rounded">
               <span class="mr-2 text-3xl">📅</span>
               <span class="text-xl">Consultas</span>
             </a>
             <ul class="ml-4 mt-2">
               <li>
-                <a href="#consultas-gerais" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas-gerais')">
+                <a href="#consultas-gerais" class="menu-item flex items-center p-2 rounded">
                   <span class="mr-2 text-2xl">📋</span>
                   <span class="text-lg">Consultas Gerais</span>
                 </a>
               </li>
               <li>
-                <a href="#consultas-dia" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas-dia')">
+                <a href="#consultas-dia" class="menu-item flex items-center p-2 rounded">
                   <span class="mr-2 text-2xl">📅</span>
                   <span class="text-lg">Consultas do Dia</span>
                 </a>
@@ -130,7 +130,7 @@
 
           <!-- Sessão de Pacientes -->
           <li class="mb-4">
-            <a href="#pacientes" class="menu-item flex items-center p-2 rounded" onclick="showSection('pacientes')">
+            <a href="#pacientes" class="menu-item flex items-center p-2 rounded">
               <span class="mr-2 text-3xl">👤</span>
               <span class="text-xl">Pacientes</span>
             </a>
@@ -138,7 +138,7 @@
 
           <!-- Sessão de Profissionais -->
           <li class="mb-4">
-            <a href="#profissionais" class="menu-item flex items-center p-2 rounded" onclick="showSection('profissionais')">
+            <a href="#profissionais" class="menu-item flex items-center p-2 rounded">
               <span class="mr-2 text-3xl">👨‍⚕️</span>
               <span class="text-xl">Profissionais</span>
             </a>
@@ -161,7 +161,7 @@
               <input type="text" id="paciente-responsavel" class="p-2 border rounded" placeholder="Responsável">
               <input type="tel" id="paciente-telefone" class="p-2 border rounded" placeholder="Telefone" required>
               <input type="email" id="paciente-email" class="p-2 border rounded" placeholder="Email" required>
-              <input type="date" id="paciente-ultima-consulta" class="p-2 border rounded" placeholder="Última Consulta">
+              <input type="date" id="paciente-ultima-consulta" class="p-2 border rounded">
             </div>
             <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
               Cadastrar Paciente
@@ -238,7 +238,7 @@
               </tr>
             </thead>
             <tbody>
-              <!-- Dados das consultas serão preenchidos aqui -->
+              <!-- Dados serão preenchidos via JavaScript -->
             </tbody>
           </table>
         </div>
@@ -264,7 +264,7 @@
               </tr>
             </thead>
             <tbody>
-              <!-- Dados das consultas do dia serão preenchidos aqui -->
+              <!-- Dados serão preenchidos via JavaScript -->
             </tbody>
           </table>
         </div>
@@ -286,9 +286,9 @@
                 <th class="p-2">Última Consulta</th>
                 <th class="p-2">Ações</th>
               </tr>
-                          </thead>
+            </thead>
             <tbody>
-              <!-- Dados dos pacientes serão preenchidos aqui -->
+              <!-- Dados serão preenchidos via JavaScript -->
             </tbody>
           </table>
         </div>
@@ -304,7 +304,7 @@
                 <th class="p-2">Nome</th>
                 <th class="p-2">CPF</th>
                 <th class="p-2">Especialidade</th>
-                <th class="p-2">Turno</th>
+                                <th class="p-2">Turno</th>
                 <th class="p-2">Telefone</th>
                 <th class="p-2">Email</th>
                 <th class="p-2">Ações</th>
