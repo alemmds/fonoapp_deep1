@@ -149,6 +149,80 @@ document.addEventListener('DOMContentLoaded', () => {
     editingId = index;
   };
 
+  // Formulário de Cadastro de Pacientes
+  document.getElementById('form-paciente').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const paciente = {
+      nome: document.getElementById('paciente-nome').value,
+      cpf: document.getElementById('paciente-cpf').value,
+      idade: document.getElementById('paciente-idade').value,
+      responsavel: document.getElementById('paciente-responsavel').value,
+      telefone: document.getElementById('paciente-telefone').value,
+      email: document.getElementById('paciente-email').value,
+      ultimaConsulta: document.getElementById('paciente-ultima-consulta').value
+    };
+
+    if (editingId !== null) {
+      // Editar paciente existente
+      currentUser.dbPacientes.pacientes[editingId] = paciente;
+      editingId = null;
+    } else {
+      // Adicionar novo paciente
+      currentUser.dbPacientes.pacientes.push(paciente);
+    }
+
+    saveData('db_usuarios', dbUsuarios);
+    updatePacientesTable();
+    document.getElementById('form-paciente').reset();
+  });
+
+  // Tabelas de Consultas
+  const updateConsultasTable = () => {
+    const tabela = document.getElementById('tabela-consultas-gerais').getElementsByTagName('tbody')[0];
+    tabela.innerHTML = '';
+    currentUser.dbConsultas.consultas.forEach((consulta, index) => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${consulta.data}</td>
+        <td>${consulta.horario}</td>
+        <td>${consulta.paciente}</td>
+        <td>${consulta.idade}</td>
+        <td>${consulta.responsavel}</td>
+        <td>${consulta.telefone}</td>
+        <td>${consulta.especialidade}</td>
+        <td>${consulta.consultorio}</td>
+        <td>${consulta.especialista}</td>
+        <td>
+          <button onclick="editConsulta(${index})">Editar</button>
+          <button onclick="deleteConsulta(${index})">Excluir</button>
+        </td>
+      `;
+      tabela.appendChild(row);
+    });
+  };
+
+  // Tabelas de Profissionais
+  const updateProfissionaisTable = () => {
+    const tabela = document.getElementById('tabela-profissionais').getElementsByTagName('tbody')[0];
+    tabela.innerHTML = '';
+    currentUser.dbCadastro.especialistas.forEach((especialista, index) => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${especialista.nome}</td>
+        <td>${especialista.cpf}</td>
+        <td>${especialista.especialidade}</td>
+        <td>${especialista.turno}</td>
+        <td>${especialista.telefone}</td>
+        <td>${especialista.email}</td>
+        <td>
+          <button onclick="editProfissional(${index})">Editar</button>
+          <button onclick="deleteProfissional(${index})">Excluir</button>
+        </td>
+      `;
+      tabela.appendChild(row);
+    });
+  };
+
   // Registro de Service Worker
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/service-worker.js')
