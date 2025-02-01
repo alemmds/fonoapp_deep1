@@ -1,31 +1,36 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Carregar dados do localStorage
+  // Carrega os dados do localStorage
   let dbUsuarios = JSON.parse(localStorage.getItem('db_usuarios')) || [];
+  let dbCadastro = JSON.parse(localStorage.getItem('db_cadastro')) || { especialistas: [] };
   let dbPacientes = JSON.parse(localStorage.getItem('db_pacientes')) || { pacientes: [] };
   let dbConsultas = JSON.parse(localStorage.getItem('db_consultas')) || { consultas: [] };
-  let dbCadastro = JSON.parse(localStorage.getItem('db_cadastro')) || { especialistas: [] };
 
   let editingId = null; // Variável global para edição
 
-  // Salvar dados no localStorage
+  // Função para salvar dados no localStorage
   const saveData = (key, data) => {
     localStorage.setItem(key, JSON.stringify(data));
   };
 
-  // Exibir uma seção específica
+  // Função para mostrar uma seção
   window.showSection = (sectionId) => {
     document.querySelectorAll('.section').forEach(section => section.classList.add('hidden'));
     document.getElementById(sectionId).classList.remove('hidden');
   };
 
-  // Alternar menu lateral
+  // Alternar o menu lateral
   document.getElementById('toggle-fullscreen').addEventListener('click', () => {
     const menuLateral = document.getElementById('menu-lateral');
+    const maximizeIcon = document.getElementById('maximize-icon');
+    const minimizeIcon = document.getElementById('minimize-icon');
+
     menuLateral.classList.toggle('w-64');
     menuLateral.classList.toggle('w-16');
+    maximizeIcon.classList.toggle('hidden');
+    minimizeIcon.classList.toggle('hidden');
   });
 
-  // Alternar entre login e cadastro
+  // Alternar entre telas de login e cadastro
   document.getElementById('show-register').addEventListener('click', (e) => {
     e.preventDefault();
     document.getElementById('login-screen').classList.add('hidden');
@@ -92,8 +97,10 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>${paciente.nome}</td>
         <td>${paciente.cpf}</td>
         <td>${paciente.idade}</td>
+        <td>${paciente.responsavel}</td>
         <td>${paciente.telefone}</td>
         <td>${paciente.email}</td>
+        <td>${paciente.ultimaConsulta}</td>
       `;
       tabela.appendChild(row);
     });
@@ -110,6 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>${consulta.horario}</td>
         <td>${consulta.paciente}</td>
         <td>${consulta.especialidade}</td>
+        <td>${consulta.consultorio}</td>
         <td>${consulta.especialista}</td>
       `;
       tabela.appendChild(row);
@@ -128,6 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>${especialista.especialidade}</td>
         <td>${especialista.turno}</td>
         <td>${especialista.telefone}</td>
+        <td>${especialista.email}</td>
       `;
       tabela.appendChild(row);
     });
