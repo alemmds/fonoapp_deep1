@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Cadastro realizado com sucesso!');
       document.getElementById('register-screen').classList.add('hidden');
       document.getElementById('main-container').classList.remove('hidden');
+      showSection('cadastro-pacientes'); // Exibe a seção de cadastro de pacientes por padrão
     } else {
       alert('Preencha todos os campos!');
     }
@@ -83,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Login realizado com sucesso!');
       document.getElementById('login-screen').classList.add('hidden');
       document.getElementById('main-container').classList.remove('hidden');
+      showSection('cadastro-pacientes'); // Exibe a seção de cadastro de pacientes por padrão
     } else {
       alert('Nome ou senha incorretos!');
     }
