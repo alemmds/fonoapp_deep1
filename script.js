@@ -1,9 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Carrega os dados do localStorage
   let dbUsuarios = JSON.parse(localStorage.getItem('db_usuarios')) || [];
-  let dbCadastro = JSON.parse(localStorage.getItem('db_cadastro')) || { especialistas: [] };
-  let dbPacientes = JSON.parse(localStorage.getItem('db_pacientes')) || { pacientes: [] };
-  let dbConsultas = JSON.parse(localStorage.getItem('db_consultas')) || { consultas: [] };
+  let currentUser = null; // Armazena o usuário logado
   let editingId = null; // Variável global para edição
 
   // Função para salvar dados no localStorage
@@ -46,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('login-screen').classList.remove('hidden');
   });
 
-  // Cadastro de Usuário permitindo múltiplos nomes para o mesmo e-mail
+  // Cadastro de Usuário
   document.getElementById('register-form').addEventListener('submit', (e) => {
     e.preventDefault();
     const nome = document.getElementById('register-name').value;
@@ -54,7 +51,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const senha = document.getElementById('register-password').value;
 
     if (nome && email && senha) {
-      dbUsuarios.push({ nome, email, senha });
+      const usuarioExistente = dbUsuarios.find(u => u.email === email);
+      if (usuarioExistente) {
+        alert('Este e-mail já está cadastrado!');
+        return;
+      }
+
+      const novoUsuario = {
+        id: Date.now(),
+        nome,
+        email,
+        senha,
+        dbPacientes: { pacientes: [] },
+        dbCadastro: { especialistas: [] },
+        dbConsultas: { consultas: [] }
+      };
+
+      dbUsuarios.push(novoUsuario);
       saveData('db_usuarios', dbUsuarios);
       alert('Cadastro realizado com sucesso!');
       document.getElementById('register-screen').classList.add('hidden');
@@ -64,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Login do Usuário e Liberação de Acesso
+  // Login do Usuário
   document.getElementById('login-form').addEventListener('submit', (e) => {
     e.preventDefault();
     const nome = document.getElementById('login-name').value;
@@ -72,10 +85,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const usuario = dbUsuarios.find(u => u.nome === nome && u.senha === senha);
 
     if (usuario) {
+      currentUser = usuario;
       alert(`Bem-vindo, ${usuario.nome}!`);
       document.getElementById('login-screen').classList.add('hidden');
       document.getElementById('main-container').classList.remove('hidden');
       showSection('cadastro-pacientes'); // Exibe a seção padrão após o login
+      updateTables(); // Atualiza as tabelas com os dados do usuário
     } else {
       alert('Nome ou senha incorretos!');
     }
@@ -83,6 +98,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Atualização das tabelas
   const updateTables = () => {
+    if (!currentUser) return;
+
     updatePacientesTable();
     updateConsultasTable();
     updateProfissionaisTable();
@@ -92,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const updatePacientesTable = () => {
     const tabela = document.getElementById('tabela-pacientes').getElementsByTagName('tbody')[0];
     tabela.innerHTML = '';
-    dbPacientes.pacientes.forEach((paciente, index) => {
+    currentUser.dbPacientes.pacientes.forEach((paciente, index) => {
       const row = document.createElement('tr');
       row.innerHTML = `
         <td>${paciente.nome}</td>
@@ -111,53 +128,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  // Tabela de Consultas
-  const updateConsultasTable = () => {
-    const tabela = document.getElementById('tabela-consultas-gerais').getElementsByTagName('tbody')[0];
-    tabela.innerHTML = '';
-    dbConsultas.consultas.forEach(consulta => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${consulta.data}</td>
-        <td>${consulta.horario}</td>
-        <td>${consulta.paciente}</td>
-        <td>${consulta.especialidade}</td>
-        <td>${consulta.consultorio}</td>
-        <td>${consulta.especialista}</td>
-      `;
-      tabela.appendChild(row);
-    });
-  };
-
-  // Tabela de Profissionais
-  const updateProfissionaisTable = () => {
-    const tabela = document.getElementById('tabela-profissionais').getElementsByTagName('tbody')[0];
-    tabela.innerHTML = '';
-    dbCadastro.especialistas.forEach(especialista => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${especialista.nome}</td>
-        <td>${especialista.cpf}</td>
-        <td>${especialista.especialidade}</td>
-        <td>${especialista.turno}</td>
-        <td>${especialista.telefone}</td>
-        <td>${especialista.email}</td>
-      `;
-      tabela.appendChild(row);
-    });
-  };
-
   // Funções para editar/excluir pacientes
   window.deletePaciente = (index) => {
     if (confirm('Tem certeza que deseja excluir este paciente?')) {
-      dbPacientes.pacientes.splice(index, 1);
-      saveData('db_pacientes', dbPacientes);
+      currentUser.dbPacientes.pacientes.splice(index, 1);
+      saveData('db_usuarios', dbUsuarios);
       updatePacientesTable();
     }
   };
 
   window.editPaciente = (index) => {
-    const paciente = dbPacientes.pacientes[index];
+    const paciente = currentUser.dbPacientes.pacientes[index];
     document.getElementById('paciente-nome').value = paciente.nome;
     document.getElementById('paciente-cpf').value = paciente.cpf;
     document.getElementById('paciente-idade').value = paciente.idade;
