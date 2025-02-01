@@ -52,14 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const senha = document.getElementById('register-password').value;
 
     if (nome && email && senha) {
-      // Verifica se o usuário já existe
-      const usuarioExistente = dbUsuarios.find(u => u.email === email);
-      if (usuarioExistente) {
-        alert('Email já cadastrado!');
-        return;
-      }
-
-      // Adiciona o novo usuário
+      // Adiciona o novo usuário (não verifica email único)
       dbUsuarios.push({ nome, email, senha });
       saveData('db_usuarios', dbUsuarios);
 
