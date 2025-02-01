@@ -1,239 +1,179 @@
 document.addEventListener('DOMContentLoaded', () => {
   let dbUsuarios = JSON.parse(localStorage.getItem('db_usuarios')) || [];
-  let currentUser = null; // Armazena o usuário logado
-  let editingId = null; // Variável global para edição
+  let currentUser = null;
+  let editingId = null;
 
-  // Função para salvar dados no localStorage
+  // Função para salvar dados
   const saveData = (key, data) => {
     try {
       localStorage.setItem(key, JSON.stringify(data));
     } catch (error) {
       console.error('Erro ao salvar dados:', error);
-      alert('Ocorreu um erro ao salvar os dados. Tente novamente.');
+      alert('Erro ao salvar dados!');
     }
   };
 
-  // Função para mostrar uma seção
+  // Função para mostrar seções
   window.showSection = (sectionId) => {
-    document.querySelectorAll('.section').forEach(section => section.classList.add('hidden'));
-    document.getElementById(sectionId).classList.remove('hidden');
+    document.querySelectorAll('.section').forEach(section => {
+      section.classList.add('hidden');
+    });
+    const sectionToShow = document.getElementById(sectionId);
+    if (sectionToShow) sectionToShow.classList.remove('hidden');
   };
 
-  // Alternar o menu lateral
+  // Menu lateral
   document.getElementById('toggle-fullscreen').addEventListener('click', () => {
-    const menuLateral = document.getElementById('menu-lateral');
-    const maximizeIcon = document.getElementById('maximize-icon');
-    const minimizeIcon = document.getElementById('minimize-icon');
-    menuLateral.classList.toggle('w-64');
-    menuLateral.classList.toggle('w-16');
-    maximizeIcon.classList.toggle('hidden');
-    minimizeIcon.classList.toggle('hidden');
+    const menu = document.getElementById('menu-lateral');
+    const icons = ['maximize-icon', 'minimize-icon'];
+    menu.classList.toggle('w-64');
+    menu.classList.toggle('w-16');
+    icons.forEach(id => document.getElementById(id).classList.toggle('hidden'));
   });
 
-  // Alternar entre telas de login e cadastro
-  document.getElementById('show-register').addEventListener('click', (e) => {
-    e.preventDefault();
-    document.getElementById('login-screen').classList.add('hidden');
-    document.getElementById('register-screen').classList.remove('hidden');
-  });
-
-  document.getElementById('show-login').addEventListener('click', (e) => {
-    e.preventDefault();
-    document.getElementById('register-screen').classList.add('hidden');
-    document.getElementById('login-screen').classList.remove('hidden');
-  });
-
-  // Cadastro de Usuário
-  document.getElementById('register-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const nome = document.getElementById('register-name').value;
-    const email = document.getElementById('register-email').value;
-    const senha = document.getElementById('register-password').value;
-
-    if (nome && email && senha) {
-      const usuarioExistente = dbUsuarios.find(u => u.email === email);
-      if (usuarioExistente) {
-        alert('Este e-mail já está cadastrado!');
-        return;
-      }
-
-      const novoUsuario = {
-        id: Date.now(),
-        nome,
-        email,
-        senha,
-        dbPacientes: { pacientes: [] },
-        dbCadastro: { especialistas: [] },
-        dbConsultas: { consultas: [] }
-      };
-
-      dbUsuarios.push(novoUsuario);
-      saveData('db_usuarios', dbUsuarios);
-      alert('Cadastro realizado com sucesso!');
-      document.getElementById('register-screen').classList.add('hidden');
-      document.getElementById('login-screen').classList.remove('hidden');
-    } else {
-      alert('Preencha todos os campos!');
-    }
-  });
-
-  // Login do Usuário
-  document.getElementById('login-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const nome = document.getElementById('login-name').value;
-    const senha = document.getElementById('login-password').value;
-    const usuario = dbUsuarios.find(u => u.nome === nome && u.senha === senha);
-
-    if (usuario) {
-      currentUser = usuario;
-      alert(`Bem-vindo, ${usuario.nome}!`);
-      document.getElementById('login-screen').classList.add('hidden');
-      document.getElementById('main-container').classList.remove('hidden');
-      showSection('cadastro-pacientes'); // Exibe a seção padrão após o login
-      updateTables(); // Atualiza as tabelas com os dados do usuário
-    } else {
-      alert('Nome ou senha incorretos!');
-    }
-  });
-
-  // Atualização das tabelas
-  const updateTables = () => {
-    if (!currentUser) return;
-
-    updatePacientesTable();
-    updateConsultasTable();
-    updateProfissionaisTable();
-  };
-
-  // Tabelas de Pacientes
-  const updatePacientesTable = () => {
-    const tabela = document.getElementById('tabela-pacientes').getElementsByTagName('tbody')[0];
-    tabela.innerHTML = '';
-    currentUser.dbPacientes.pacientes.forEach((paciente, index) => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${paciente.nome}</td>
-        <td>${paciente.cpf}</td>
-        <td>${paciente.idade}</td>
-        <td>${paciente.responsavel}</td>
-        <td>${paciente.telefone}</td>
-        <td>${paciente.email}</td>
-        <td>${paciente.ultimaConsulta}</td>
-        <td>
-          <button onclick="editPaciente(${index})">Editar</button>
-          <button onclick="deletePaciente(${index})">Excluir</button>
-        </td>
-      `;
-      tabela.appendChild(row);
+  // Navegação entre telas
+  const setupScreenToggle = (from, to) => {
+    document.getElementById(from).addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('login-screen').classList.toggle('hidden');
+      document.getElementById('register-screen').classList.toggle('hidden');
     });
   };
+  setupScreenToggle('show-register', 'login-screen');
+  setupScreenToggle('show-login', 'register-screen');
 
-  // Funções para editar/excluir pacientes
-  window.deletePaciente = (index) => {
-    if (confirm('Tem certeza que deseja excluir este paciente?')) {
-      currentUser.dbPacientes.pacientes.splice(index, 1);
-      saveData('db_usuarios', dbUsuarios);
-      updatePacientesTable();
+  // Cadastro de usuário
+  document.getElementById('register-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = {
+      nome: document.getElementById('register-name').value,
+      email: document.getElementById('register-email').value,
+      senha: document.getElementById('register-password').value
+    };
+
+    if (dbUsuarios.some(u => u.email === formData.email)) {
+      alert('E-mail já cadastrado!');
+      return;
     }
+
+    const newUser = {
+      ...formData,
+      id: Date.now(),
+      dbPacientes: { pacientes: [] },
+      dbCadastro: { especialistas: [] },
+      dbConsultas: { consultas: [] }
+    };
+
+    dbUsuarios.push(newUser);
+    saveData('db_usuarios', dbUsuarios);
+    alert('Cadastro realizado!');
+    document.getElementById('register-form').reset();
+    document.getElementById('show-login').click();
+  });
+
+  // Login
+  document.getElementById('login-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const credentials = {
+      nome: document.getElementById('login-name').value,
+      senha: document.getElementById('login-password').value
+    };
+
+    const user = dbUsuarios.find(u => 
+      u.nome === credentials.nome && 
+      u.senha === credentials.senha
+    );
+
+    if (user) {
+      currentUser = user;
+      document.getElementById('login-screen').classList.add('hidden');
+      document.getElementById('main-container').classList.remove('hidden');
+      showSection('cadastro-pacientes');
+      updateAllTables();
+    } else {
+      alert('Credenciais inválidas!');
+    }
+  });
+
+  // Atualização de tabelas
+  const updateAllTables = () => {
+    if (!currentUser) return;
+    updateTable('pacientes', currentUser.dbPacientes.pacientes);
+    updateTable('consultas-gerais', currentUser.dbConsultas.consultas);
+    updateTable('profissionais', currentUser.dbCadastro.especialistas);
   };
 
-  window.editPaciente = (index) => {
-    const paciente = currentUser.dbPacientes.pacientes[index];
-    document.getElementById('paciente-nome').value = paciente.nome;
-    document.getElementById('paciente-cpf').value = paciente.cpf;
-    document.getElementById('paciente-idade').value = paciente.idade;
-    document.getElementById('paciente-responsavel').value = paciente.responsavel;
-    document.getElementById('paciente-telefone').value = paciente.telefone;
-    document.getElementById('paciente-email').value = paciente.email;
-    document.getElementById('paciente-ultima-consulta').value = paciente.ultimaConsulta;
+  // Função genérica para atualizar tabelas
+  const updateTable = (tableId, data) => {
+    const table = document.getElementById(`tabela-${tableId}`).querySelector('tbody');
+    table.innerHTML = data.map((item, index) => `
+      <tr>
+        ${Object.values(item).map(value => `<td>${value}</td>`).join('')}
+        <td>
+          <button onclick="editItem('${tableId}', ${index})">Editar</button>
+          <button onclick="deleteItem('${tableId}', ${index})">Excluir</button>
+        </td>
+      </tr>
+    `).join('');
+  };
+
+  // Funções genéricas para editar/excluir
+  window.editItem = (type, index) => {
+    const collection = currentUser[`db${type.charAt(0).toUpperCase() + type.slice(1)}`][type];
+    const item = collection[index];
+    const form = document.getElementById(`form-${type}`);
+    
+    Object.keys(item).forEach(key => {
+      const field = form.querySelector(`#${type}-${key}`);
+      if (field) field.value = item[key];
+    });
+    
     editingId = index;
   };
 
-  // Formulário de Cadastro de Pacientes
-  document.getElementById('form-paciente').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const paciente = {
-      nome: document.getElementById('paciente-nome').value,
-      cpf: document.getElementById('paciente-cpf').value,
-      idade: document.getElementById('paciente-idade').value,
-      responsavel: document.getElementById('paciente-responsavel').value,
-      telefone: document.getElementById('paciente-telefone').value,
-      email: document.getElementById('paciente-email').value,
-      ultimaConsulta: document.getElementById('paciente-ultima-consulta').value
-    };
-
-    if (editingId !== null) {
-      // Editar paciente existente
-      currentUser.dbPacientes.pacientes[editingId] = paciente;
-      editingId = null;
-    } else {
-      // Adicionar novo paciente
-      currentUser.dbPacientes.pacientes.push(paciente);
-    }
-
+  window.deleteItem = (type, index) => {
+    if (!confirm('Confirmar exclusão?')) return;
+    currentUser[`db${type.charAt(0).toUpperCase() + type.slice(1)}`][type].splice(index, 1);
     saveData('db_usuarios', dbUsuarios);
-    updatePacientesTable();
-    document.getElementById('form-paciente').reset();
-  });
+    updateAllTables();
+  };
 
-  // Tabelas de Consultas
-  const updateConsultasTable = () => {
-    const tabela = document.getElementById('tabela-consultas-gerais').getElementsByTagName('tbody')[0];
-    tabela.innerHTML = '';
-    currentUser.dbConsultas.consultas.forEach((consulta, index) => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${consulta.data}</td>
-        <td>${consulta.horario}</td>
-        <td>${consulta.paciente}</td>
-        <td>${consulta.idade}</td>
-        <td>${consulta.responsavel}</td>
-        <td>${consulta.telefone}</td>
-        <td>${consulta.especialidade}</td>
-        <td>${consulta.consultorio}</td>
-        <td>${consulta.especialista}</td>
-        <td>
-          <button onclick="editConsulta(${index})">Editar</button>
-          <button onclick="deleteConsulta(${index})">Excluir</button>
-        </td>
-      `;
-      tabela.appendChild(row);
+  // Manipulação de formulários
+  const setupForm = (formId, dataType) => {
+    document.getElementById(formId).addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = {};
+      Array.from(e.target.elements).forEach(element => {
+        if (element.id.startsWith(dataType)) {
+          const key = element.id.replace(`${dataType}-`, '');
+          formData[key] = element.value;
+        }
+      });
+
+      const collection = currentUser[`db${dataType.charAt(0).toUpperCase() + dataType.slice(1)}`][dataType];
+      
+      if (editingId !== null) {
+        collection[editingId] = formData;
+        editingId = null;
+      } else {
+        collection.push(formData);
+      }
+
+      saveData('db_usuarios', dbUsuarios);
+      updateAllTables();
+      e.target.reset();
     });
   };
 
-  // Tabelas de Profissionais
-  const updateProfissionaisTable = () => {
-    const tabela = document.getElementById('tabela-profissionais').getElementsByTagName('tbody')[0];
-    tabela.innerHTML = '';
-    currentUser.dbCadastro.especialistas.forEach((especialista, index) => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${especialista.nome}</td>
-        <td>${especialista.cpf}</td>
-        <td>${especialista.especialidade}</td>
-        <td>${especialista.turno}</td>
-        <td>${especialista.telefone}</td>
-        <td>${especialista.email}</td>
-        <td>
-          <button onclick="editProfissional(${index})">Editar</button>
-          <button onclick="deleteProfissional(${index})">Excluir</button>
-        </td>
-      `;
-      tabela.appendChild(row);
-    });
-  };
+  // Configurar todos os formulários
+  setupForm('form-paciente', 'paciente');
+  setupForm('form-especialista', 'especialista');
+  setupForm('form-consulta', 'consulta');
 
-  // Registro de Service Worker
+  // Service Worker
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/service-worker.js')
-      .then((registration) => {
-        console.log('Service Worker registrado:', registration);
-      })
-      .catch((error) => {
-        console.log('Erro no Service Worker:', error);
-      });
+      .then(reg => console.log('SW registrado:', reg))
+      .catch(err => console.error('SW erro:', err));
   }
-
-  // Inicialização
-  updateTables();
 });
