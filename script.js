@@ -42,6 +42,23 @@ document.addEventListener('DOMContentLoaded', () => {
   setupScreenToggle('show-register', 'login-screen');
   setupScreenToggle('show-login', 'register-screen');
 
+  // Mensagem de boas-vindas na tela de login
+  const welcomeMessage = document.createElement('p');
+  welcomeMessage.textContent = 'Bem-vindo à FONOCLINI! Por favor, faça login para continuar.';
+  document.getElementById('login-screen').prepend(welcomeMessage);
+
+  // Centralizar título e formulários
+  const centerElements = () => {
+    const elementsToCenter = document.querySelectorAll('.centered');
+    elementsToCenter.forEach(element => {
+      element.style.display = 'flex';
+      element.style.flexDirection = 'column';
+      element.style.alignItems = 'center';
+      element.style.justifyContent = 'center';
+    });
+  };
+  centerElements();
+
   // Cadastro de usuário
   document.getElementById('register-form').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -90,6 +107,8 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('main-container').classList.remove('hidden');
       showSection('cadastro-pacientes');
       updateAllTables();
+      // Mostrar nome do usuário no menu
+      document.getElementById('user-greeting').textContent = `Olá, ${currentUser.nome}`;
     } else {
       alert('Credenciais inválidas!');
     }
