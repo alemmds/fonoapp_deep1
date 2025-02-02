@@ -86,9 +86,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (user) {
       currentUser = user;
-      console.log('Usuário logado:', currentUser);
       document.getElementById('login-screen').classList.add('hidden');
       document.getElementById('main-container').classList.remove('hidden');
+      document.getElementById('user-greeting').textContent = `Olá, ${currentUser.nome}`;
       showSection('cadastro-pacientes');
       updateAllTables();
     } else {
@@ -163,7 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
       saveData('db_usuarios', dbUsuarios);
       updateAllTables();
       e.target.reset();
-      alert(`${dataType.charAt(0).toUpperCase() + dataType.slice(1)} cadastrado com sucesso!`);
     });
   };
 
