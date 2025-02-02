@@ -163,6 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
       saveData('db_usuarios', dbUsuarios);
       updateAllTables();
       e.target.reset();
+      alert(`${dataType.charAt(0).toUpperCase() + dataType.slice(1)} cadastrado com sucesso!`);
     });
   };
 
