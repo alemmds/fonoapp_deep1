@@ -9,7 +9,7 @@
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#1e3a8a">
   <style>
-    /* Centralizar o conteúdo */
+    /* Centraliza o conteúdo das telas de login e cadastro */
     .centered {
       display: flex;
       flex-direction: column;
@@ -43,7 +43,7 @@
     </div>
   </div>
 
-  <!-- Tela de Cadastro -->
+  <!-- Tela de Cadastro de Usuário -->
   <div id="register-screen" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 hidden">
     <div class="bg-white p-8 rounded-lg shadow-lg w-96 centered">
       <h2 class="text-2xl font-bold mb-6 text-center">Cadastro</h2>
@@ -70,25 +70,26 @@
     </div>
   </div>
 
-  <!-- Container Principal -->
+  <!-- Container Principal: Tela com menu lateral e conteúdo -->
   <div id="main-container" class="hidden flex min-h-screen">
     <!-- Menu Lateral -->
     <div class="w-64 bg-blue-900 text-white p-6 relative transition-all duration-300" id="menu-lateral">
-      <!-- Botão de Minimizar/Maximizar -->
+      <!-- Botão para minimizar/maximizar o menu -->
       <button id="toggle-fullscreen" class="absolute top-2 right-2 p-2 bg-blue-800 rounded-full hover:bg-blue-700 transition">
         <svg id="maximize-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+            d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
         </svg>
         <svg id="minimize-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+            d="M15 19l-7-7 7-7" />
         </svg>
       </button>
 
-      <!-- Título e Menu -->
+      <!-- Título e Itens do Menu -->
       <h1 class="text-2xl font-bold mb-8">FonoClinic</h1>
       <nav>
         <ul>
-          <!-- Sessão de Cadastro -->
           <li class="mb-4">
             <a href="#cadastro-pacientes" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-pacientes')">
               <span class="mr-2 text-2xl">👤</span>
@@ -127,15 +128,15 @@
           </li>
         </ul>
       </nav>
-      <!-- Nome do usuário -->
+      <!-- Exibe o nome do usuário na parte inferior do menu -->
       <div class="absolute bottom-4 left-4">
         <p id="user-greeting" class="text-sm">Olá, Usuário</p>
       </div>
     </div>
 
-    <!-- Conteúdo Principal -->
+    <!-- Conteúdo Principal: Cada seção representa uma tela exclusiva -->
     <div class="flex-1 p-8">
-      <!-- Seção de Cadastro de Pacientes -->
+      <!-- Tela: Cadastro de Pacientes -->
       <section id="cadastro-pacientes" class="hidden section">
         <h2 class="text-3xl font-bold mb-6">Cadastro de Pacientes</h2>
         <div class="glassmorphism p-6 hover-scale">
@@ -156,7 +157,7 @@
         </div>
       </section>
 
-      <!-- Seção de Cadastro de Especialistas -->
+      <!-- Tela: Cadastro de Especialistas -->
       <section id="cadastro-especialistas" class="hidden section">
         <h2 class="text-3xl font-bold mb-6">Cadastro de Especialistas</h2>
         <div class="glassmorphism p-6 hover-scale">
@@ -164,7 +165,8 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input type="text" id="nome-especialista" class="p-2 border rounded" placeholder="Nome do Especialista" required>
               <input type="text" id="cpf-especialista" class="p-2 border rounded" placeholder="CPF" required>
-              <input type="text" id="especialidade" class="p-2 border rounded" placeholder="Especialidade" required>
+              <!-- Para edição usamos o prefixo "especialista-" em todos os campos -->
+              <input type="text" id="especialista-especialidade" class="p-2 border rounded" placeholder="Especialidade" required>
               <select id="turno-especialista" class="p-2 border rounded" required>
                 <option value="">Selecione o turno</option>
                 <option value="Manhã">Manhã</option>
@@ -181,7 +183,7 @@
         </div>
       </section>
 
-      <!-- Seção de Cadastro de Consultas -->
+      <!-- Tela: Cadastro de Consultas -->
       <section id="cadastro-consultas" class="hidden section">
         <h2 class="text-3xl font-bold mb-6">Cadastro de Consultas</h2>
         <div class="glassmorphism p-6 hover-scale">
@@ -204,7 +206,7 @@
         </div>
       </section>
 
-      <!-- Seção de Lista de Pacientes -->
+      <!-- Tela: Lista de Pacientes -->
       <section id="pacientes" class="hidden section">
         <h2 class="text-3xl font-bold mb-6">Lista de Pacientes</h2>
         <div class="glassmorphism p-6 hover-scale">
@@ -222,13 +224,13 @@
               </tr>
             </thead>
             <tbody>
-              <!-- Dados dos pacientes serão preenchidos aqui -->
+              <!-- Dados dos pacientes serão inseridos aqui via script.js -->
             </tbody>
           </table>
         </div>
       </section>
 
-      <!-- Seção de Lista de Especialistas -->
+      <!-- Tela: Lista de Especialistas -->
       <section id="profissionais" class="hidden section">
         <h2 class="text-3xl font-bold mb-6">Lista de Especialistas</h2>
         <div class="glassmorphism p-6 hover-scale">
@@ -245,13 +247,13 @@
               </tr>
             </thead>
             <tbody>
-              <!-- Dados dos profissionais serão preenchidos aqui -->
+              <!-- Dados dos especialistas serão inseridos aqui -->
             </tbody>
           </table>
         </div>
       </section>
 
-      <!-- Seção de Consultas Gerais -->
+      <!-- Tela: Consultas Gerais -->
       <section id="consultas-gerais" class="hidden section">
         <h2 class="text-3xl font-bold mb-6">Consultas Gerais</h2>
         <div class="glassmorphism p-6 hover-scale">
@@ -271,7 +273,7 @@
               </tr>
             </thead>
             <tbody>
-              <!-- Dados das consultas serão preenchidos aqui -->
+              <!-- Dados das consultas serão inseridos aqui -->
             </tbody>
           </table>
         </div>
