@@ -176,17 +176,17 @@
         <div class="glassmorphism p-6 hover-scale">
           <form id="form-especialista">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input type="text" id="especialista-nome" class="p-2 border rounded" placeholder="Nome do Especialista" required>
-              <input type="text" id="especialista-cpf" class="p-2 border rounded" placeholder="CPF" required>
-              <input type="text" id="especialista-especialidade" class="p-2 border rounded" placeholder="Especialidade" required>
-              <select id="especialista-turno" class="p-2 border rounded" required>
+              <input type="text" id="nome-especialista" class="p-2 border rounded" placeholder="Nome do Especialista" required>
+              <input type="text" id="cpf-especialista" class="p-2 border rounded" placeholder="CPF" required>
+              <input type="text" id="especialidade" class="p-2 border rounded" placeholder="Especialidade" required>
+              <select id="turno-especialista" class="p-2 border rounded" required>
                 <option value="">Selecione o turno</option>
                 <option value="Manhã">Manhã</option>
                 <option value="Tarde">Tarde</option>
                 <option value="Noite">Noite</option>
               </select>
-              <input type="tel" id="especialista-telefone" class="p-2 border rounded" placeholder="Telefone" required>
-              <input type="email" id="especialista-email" class="p-2 border rounded" placeholder="Email" required>
+              <input type="tel" id="telefone-especialista" class="p-2 border rounded" placeholder="Telefone" required>
+              <input type="email" id="email-especialista" class="p-2 border rounded" placeholder="Email" required>
             </div>
             <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
               Cadastrar Especialista
@@ -201,15 +201,15 @@
         <div class="glassmorphism p-6 hover-scale">
           <form id="form-consulta">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input type="date" id="consulta-data" class="p-2 border rounded" required>
-              <input type="time" id="consulta-horario" class="p-2 border rounded" required>
-              <input type="text" id="consulta-paciente-nome" class="p-2 border rounded" placeholder="Nome do Paciente" required>
-              <input type="number" id="consulta-paciente-idade" class="p-2 border rounded" placeholder="Idade" required>
-              <input type="text" id="consulta-responsavel" class="p-2 border rounded" placeholder="Responsável">
-              <input type="tel" id="consulta-telefone" class="p-2 border rounded" placeholder="Telefone" required>
-              <input type="text" id="consulta-especialidade" class="p-2 border rounded" placeholder="Especialidade" required>
-              <input type="text" id="consulta-consultorio" class="p-2 border rounded" placeholder="Consultório" required>
-              <input type="text" id="consulta-especialista" class="p-2 border rounded" placeholder="Especialista" required>
+              <input type="date" id="data-consulta" class="p-2 border rounded" required>
+              <input type="time" id="horario-consulta" class="p-2 border rounded" required>
+              <input type="text" id="nome-paciente-consulta" class="p-2 border rounded" placeholder="Nome do Paciente" required>
+              <input type="number" id="idade-paciente-consulta" class="p-2 border rounded" placeholder="Idade" required>
+              <input type="text" id="responsavel-consulta" class="p-2 border rounded" placeholder="Responsável">
+              <input type="tel" id="telefone-consulta" class="p-2 border rounded" placeholder="Telefone" required>
+              <input type="text" id="especialidade-consulta" class="p-2 border rounded" placeholder="Especialidade" required>
+              <input type="text" id="consultorio-consulta" class="p-2 border rounded" placeholder="Consultório" required>
+              <input type="text" id="especialista-consulta" class="p-2 border rounded" placeholder="Especialista" required>
             </div>
             <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
               Agendar Consulta
@@ -355,6 +355,30 @@
       const senha = document.getElementById('register-password').value;
 
       if (nome && email && senha) {
+        // Obter usuários existentes do localStorage
+        let dbUsuarios = JSON.parse(localStorage.getItem('db_usuarios')) || [];
+
+        // Verificar se o e-mail já está cadastrado
+        if (dbUsuarios.some(u => u.email === email)) {
+          alert('E-mail já cadastrado!');
+          return;
+        }
+
+        // Criar novo usuário
+        const newUser = {
+          nome,
+          email,
+          senha,
+          id: Date.now(),
+          dbPacientes: { pacientes: [] },
+          dbCadastro: { especialistas: [] },
+          dbConsultas: { consultas: [] }
+        };
+
+        // Adicionar novo usuário ao banco de dados
+        dbUsuarios.push(newUser);
+        localStorage.setItem('db_usuarios', JSON.stringify(dbUsuarios));
+
         alert('Cadastro realizado com sucesso!');
         document.getElementById('register-screen').classList.add('hidden');
         document.getElementById('login-screen').classList.remove('hidden');
@@ -376,6 +400,97 @@
         showSection('cadastro-pacientes'); // Exibe a seção padrão após o login
       } else {
         alert('Nome ou senha incorretos!');
+      }
+    });
+
+    // Cadastro de Pacientes
+    document.getElementById('form-paciente').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nome = document.getElementById('paciente-nome').value;
+      const cpf = document.getElementById('paciente-cpf').value;
+      const idade = document.getElementById('paciente-idade').value;
+      const responsavel = document.getElementById('paciente-responsavel').value;
+      const telefone = document.getElementById('paciente-telefone').value;
+      const email = document.getElementById('paciente-email').value;
+      const ultimaConsulta = document.getElementById('paciente-ultima-consulta').value;
+
+      if (nome && cpf && idade && telefone && email) {
+        // Obter pacientes existentes do localStorage
+        let dbPacientes = JSON.parse(localStorage.getItem('db_pacientes')) || [];
+
+        // Criar novo paciente
+        const newPaciente = { nome, cpf, idade, responsavel, telefone, email, ultimaConsulta };
+
+        // Adicionar novo paciente ao banco de dados
+        dbPacientes.push(newPaciente);
+        localStorage.setItem('db_pacientes', JSON.stringify(dbPacientes));
+
+        alert('Paciente cadastrado com sucesso!');
+        // Limpar o formulário após o cadastro
+        e.target.reset();
+      } else {
+        alert('Preencha todos os campos obrigatórios!');
+      }
+    });
+
+    // Cadastro de Especialistas
+    document.getElementById('form-especialista').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nome = document.getElementById('nome-especialista').value;
+      const cpf = document.getElementById('cpf-especialista').value;
+      const especialidade = document.getElementById('especialidade').value;
+      const turno = document.getElementById('turno-especialista').value;
+      const telefone = document.getElementById('telefone-especialista').value;
+      const email = document.getElementById('email-especialista').value;
+
+      if (nome && cpf && especialidade && turno && telefone && email) {
+        // Obter especialistas existentes do localStorage
+        let dbEspecialistas = JSON.parse(localStorage.getItem('db_especialistas')) || [];
+
+        // Criar novo especialista
+        const newEspecialista = { nome, cpf, especialidade, turno, telefone, email };
+
+        // Adicionar novo especialista ao banco de dados
+        dbEspecialistas.push(newEspecialista);
+        localStorage.setItem('db_especialistas', JSON.stringify(dbEspecialistas));
+
+        alert('Especialista cadastrado com sucesso!');
+        // Limpar o formulário após o cadastro
+        e.target.reset();
+      } else {
+        alert('Preencha todos os campos obrigatórios!');
+      }
+    });
+
+    // Cadastro de Consultas
+    document.getElementById('form-consulta').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = document.getElementById('data-consulta').value;
+      const horario = document.getElementById('horario-consulta').value;
+      const nomePaciente = document.getElementById('nome-paciente-consulta').value;
+      const idade = document.getElementById('idade-paciente-consulta').value;
+      const responsavel = document.getElementById('responsavel-consulta').value;
+      const telefone = document.getElementById('telefone-consulta').value;
+      const especialidade = document.getElementById('especialidade-consulta').value;
+      const consultorio = document.getElementById('consultorio-consulta').value;
+      const especialista = document.getElementById('especialista-consulta').value;
+
+      if (data && horario && nomePaciente && idade && telefone && especialidade && consultorio && especialista) {
+        // Obter consultas existentes do localStorage
+        let dbConsultas = JSON.parse(localStorage.getItem('db_consultas')) || [];
+
+        // Criar nova consulta
+        const newConsulta = { data, horario, nomePaciente, idade, responsavel, telefone, especialidade, consultorio, especialista };
+
+        // Adicionar nova consulta ao banco de dados
+        dbConsultas.push(newConsulta);
+        localStorage.setItem('db_consultas', JSON.stringify(dbConsultas));
+
+        alert('Consulta agendada com sucesso!');
+        // Limpar o formulário após o cadastro
+        e.target.reset();
+      } else {
+        alert('Preencha todos os campos obrigatórios!');
       }
     });
 
