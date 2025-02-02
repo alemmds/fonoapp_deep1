@@ -90,67 +90,39 @@
         <ul>
           <!-- Sessão de Cadastro -->
           <li class="mb-4">
-            <a href="#cadastro" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-pacientes')">
-              <span class="mr-2 text-3xl">📌</span>
-              <span class="text-xl">Cadastro</span>
+            <a href="#cadastro-pacientes" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-pacientes')">
+              <span class="mr-2 text-2xl">👤</span>
+              <span class="text-lg">Cadastro de Pacientes</span>
             </a>
-            <ul class="ml-4 mt-2">
-              <li>
-                <a href="#cadastro-pacientes" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-pacientes')">
-                  <span class="mr-2 text-2xl">👤</span>
-                  <span class="text-lg">Pacientes</span>
-                </a>
-              </li>
-              <li>
-                <a href="#cadastro-especialistas" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-especialistas')">
-                  <span class="mr-2 text-2xl">👥</span>
-                  <span class="text-lg">Especialistas</span>
-                </a>
-              </li>
-              <li>
-                <a href="#cadastro-consultas" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-consultas')">
-                  <span class="mr-2 text-2xl">🗓️</span>
-                  <span class="text-lg">Consultas</span>
-                </a>
-              </li>
-            </ul>
           </li>
-
-          <!-- Sessão de Consultas -->
           <li class="mb-4">
-            <a href="#consultas" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas-gerais')">
-              <span class="mr-2 text-3xl">📅</span>
-              <span class="text-xl">Consultas</span>
+            <a href="#cadastro-especialistas" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-especialistas')">
+              <span class="mr-2 text-2xl">👥</span>
+              <span class="text-lg">Cadastro de Especialistas</span>
             </a>
-            <ul class="ml-4 mt-2">
-              <li>
-                <a href="#consultas-gerais" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas-gerais')">
-                  <span class="mr-2 text-2xl">📋</span>
-                  <span class="text-lg">Consultas Gerais</span>
-                </a>
-              </li>
-              <li>
-                <a href="#consultas-dia" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas-dia')">
-                  <span class="mr-2 text-2xl">📅</span>
-                  <span class="text-lg">Consultas do Dia</span>
-                </a>
-              </li>
-            </ul>
           </li>
-
-          <!-- Sessão de Pacientes -->
+          <li class="mb-4">
+            <a href="#cadastro-consultas" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-consultas')">
+              <span class="mr-2 text-2xl">🗓️</span>
+              <span class="text-lg">Cadastro de Consultas</span>
+            </a>
+          </li>
           <li class="mb-4">
             <a href="#pacientes" class="menu-item flex items-center p-2 rounded" onclick="showSection('pacientes')">
-              <span class="mr-2 text-3xl">👤</span>
-              <span class="text-xl">Pacientes</span>
+              <span class="mr-2 text-2xl">📋</span>
+              <span class="text-lg">Lista de Pacientes</span>
             </a>
           </li>
-
-          <!-- Sessão de Profissionais -->
           <li class="mb-4">
             <a href="#profissionais" class="menu-item flex items-center p-2 rounded" onclick="showSection('profissionais')">
-              <span class="mr-2 text-3xl">👨‍⚕️</span>
-              <span class="text-xl">Profissionais</span>
+              <span class="mr-2 text-2xl">👨‍⚕️</span>
+              <span class="text-lg">Lista de Especialistas</span>
+            </a>
+          </li>
+          <li class="mb-4">
+            <a href="#consultas-gerais" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas-gerais')">
+              <span class="mr-2 text-2xl">📅</span>
+              <span class="text-lg">Consultas Gerais</span>
             </a>
           </li>
         </ul>
@@ -164,7 +136,7 @@
     <!-- Conteúdo Principal -->
     <div class="flex-1 p-8">
       <!-- Seção de Cadastro de Pacientes -->
-      <section id="cadastro-pacientes" class="hidden">
+      <section id="cadastro-pacientes" class="hidden section">
         <h2 class="text-3xl font-bold mb-6">Cadastro de Pacientes</h2>
         <div class="glassmorphism p-6 hover-scale">
           <form id="form-paciente">
@@ -185,7 +157,7 @@
       </section>
 
       <!-- Seção de Cadastro de Especialistas -->
-      <section id="cadastro-especialistas" class="hidden">
+      <section id="cadastro-especialistas" class="hidden section">
         <h2 class="text-3xl font-bold mb-6">Cadastro de Especialistas</h2>
         <div class="glassmorphism p-6 hover-scale">
           <form id="form-especialista">
@@ -210,7 +182,7 @@
       </section>
 
       <!-- Seção de Cadastro de Consultas -->
-      <section id="cadastro-consultas" class="hidden">
+      <section id="cadastro-consultas" class="hidden section">
         <h2 class="text-3xl font-bold mb-6">Cadastro de Consultas</h2>
         <div class="glassmorphism p-6 hover-scale">
           <form id="form-consulta">
@@ -232,61 +204,9 @@
         </div>
       </section>
 
-      <!-- Seção de Consultas Gerais -->
-      <section id="consultas-gerais" class="hidden">
-        <h2 class="text-3xl font-bold mb-6">Consultas Gerais</h2>
-        <div class="glassmorphism p-6 hover-scale">
-          <table id="tabela-consultas-gerais" class="w-full text-left">
-            <thead>
-              <tr>
-                <th class="p-2">Data</th>
-                <th class="p-2">Horário</th>
-                <th class="p-2">Paciente</th>
-                <th class="p-2">Idade</th>
-                <th class="p-2">Responsável</th>
-                <th class="p-2">Telefone</th>
-                <th class="p-2">Especialidade</th>
-                <th class="p-2">Consultório</th>
-                <th class="p-2">Especialista</th>
-                <th class="p-2">Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Dados das consultas serão preenchidos aqui -->
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- Seção de Consultas do Dia -->
-      <section id="consultas-dia" class="hidden">
-        <h2 class="text-3xl font-bold mb-6">Consultas do Dia</h2>
-        <div class="glassmorphism p-6 hover-scale">
-          <table id="tabela-consultas-dia" class="w-full text-left">
-            <thead>
-              <tr>
-                <th class="p-2">Data</th>
-                <th class="p-2">Horário</th>
-                <th class="p-2">Paciente</th>
-                <th class="p-2">Idade</th>
-                <th class="p-2">Responsável</th>
-                <th class="p-2">Telefone</th>
-                <th class="p-2">Especialidade</th>
-                <th class="p-2">Consultório</th>
-                <th class="p-2">Especialista</th>
-                <th class="p-2">Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Dados das consultas do dia serão preenchidos aqui -->
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- Seção de Pacientes -->
-      <section id="pacientes" class="hidden">
-        <h2 class="text-3xl font-bold mb-6">Pacientes</h2>
+      <!-- Seção de Lista de Pacientes -->
+      <section id="pacientes" class="hidden section">
+        <h2 class="text-3xl font-bold mb-6">Lista de Pacientes</h2>
         <div class="glassmorphism p-6 hover-scale">
           <table id="tabela-pacientes" class="w-full text-left">
             <thead>
@@ -308,9 +228,9 @@
         </div>
       </section>
 
-      <!-- Seção de Profissionais -->
-      <section id="profissionais" class="hidden">
-        <h2 class="text-3xl font-bold mb-6">Profissionais</h2>
+      <!-- Seção de Lista de Especialistas -->
+      <section id="profissionais" class="hidden section">
+        <h2 class="text-3xl font-bold mb-6">Lista de Especialistas</h2>
         <div class="glassmorphism p-6 hover-scale">
           <table id="tabela-profissionais" class="w-full text-left">
             <thead>
@@ -326,6 +246,32 @@
             </thead>
             <tbody>
               <!-- Dados dos profissionais serão preenchidos aqui -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Seção de Consultas Gerais -->
+      <section id="consultas-gerais" class="hidden section">
+        <h2 class="text-3xl font-bold mb-6">Consultas Gerais</h2>
+        <div class="glassmorphism p-6 hover-scale">
+          <table id="tabela-consultas-gerais" class="w-full text-left">
+            <thead>
+              <tr>
+                <th class="p-2">Data</th>
+                <th class="p-2">Horário</th>
+                <th class="p-2">Paciente</th>
+                <th class="p-2">Idade</th>
+                <th class="p-2">Responsável</th>
+                <th class="p-2">Telefone</th>
+                <th class="p-2">Especialidade</th>
+                <th class="p-2">Consultório</th>
+                <th class="p-2">Especialista</th>
+                <th class="p-2">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Dados das consultas serão preenchidos aqui -->
             </tbody>
           </table>
         </div>
