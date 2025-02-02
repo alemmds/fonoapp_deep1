@@ -80,25 +80,25 @@
         <ul>
           <!-- Sessão de Cadastro -->
           <li class="mb-4">
-            <a href="#cadastro-pacientes" class="menu-item flex items-center p-2 rounded">
+            <a href="#cadastro" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-pacientes')">
               <span class="mr-2 text-3xl">📌</span>
               <span class="text-xl">Cadastro</span>
             </a>
             <ul class="ml-4 mt-2">
               <li>
-                <a href="#cadastro-pacientes" class="menu-item flex items-center p-2 rounded">
+                <a href="#cadastro-pacientes" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-pacientes')">
                   <span class="mr-2 text-2xl">👤</span>
                   <span class="text-lg">Pacientes</span>
                 </a>
               </li>
               <li>
-                <a href="#cadastro-especialistas" class="menu-item flex items-center p-2 rounded">
+                <a href="#cadastro-especialistas" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-especialistas')">
                   <span class="mr-2 text-2xl">👥</span>
                   <span class="text-lg">Especialistas</span>
                 </a>
               </li>
               <li>
-                <a href="#cadastro-consultas" class="menu-item flex items-center p-2 rounded">
+                <a href="#cadastro-consultas" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-consultas')">
                   <span class="mr-2 text-2xl">🗓️</span>
                   <span class="text-lg">Consultas</span>
                 </a>
@@ -108,19 +108,19 @@
 
           <!-- Sessão de Consultas -->
           <li class="mb-4">
-            <a href="#consultas-gerais" class="menu-item flex items-center p-2 rounded">
+            <a href="#consultas" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas-gerais')">
               <span class="mr-2 text-3xl">📅</span>
               <span class="text-xl">Consultas</span>
             </a>
             <ul class="ml-4 mt-2">
               <li>
-                <a href="#consultas-gerais" class="menu-item flex items-center p-2 rounded">
+                <a href="#consultas-gerais" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas-gerais')">
                   <span class="mr-2 text-2xl">📋</span>
                   <span class="text-lg">Consultas Gerais</span>
                 </a>
               </li>
               <li>
-                <a href="#consultas-dia" class="menu-item flex items-center p-2 rounded">
+                <a href="#consultas-dia" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas-dia')">
                   <span class="mr-2 text-2xl">📅</span>
                   <span class="text-lg">Consultas do Dia</span>
                 </a>
@@ -130,7 +130,7 @@
 
           <!-- Sessão de Pacientes -->
           <li class="mb-4">
-            <a href="#pacientes" class="menu-item flex items-center p-2 rounded">
+            <a href="#pacientes" class="menu-item flex items-center p-2 rounded" onclick="showSection('pacientes')">
               <span class="mr-2 text-3xl">👤</span>
               <span class="text-xl">Pacientes</span>
             </a>
@@ -138,7 +138,7 @@
 
           <!-- Sessão de Profissionais -->
           <li class="mb-4">
-            <a href="#profissionais" class="menu-item flex items-center p-2 rounded">
+            <a href="#profissionais" class="menu-item flex items-center p-2 rounded" onclick="showSection('profissionais')">
               <span class="mr-2 text-3xl">👨‍⚕️</span>
               <span class="text-xl">Profissionais</span>
             </a>
@@ -150,7 +150,7 @@
     <!-- Conteúdo Principal -->
     <div class="flex-1 p-8">
       <!-- Seção de Cadastro de Pacientes -->
-      <section id="cadastro-pacientes" class="section hidden">
+      <section id="cadastro-pacientes" class="hidden">
         <h2 class="text-3xl font-bold mb-6">Cadastro de Pacientes</h2>
         <div class="glassmorphism p-6 hover-scale">
           <form id="form-paciente">
@@ -161,7 +161,7 @@
               <input type="text" id="paciente-responsavel" class="p-2 border rounded" placeholder="Responsável">
               <input type="tel" id="paciente-telefone" class="p-2 border rounded" placeholder="Telefone" required>
               <input type="email" id="paciente-email" class="p-2 border rounded" placeholder="Email" required>
-              <input type="date" id="paciente-ultima-consulta" class="p-2 border rounded">
+              <input type="date" id="paciente-ultima-consulta" class="p-2 border rounded" placeholder="Última Consulta">
             </div>
             <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
               Cadastrar Paciente
@@ -171,7 +171,7 @@
       </section>
 
       <!-- Seção de Cadastro de Especialistas -->
-      <section id="cadastro-especialistas" class="section hidden">
+      <section id="cadastro-especialistas" class="hidden">
         <h2 class="text-3xl font-bold mb-6">Cadastro de Especialistas</h2>
         <div class="glassmorphism p-6 hover-scale">
           <form id="form-especialista">
@@ -196,7 +196,7 @@
       </section>
 
       <!-- Seção de Cadastro de Consultas -->
-      <section id="cadastro-consultas" class="section hidden">
+      <section id="cadastro-consultas" class="hidden">
         <h2 class="text-3xl font-bold mb-6">Cadastro de Consultas</h2>
         <div class="glassmorphism p-6 hover-scale">
           <form id="form-consulta">
@@ -219,7 +219,7 @@
       </section>
 
       <!-- Seção de Consultas Gerais -->
-      <section id="consultas-gerais" class="section hidden">
+      <section id="consultas-gerais" class="hidden">
         <h2 class="text-3xl font-bold mb-6">Consultas Gerais</h2>
         <div class="glassmorphism p-6 hover-scale">
           <table id="tabela-consultas-gerais" class="w-full text-left">
@@ -238,14 +238,14 @@
               </tr>
             </thead>
             <tbody>
-              <!-- Dados serão preenchidos via JavaScript -->
+              <!-- Dados das consultas serão preenchidos aqui -->
             </tbody>
           </table>
         </div>
       </section>
 
       <!-- Seção de Consultas do Dia -->
-      <section id="consultas-dia" class="section hidden">
+      <section id="consultas-dia" class="hidden">
         <h2 class="text-3xl font-bold mb-6">Consultas do Dia</h2>
         <div class="glassmorphism p-6 hover-scale">
           <table id="tabela-consultas-dia" class="w-full text-left">
@@ -264,14 +264,14 @@
               </tr>
             </thead>
             <tbody>
-              <!-- Dados serão preenchidos via JavaScript -->
+              <!-- Dados das consultas do dia serão preenchidos aqui -->
             </tbody>
           </table>
         </div>
       </section>
 
       <!-- Seção de Pacientes -->
-      <section id="pacientes" class="section hidden">
+      <section id="pacientes" class="hidden">
         <h2 class="text-3xl font-bold mb-6">Pacientes</h2>
         <div class="glassmorphism p-6 hover-scale">
           <table id="tabela-pacientes" class="w-full text-left">
@@ -288,15 +288,15 @@
               </tr>
             </thead>
             <tbody>
-              <!-- Dados serão preenchidos via JavaScript -->
+              <!-- Dados dos pacientes serão preenchidos aqui -->
             </tbody>
           </table>
         </div>
       </section>
 
       <!-- Seção de Profissionais -->
-      <section id="profissionais" class="section hidden">
-        <h2 class="text-3xl font-bold mb-6">Profissionais</h2>
+      <section id="profissionais" class="hidden">
+<h2 class="text-3xl font-bold mb-6">Profissionais</h2>
         <div class="glassmorphism p-6 hover-scale">
           <table id="tabela-profissionais" class="w-full text-left">
             <thead>
@@ -304,7 +304,7 @@
                 <th class="p-2">Nome</th>
                 <th class="p-2">CPF</th>
                 <th class="p-2">Especialidade</th>
-                                <th class="p-2">Turno</th>
+                <th class="p-2">Turno</th>
                 <th class="p-2">Telefone</th>
                 <th class="p-2">Email</th>
                 <th class="p-2">Ações</th>
@@ -319,6 +319,76 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    // Função para exibir seções
+    window.showSection = (sectionId) => {
+      // Oculta todas as seções
+      document.querySelectorAll('section').forEach(section => {
+        section.classList.add('hidden');
+      });
+
+      // Exibe a seção clicada
+      const sectionToShow = document.getElementById(sectionId);
+      if (sectionToShow) {
+        sectionToShow.classList.remove('hidden');
+      }
+    };
+
+    // Alternar entre telas de login e cadastro
+    document.getElementById('show-register').addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('login-screen').classList.add('hidden');
+      document.getElementById('register-screen').classList.remove('hidden');
+    });
+
+    document.getElementById('show-login').addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('register-screen').classList.add('hidden');
+      document.getElementById('login-screen').classList.remove('hidden');
+    });
+
+    // Cadastro de Usuário
+    document.getElementById('register-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nome = document.getElementById('register-name').value;
+      const email = document.getElementById('register-email').value;
+      const senha = document.getElementById('register-password').value;
+
+      if (nome && email && senha) {
+        alert('Cadastro realizado com sucesso!');
+        document.getElementById('register-screen').classList.add('hidden');
+        document.getElementById('login-screen').classList.remove('hidden');
+      } else {
+        alert('Preencha todos os campos!');
+      }
+    });
+
+    // Login do Usuário
+    document.getElementById('login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nome = document.getElementById('login-name').value;
+      const senha = document.getElementById('login-password').value;
+
+      if (nome && senha) {
+        alert(`Bem-vindo, ${nome}!`);
+        document.getElementById('login-screen').classList.add('hidden');
+        document.getElementById('main-container').classList.remove('hidden');
+        showSection('cadastro-pacientes'); // Exibe a seção padrão após o login
+      } else {
+        alert('Nome ou senha incorretos!');
+      }
+    });
+
+    // Alternar o menu lateral
+    document.getElementById('toggle-fullscreen').addEventListener('click', () => {
+      const menuLateral = document.getElementById('menu-lateral');
+      const maximizeIcon = document.getElementById('maximize-icon');
+      const minimizeIcon = document.getElementById('minimize-icon');
+      menuLateral.classList.toggle('w-64');
+      menuLateral.classList.toggle('w-16');
+      maximizeIcon.classList.toggle('hidden');
+      minimizeIcon.classList.toggle('hidden');
+    });
+  </script>
 </body>
 </html>
