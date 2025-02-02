@@ -12,9 +12,8 @@
 <body class="bg-gray-100 font-sans">
   <!-- Tela de Login -->
   <div id="login-screen" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-96 text-center">
-      <h2 class="text-2xl font-bold mb-6">Login</h2>
-      <p class="mb-4 text-gray-600">Bem-vindo ao FonoClinic! Por favor, faça login para continuar.</p>
+    <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+      <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
       <form id="login-form">
         <div class="mb-4">
           <label for="login-name" class="block text-sm font-medium text-gray-700">Nome</label>
@@ -36,8 +35,8 @@
 
   <!-- Tela de Cadastro -->
   <div id="register-screen" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 hidden">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-96 text-center">
-      <h2 class="text-2xl font-bold mb-6">Cadastro</h2>
+    <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+      <h2 class="text-2xl font-bold mb-6 text-center">Cadastro</h2>
       <form id="register-form">
         <div class="mb-4">
           <label for="register-name" class="block text-sm font-medium text-gray-700">Nome</label>
@@ -64,7 +63,7 @@
   <!-- Container Principal -->
   <div id="main-container" class="hidden flex min-h-screen">
     <!-- Menu Lateral -->
-    <div class="w-64 bg-blue-900 text-white p-6 relative transition-all duration-300 flex flex-col justify-between" id="menu-lateral">
+    <div class="w-64 bg-blue-900 text-white p-6 relative transition-all duration-300" id="menu-lateral">
       <!-- Botão de Minimizar/Maximizar -->
       <button id="toggle-fullscreen" class="absolute top-2 right-2 p-2 bg-blue-800 rounded-full hover:bg-blue-700 transition">
         <svg id="maximize-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -76,7 +75,7 @@
       </button>
 
       <!-- Título e Menu -->
-      <h1 class="text-2xl font-bold mb-8 text-center">FonoClinic</h1>
+      <h1 class="text-2xl font-bold mb-8">FonoClinic</h1>
       <nav>
         <ul>
           <!-- Sessão de Cadastro -->
@@ -146,9 +145,6 @@
           </li>
         </ul>
       </nav>
-      <div class="text-center mt-auto">
-        <p id="user-greeting" class="text-sm">Olá, Usuário</p>
-      </div>
     </div>
 
     <!-- Conteúdo Principal -->
@@ -180,17 +176,17 @@
         <div class="glassmorphism p-6 hover-scale">
           <form id="form-especialista">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input type="text" id="nome-especialista" class="p-2 border rounded" placeholder="Nome do Especialista" required>
-              <input type="text" id="cpf-especialista" class="p-2 border rounded" placeholder="CPF" required>
-              <input type="text" id="especialidade" class="p-2 border rounded" placeholder="Especialidade" required>
-              <select id="turno-especialista" class="p-2 border rounded" required>
+              <input type="text" id="especialista-nome" class="p-2 border rounded" placeholder="Nome do Especialista" required>
+              <input type="text" id="especialista-cpf" class="p-2 border rounded" placeholder="CPF" required>
+              <input type="text" id="especialista-especialidade" class="p-2 border rounded" placeholder="Especialidade" required>
+              <select id="especialista-turno" class="p-2 border rounded" required>
                 <option value="">Selecione o turno</option>
                 <option value="Manhã">Manhã</option>
                 <option value="Tarde">Tarde</option>
                 <option value="Noite">Noite</option>
               </select>
-              <input type="tel" id="telefone-especialista" class="p-2 border rounded" placeholder="Telefone" required>
-              <input type="email" id="email-especialista" class="p-2 border rounded" placeholder="Email" required>
+              <input type="tel" id="especialista-telefone" class="p-2 border rounded" placeholder="Telefone" required>
+              <input type="email" id="especialista-email" class="p-2 border rounded" placeholder="Email" required>
             </div>
             <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
               Cadastrar Especialista
@@ -205,15 +201,15 @@
         <div class="glassmorphism p-6 hover-scale">
           <form id="form-consulta">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input type="date" id="data-consulta" class="p-2 border rounded" required>
-              <input type="time" id="horario-consulta" class="p-2 border rounded" required>
-              <input type="text" id="nome-paciente-consulta" class="p-2 border rounded" placeholder="Nome do Paciente" required>
-              <input type="number" id="idade-paciente-consulta" class="p-2 border rounded" placeholder="Idade" required>
-              <input type="text" id="responsavel-consulta" class="p-2 border rounded" placeholder="Responsável">
-              <input type="tel" id="telefone-consulta" class="p-2 border rounded" placeholder="Telefone" required>
-              <input type="text" id="especialidade-consulta" class="p-2 border rounded" placeholder="Especialidade" required>
-              <input type="text" id="consultorio-consulta" class="p-2 border rounded" placeholder="Consultório" required>
-              <input type="text" id="especialista-consulta" class="p-2 border rounded" placeholder="Especialista" required>
+              <input type="date" id="consulta-data" class="p-2 border rounded" required>
+              <input type="time" id="consulta-horario" class="p-2 border rounded" required>
+              <input type="text" id="consulta-paciente-nome" class="p-2 border rounded" placeholder="Nome do Paciente" required>
+              <input type="number" id="consulta-paciente-idade" class="p-2 border rounded" placeholder="Idade" required>
+              <input type="text" id="consulta-responsavel" class="p-2 border rounded" placeholder="Responsável">
+              <input type="tel" id="consulta-telefone" class="p-2 border rounded" placeholder="Telefone" required>
+              <input type="text" id="consulta-especialidade" class="p-2 border rounded" placeholder="Especialidade" required>
+              <input type="text" id="consulta-consultorio" class="p-2 border rounded" placeholder="Consultório" required>
+              <input type="text" id="consulta-especialista" class="p-2 border rounded" placeholder="Especialista" required>
             </div>
             <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
               Agendar Consulta
@@ -359,9 +355,6 @@
       const senha = document.getElementById('register-password').value;
 
       if (nome && email && senha) {
-        const userId = Date.now(); // Simples ID de usuário
-        const userData = { id: userId, nome, email, senha };
-        localStorage.setItem(`user_${userId}`, JSON.stringify(userData));
         alert('Cadastro realizado com sucesso!');
         document.getElementById('register-screen').classList.add('hidden');
         document.getElementById('login-screen').classList.remove('hidden');
@@ -376,58 +369,15 @@
       const nome = document.getElementById('login-name').value;
       const senha = document.getElementById('login-password').value;
 
-      let userFound = false;
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key.startsWith('user_')) {
-          const userData = JSON.parse(localStorage.getItem(key));
-          if (userData.nome === nome && userData.senha === senha) {
-            userFound = true;
-            document.getElementById('user-greeting').textContent = `Olá, ${userData.nome}`;
-            document.getElementById('login-screen').classList.add('hidden');
-            document.getElementById('main-container').classList.remove('hidden');
-            showSection('cadastro-pacientes');
-            break;
-          }
-        }
-      }
-
-      if (!userFound) {
+      if (nome && senha) {
+        alert(`Bem-vindo, ${nome}!`);
+        document.getElementById('login-screen').classList.add('hidden');
+        document.getElementById('main-container').classList.remove('hidden');
+        showSection('cadastro-pacientes'); // Exibe a seção padrão após o login
+      } else {
         alert('Nome ou senha incorretos!');
       }
     });
-
-    // Funções para manipular dados no localStorage
-    function saveData(key, data) {
-      localStorage.setItem(key, JSON.stringify(data));
-    }
-
-    function getData(key) {
-      return JSON.parse(localStorage.getItem(key));
-    }
-
-    function deleteData(key) {
-      localStorage.removeItem(key);
-    }
-
-    // Exemplo de uso para consultas, pacientes e especialistas
-    function addConsulta(consulta) {
-      const consultas = getData('consultas') || [];
-      consultas.push(consulta);
-      saveData('consultas', consultas);
-    }
-
-    function getConsultas() {
-      return getData('consultas') || [];
-    }
-
-    function deleteConsulta(index) {
-      const consultas = getConsultas();
-      consultas.splice(index, 1);
-      saveData('consultas', consultas);
-    }
-
-    // ... similar functions for pacientes and especialistas ...
 
     // Alternar o menu lateral
     document.getElementById('toggle-fullscreen').addEventListener('click', () => {
