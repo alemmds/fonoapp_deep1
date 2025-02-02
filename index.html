@@ -8,12 +8,22 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#1e3a8a">
+  <style>
+    /* Centralizar o conteúdo */
+    .centered {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+  </style>
 </head>
 <body class="bg-gray-100 font-sans">
   <!-- Tela de Login -->
   <div id="login-screen" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-96">
-      <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+    <div class="bg-white p-8 rounded-lg shadow-lg w-96 centered">
+      <h2 class="text-2xl font-bold mb-6 text-center">Bem-vindo ao FonoClinic</h2>
       <form id="login-form">
         <div class="mb-4">
           <label for="login-name" class="block text-sm font-medium text-gray-700">Nome</label>
@@ -35,7 +45,7 @@
 
   <!-- Tela de Cadastro -->
   <div id="register-screen" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 hidden">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-96 centered">
       <h2 class="text-2xl font-bold mb-6 text-center">Cadastro</h2>
       <form id="register-form">
         <div class="mb-4">
@@ -145,6 +155,10 @@
           </li>
         </ul>
       </nav>
+      <!-- Nome do usuário -->
+      <div class="absolute bottom-4 left-4">
+        <p id="user-greeting" class="text-sm">Olá, Usuário</p>
+      </div>
     </div>
 
     <!-- Conteúdo Principal -->
@@ -319,191 +333,6 @@
     </div>
   </div>
 
-  <script>
-    // Função para exibir seções
-    window.showSection = (sectionId) => {
-      // Oculta todas as seções
-      document.querySelectorAll('section').forEach(section => {
-        section.classList.add('hidden');
-      });
-
-      // Exibe a seção clicada
-      const sectionToShow = document.getElementById(sectionId);
-      if (sectionToShow) {
-        sectionToShow.classList.remove('hidden');
-      }
-    };
-
-    // Alternar entre telas de login e cadastro
-    document.getElementById('show-register').addEventListener('click', (e) => {
-      e.preventDefault();
-      document.getElementById('login-screen').classList.add('hidden');
-      document.getElementById('register-screen').classList.remove('hidden');
-    });
-
-    document.getElementById('show-login').addEventListener('click', (e) => {
-      e.preventDefault();
-      document.getElementById('register-screen').classList.add('hidden');
-      document.getElementById('login-screen').classList.remove('hidden');
-    });
-
-    // Cadastro de Usuário
-    document.getElementById('register-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const nome = document.getElementById('register-name').value;
-      const email = document.getElementById('register-email').value;
-      const senha = document.getElementById('register-password').value;
-
-      if (nome && email && senha) {
-        // Obter usuários existentes do localStorage
-        let dbUsuarios = JSON.parse(localStorage.getItem('db_usuarios')) || [];
-
-        // Verificar se o e-mail já está cadastrado
-        if (dbUsuarios.some(u => u.email === email)) {
-          alert('E-mail já cadastrado!');
-          return;
-        }
-
-        // Criar novo usuário
-        const newUser = {
-          nome,
-          email,
-          senha,
-          id: Date.now(),
-          dbPacientes: { pacientes: [] },
-          dbCadastro: { especialistas: [] },
-          dbConsultas: { consultas: [] }
-        };
-
-        // Adicionar novo usuário ao banco de dados
-        dbUsuarios.push(newUser);
-        localStorage.setItem('db_usuarios', JSON.stringify(dbUsuarios));
-
-        alert('Cadastro realizado com sucesso!');
-        document.getElementById('register-screen').classList.add('hidden');
-        document.getElementById('login-screen').classList.remove('hidden');
-      } else {
-        alert('Preencha todos os campos!');
-      }
-    });
-
-    // Login do Usuário
-    document.getElementById('login-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const nome = document.getElementById('login-name').value;
-      const senha = document.getElementById('login-password').value;
-
-      if (nome && senha) {
-        alert(`Bem-vindo, ${nome}!`);
-        document.getElementById('login-screen').classList.add('hidden');
-        document.getElementById('main-container').classList.remove('hidden');
-        showSection('cadastro-pacientes'); // Exibe a seção padrão após o login
-      } else {
-        alert('Nome ou senha incorretos!');
-      }
-    });
-
-    // Cadastro de Pacientes
-    document.getElementById('form-paciente').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const nome = document.getElementById('paciente-nome').value;
-      const cpf = document.getElementById('paciente-cpf').value;
-      const idade = document.getElementById('paciente-idade').value;
-      const responsavel = document.getElementById('paciente-responsavel').value;
-      const telefone = document.getElementById('paciente-telefone').value;
-      const email = document.getElementById('paciente-email').value;
-      const ultimaConsulta = document.getElementById('paciente-ultima-consulta').value;
-
-      if (nome && cpf && idade && telefone && email) {
-        // Obter pacientes existentes do localStorage
-        let dbPacientes = JSON.parse(localStorage.getItem('db_pacientes')) || [];
-
-        // Criar novo paciente
-        const newPaciente = { nome, cpf, idade, responsavel, telefone, email, ultimaConsulta };
-
-        // Adicionar novo paciente ao banco de dados
-        dbPacientes.push(newPaciente);
-        localStorage.setItem('db_pacientes', JSON.stringify(dbPacientes));
-
-        alert('Paciente cadastrado com sucesso!');
-        // Limpar o formulário após o cadastro
-        e.target.reset();
-      } else {
-        alert('Preencha todos os campos obrigatórios!');
-      }
-    });
-
-    // Cadastro de Especialistas
-    document.getElementById('form-especialista').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const nome = document.getElementById('nome-especialista').value;
-      const cpf = document.getElementById('cpf-especialista').value;
-      const especialidade = document.getElementById('especialidade').value;
-      const turno = document.getElementById('turno-especialista').value;
-      const telefone = document.getElementById('telefone-especialista').value;
-      const email = document.getElementById('email-especialista').value;
-
-      if (nome && cpf && especialidade && turno && telefone && email) {
-        // Obter especialistas existentes do localStorage
-        let dbEspecialistas = JSON.parse(localStorage.getItem('db_especialistas')) || [];
-
-        // Criar novo especialista
-        const newEspecialista = { nome, cpf, especialidade, turno, telefone, email };
-
-        // Adicionar novo especialista ao banco de dados
-        dbEspecialistas.push(newEspecialista);
-        localStorage.setItem('db_especialistas', JSON.stringify(dbEspecialistas));
-
-        alert('Especialista cadastrado com sucesso!');
-        // Limpar o formulário após o cadastro
-        e.target.reset();
-      } else {
-        alert('Preencha todos os campos obrigatórios!');
-      }
-    });
-
-    // Cadastro de Consultas
-    document.getElementById('form-consulta').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const data = document.getElementById('data-consulta').value;
-      const horario = document.getElementById('horario-consulta').value;
-      const nomePaciente = document.getElementById('nome-paciente-consulta').value;
-      const idade = document.getElementById('idade-paciente-consulta').value;
-      const responsavel = document.getElementById('responsavel-consulta').value;
-      const telefone = document.getElementById('telefone-consulta').value;
-      const especialidade = document.getElementById('especialidade-consulta').value;
-      const consultorio = document.getElementById('consultorio-consulta').value;
-      const especialista = document.getElementById('especialista-consulta').value;
-
-      if (data && horario && nomePaciente && idade && telefone && especialidade && consultorio && especialista) {
-        // Obter consultas existentes do localStorage
-        let dbConsultas = JSON.parse(localStorage.getItem('db_consultas')) || [];
-
-        // Criar nova consulta
-        const newConsulta = { data, horario, nomePaciente, idade, responsavel, telefone, especialidade, consultorio, especialista };
-
-        // Adicionar nova consulta ao banco de dados
-        dbConsultas.push(newConsulta);
-        localStorage.setItem('db_consultas', JSON.stringify(dbConsultas));
-
-        alert('Consulta agendada com sucesso!');
-        // Limpar o formulário após o cadastro
-        e.target.reset();
-      } else {
-        alert('Preencha todos os campos obrigatórios!');
-      }
-    });
-
-    // Alternar o menu lateral
-    document.getElementById('toggle-fullscreen').addEventListener('click', () => {
-      const menuLateral = document.getElementById('menu-lateral');
-      const maximizeIcon = document.getElementById('maximize-icon');
-      const minimizeIcon = document.getElementById('minimize-icon');
-      menuLateral.classList.toggle('w-64');
-      menuLateral.classList.toggle('w-16');
-      maximizeIcon.classList.toggle('hidden');
-      minimizeIcon.classList.toggle('hidden');
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
