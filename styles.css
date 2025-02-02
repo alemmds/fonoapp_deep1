@@ -317,6 +317,7 @@ tr:hover {
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.75);
   z-index: 1000;
+  text-align: center; /* Centraliza o texto */
 }
 
 #login-screen.hidden,
@@ -392,4 +393,13 @@ tr:hover {
 /* Estilos para as seções ocultas */
 .hidden {
   display: none;
+}
+
+/* Estilo para o nome do usuário no menu */
+#user-name {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  color: #fff;
+  font-size: 1rem;
 }
