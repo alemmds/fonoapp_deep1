@@ -1,237 +1,134 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FonoClinic</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#1e3a8a" />
-    <style>
-        .centered {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-        .fixed-screen {
-            position: fixed;
-            inset: 0;
-            z-index: 50;
-            background: rgba(0, 0, 0, 0.7);
-        }
-        .screen {
-            display: none;
-        }
-        #menu-lateral {
-            width: 250px;
-            background-color: #1e3a8a;
-            color: #fff;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        #user-greeting {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            font-size: 16px;
-        }
-        #content {
-            flex: 1;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FONOCLINI</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-gray-100 font-sans">
-    <!-- Tela de Login -->
-    <div id="login-screen" class="centered fixed-screen">
-        <div class="bg-white p-8 rounded-lg shadow-lg w-96">
-            <h2 class="text-2xl font-bold mb-6 text-center">Bem-vindo ao FonoClinic</h2>
-            <form id="login-form">
-                <div class="mb-4">
-                    <label for="login-name" class="block text-sm font-medium text-gray-700">Nome</label>
-                    <input type="text" id="login-name" class="mt-1 p-2 w-full border rounded" required />
-                </div>
-                <div class="mb-6">
-                    <label for="login-password" class="block text-sm font-medium text-gray-700">Senha</label>
-                    <input type="password" id="login-password" class="mt-1 p-2 w-full border rounded" required />
-                </div>
-                <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Entrar</button>
-            </form>
-            <p class="mt-4 text-center text-sm text-gray-600">
-                Não tem uma conta? <a href="#" id="show-register" class="text-blue-600 hover:underline">Cadastre-se</a>
-            </p>
-        </div>
+<body>
+  <!-- Tela de Login -->
+  <div id="login-screen">
+    <div class="bg-white">
+      <h2>FONOCLINI</h2>
+      <p>Por favor, faça login para continuar.</p>
+      <form id="login-form">
+        <input type="text" id="login-name" placeholder="Nome" required>
+        <input type="password" id="login-password" placeholder="Senha" required>
+        <button type="submit">Login</button>
+      </form>
+      <p>Não tem uma conta? <a href="#" id="show-register">Cadastre-se</a></p>
+    </div>
+  </div>
+
+  <!-- Tela de Cadastro -->
+  <div id="register-screen" class="hidden">
+    <div class="bg-white">
+      <h2>Cadastro</h2>
+      <form id="register-form">
+        <input type="text" id="register-name" placeholder="Nome" required>
+        <input type="email" id="register-email" placeholder="E-mail" required>
+        <input type="password" id="register-password" placeholder="Senha" required>
+        <button type="submit">Cadastrar</button>
+      </form>
+      <p>Já tem uma conta? <a href="#" id="show-login">Faça login</a></p>
+    </div>
+  </div>
+
+  <!-- Container Principal -->
+  <div id="main-container" class="hidden flex min-h-screen">
+    <!-- Menu Lateral -->
+    <div id="menu-lateral" class="bg-blue-900 text-white p-6 w-64">
+      <h1 class="text-2xl font-bold mb-8">FONOCLINI</h1>
+      <nav>
+        <ul>
+          <li class="menu-item" onclick="showSection('cadastro-pacientes')">
+            <span class="text-xl">👤</span>
+            <span class="ml-4">Pacientes</span>
+          </li>
+          <li class="menu-item" onclick="showSection('cadastro-especialistas')">
+            <span class="text-xl">👨‍⚕️</span>
+            <span class="ml-4">Especialistas</span>
+          </li>
+          <li class="menu-item" onclick="showSection('cadastro-consultas')">
+            <span class="text-xl">📅</span>
+            <span class="ml-4">Consultas</span>
+          </li>
+        </ul>
+      </nav>
+      <!-- Nome do Usuário -->
+      <div id="user-info" class="mt-auto p-4">
+        <p>Olá, <span id="user-name"></span></p>
+      </div>
     </div>
 
-    <!-- Tela de Cadastro de Usuário -->
-    <div id="register-screen" class="centered fixed-screen hidden">
-        <div class="bg-white p-8 rounded-lg shadow-lg w-96">
-            <h2 class="text-2xl font-bold mb-6 text-center">Cadastro de Usuário</h2>
-            <form id="register-form">
-                <div class="mb-4">
-                    <label for="register-name" class="block text-sm font-medium text-gray-700">Nome</label>
-                    <input type="text" id="register-name" class="mt-1 p-2 w-full border rounded" required />
-                </div>
-                <div class="mb-4">
-                    <label for="register-email" class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" id="register-email" class="mt-1 p-2 w-full border rounded" required />
-                </div>
-                <div class="mb-6">
-                    <label for="register-password" class="block text-sm font-medium text-gray-700">Senha</label>
-                    <input type="password" id="register-password" class="mt-1 p-2 w-full border rounded" required />
-                </div>
-                <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Cadastrar</button>
-            </form>
-            <p class="mt-4 text-center text-sm text-gray-600">
-                Já tem uma conta? <a href="#" id="show-login" class="text-blue-600 hover:underline">Faça login</a>
-            </p>
-        </div>
+    <!-- Conteúdo Principal -->
+    <div class="flex-1 p-8">
+      <!-- Seção de Cadastro de Pacientes -->
+      <div id="cadastro-pacientes" class="section">
+        <h2 class="text-2xl font-bold mb-4">Cadastro de Pacientes</h2>
+        <form id="form-paciente">
+          <input type="text" id="paciente-nome" placeholder="Nome" required>
+          <input type="email" id="paciente-email" placeholder="E-mail" required>
+          <button type="submit">Salvar</button>
+        </form>
+        <table id="tabela-pacientes" class="mt-4">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>E-mail</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <!-- Seção de Cadastro de Especialistas -->
+      <div id="cadastro-especialistas" class="section hidden">
+        <h2 class="text-2xl font-bold mb-4">Cadastro de Especialistas</h2>
+        <form id="form-especialista">
+          <input type="text" id="especialista-nome" placeholder="Nome" required>
+          <input type="text" id="especialista-especialidade" placeholder="Especialidade" required>
+          <button type="submit">Salvar</button>
+        </form>
+        <table id="tabela-especialistas" class="mt-4">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Especialidade</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <!-- Seção de Cadastro de Consultas -->
+      <div id="cadastro-consultas" class="section hidden">
+        <h2 class="text-2xl font-bold mb-4">Cadastro de Consultas</h2>
+        <form id="form-consulta">
+          <input type="text" id="consulta-paciente" placeholder="Paciente" required>
+          <input type="text" id="consulta-especialista" placeholder="Especialista" required>
+          <input type="date" id="consulta-data" placeholder="Data" required>
+          <button type="submit">Salvar</button>
+        </form>
+        <table id="tabela-consultas" class="mt-4">
+          <thead>
+            <tr>
+              <th>Paciente</th>
+              <th>Especialista</th>
+              <th>Data</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </div>
+  </div>
 
-    <!-- Container Principal -->
-    <div id="main-container" class="hidden flex min-h-screen">
-        <!-- Menu Lateral -->
-        <div id="menu-lateral">
-            <h2 id="user-greeting">Olá, Usuário</h2>
-            <ul>
-                <li><a onclick="showScreen('cadastro-pacientes')">Cadastro de Pacientes</a></li>
-                <li><a onclick="showScreen('lista-pacientes')">Lista de Pacientes</a></li>
-                <li><a onclick="showScreen('cadastro-especialistas')">Cadastro de Especialistas</a></li>
-                <li><a onclick="showScreen('lista-especialistas')">Lista de Especialistas</a></li>
-                <li><a onclick="showScreen('cadastro-consultas')">Cadastro de Consultas</a></li>
-                <li><a onclick="showScreen('lista-consultas')">Lista de Consultas</a></li>
-            </ul>
-        </div>
-
-        <div id="content" class="flex-1">
-            <!-- Tela: Cadastro de Pacientes -->
-            <section id="cadastro-pacientes" class="screen">
-                <h2 class="text-3xl font-bold mb-4">Cadastro de Pacientes</h2>
-                <form id="form-cadastro-paciente" class="space-y-4">
-                    <input type="text" id="paciente-nome" placeholder="Nome do Paciente" class="p-2 border rounded" required />
-                    <input type="text" id="paciente-cpf" placeholder="CPF" class="p-2 border rounded" required />
-                    <input type="number" id="paciente-idade" placeholder="Idade" class="p-2 border rounded" required />
-                    <input type="text" id="paciente-responsavel" placeholder="Responsável" class="p-2 border rounded" />
-                    <input type="tel" id="paciente-telefone" placeholder="Telefone" class="p-2 border rounded" required />
-                    <input type="email" id="paciente-email" placeholder="Email" class="p-2 border rounded" required />
-                    <input type="date" id="paciente-ultima-consulta" placeholder="Última Consulta" class="p-2 border rounded" />
-                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Salvar Paciente</button>
-                </form>
-            </section>
-
-            <!-- Tela: Lista de Pacientes -->
-            <section id="lista-pacientes" class="screen">
-                <h2 class="text-3xl font-bold mb-4">Lista de Pacientes</h2>
-                <table id="tabela-pacientes">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>CPF</th>
-                            <th>Idade</th>
-                            <th>Responsável</th>
-                            <th>Telefone</th>
-                            <th>Email</th>
-                            <th>Última Consulta</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </section>
-
-            <!-- Tela: Cadastro de Especialistas -->
-            <section id="cadastro-especialistas" class="screen">
-                <h2 class="text-3xl font-bold mb-4">Cadastro de Especialistas</h2>
-                <form id="form-cadastro-especialista" class="space-y-4">
-                    <input type="text" id="especialista-nome" placeholder="Nome do Especialista" class="p-2 border rounded" required />
-                    <input type="text" id="especialista-cpf" placeholder="CPF" class="p-2 border rounded" required />
-                    <input type="text" id="especialista-especialidade" placeholder="Especialidade" class="p-2 border rounded" required />
-                    <select id="especialista-turno" class="p-2 border rounded" required>
-                        <option value="">Selecione o turno</option>
-                        <option value="Manhã">Manhã</option>
-                        <option value="Tarde">Tarde</option>
-                        <option value="Noite">Noite</option>
-                    </select>
-                    <input type="tel" id="especialista-telefone" placeholder="Telefone" class="p-2 border rounded" required />
-                    <input type="email" id="especialista-email" placeholder="Email" class="p-2 border rounded" required />
-                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Salvar Especialista</button>
-                </form>
-            </section>
-
-            <!-- Tela: Lista de Especialistas -->
-            <section id="lista-especialistas" class="screen">
-                <h2 class="text-3xl font-bold mb-4">Lista de Especialistas</h2>
-                <table id="tabela-profissionais">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>CPF</th>
-                            <th>Especialidade</th>
-                            <th>Turno</th>
-                            <th>Telefone</th>
-                            <th>Email</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </section>
-
-            <!-- Tela: Cadastro de Consultas -->
-            <section id="cadastro-consultas" class="screen">
-                <h2 class="text-3xl font-bold mb-4">Cadastro de Consultas</h2>
-                <form id="form-cadastro-consulta" class="space-y-4">
-                    <input type="date" id="consulta-data" class="p-2 border rounded" required />
-                    <input type="time" id="consulta-horario" class="p-2 border rounded" required />
-                    <input type="text" id="consulta-nomePaciente" placeholder="Nome do Paciente" class="p-2 border rounded" required />
-                    <input type="number" id="consulta-idade" placeholder="Idade" class="p-2 border rounded" required />
-                    <input type="text" id="consulta-responsavel" placeholder="Responsável" class="p-2 border rounded" />
-                    <input type="tel" id="consulta-telefone" placeholder="Telefone" class="p-2 border rounded" required />
-                    <input type="text" id="consulta-especialidade" placeholder="Especialidade" class="p-2 border rounded" required />
-                    <input type="text" id="consulta-consultorio" placeholder="Consultório" class="p-2 border rounded" required />
-                    <input type="text" id="consulta-especialista" placeholder="Especialista" class="p-2 border rounded" required />
-                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Salvar Consulta</button>
-                </form>
-            </section>
-
-            <!-- Tela: Lista de Consultas -->
-            <section id="lista-consultas" class="screen">
-                <h2 class="text-3xl font-bold mb-4">Lista de Consultas</h2>
-                <table id="tabela-consultas-gerais">
-                    <thead>
-                        <tr>
-                            <th>Data</th>
-                            <th>Horário</th>
-                            <th>Paciente</th>
-                            <th>Idade</th>
-                            <th>Responsável</th>
-                            <th>Telefone</th>
-                            <th>Especialidade</th>
-                            <th>Consultório</th>
-                            <th>Especialista</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </section>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+  <!-- Scripts -->
+  <script src="script.js"></script>
 </body>
 </html>
