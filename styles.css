@@ -10,7 +10,6 @@ body {
   font-family: 'Arial', sans-serif;
   background-color: #f3f4f6;
   color: #333;
-  line-height: 1.6;
 }
 
 /* Container principal */
@@ -39,10 +38,6 @@ body {
   width: 16rem;
 }
 
-.w-16 {
-  width: 4rem;
-}
-
 /* Estilos para o título do menu */
 .text-2xl {
   font-size: 1.5rem;
@@ -63,7 +58,6 @@ body {
   padding: 0.5rem;
   border-radius: 0.375rem;
   transition: background-color 0.3s ease;
-  cursor: pointer;
 }
 
 .menu-item:hover {
@@ -233,36 +227,37 @@ tr:hover {
 }
 
 /* Estilos para o botão de minimizar/maximizar */
-#toggle-fullscreen {
+#toggle-menu {
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 10;
 }
 
-#maximize-icon,
-#minimize-icon {
+#menu-icon,
+#close-icon {
   transition: opacity 0.3s ease;
 }
 
-#maximize-icon.hidden,
-#minimize-icon.hidden {
+#menu-icon.hidden,
+#close-icon.hidden {
   opacity: 0;
   pointer-events: none;
 }
 
 /* Estilos para o menu lateral minimizado */
-#menu-lateral.w-16 h1,
-#menu-lateral.w-16 nav {
-  display: none;
+#menu-lateral.minimizado {
+  width: 4rem; /* Largura reduzida */
+  overflow: hidden;
 }
 
-#menu-lateral.w-16 #toggle-fullscreen {
-  right: 0.5rem;
+#menu-lateral.minimizado h1,
+#menu-lateral.minimizado nav {
+  display: none; /* Oculta o título e o menu */
+}
+
+#menu-lateral.minimizado #toggle-menu {
+  right: 0.5rem; /* Ajusta a posição do botão */
 }
 
 /* Estilos para dispositivos móveis */
@@ -304,19 +299,35 @@ tr:hover {
   }
 }
 
+/* Estilos para o botão de tela cheia */
+#toggle-fullscreen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
+}
+
+#maximize-icon,
+#minimize-icon {
+  transition: opacity 0.3s ease;
+}
+
+#maximize-icon.hidden,
+#minimize-icon.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* Estilos para a tela de login/cadastro */
 #login-screen,
 #register-screen {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.75);
-  z-index: 1000;
 }
 
 #login-screen.hidden,
@@ -328,15 +339,11 @@ tr:hover {
 #register-screen .bg-white {
   width: 100%;
   max-width: 24rem;
-  padding: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 #login-screen h2,
 #register-screen h2 {
   text-align: center;
-  margin-bottom: 1.5rem;
 }
 
 #login-screen form,
@@ -374,7 +381,6 @@ tr:hover {
 #login-screen p,
 #register-screen p {
   text-align: center;
-  margin-top: 1rem;
 }
 
 #login-screen a,
@@ -387,9 +393,4 @@ tr:hover {
 #login-screen a:hover,
 #register-screen a:hover {
   color: #1d4ed8;
-}
-
-/* Estilos para as seções ocultas */
-.hidden {
-  display: none;
 }
