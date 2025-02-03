@@ -169,6 +169,15 @@
       <!-- Seção de Consultas Gerais -->
       <section id="consultas-gerais" class="section hidden">
         <h2 class="text-3xl font-bold mb-6">Consultas Gerais</h2>
+        <!-- Filtros para Consultas Gerais -->
+        <div class="mb-4 flex space-x-2">
+          <input type="text" id="filter-consulta-geral-nome" placeholder="Nome do paciente" class="p-2 border rounded">
+          <input type="date" id="filter-consulta-geral-data" class="p-2 border rounded">
+          <input type="time" id="filter-consulta-geral-horario" class="p-2 border rounded">
+          <button onclick="filtrarConsultasGerais()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+            Confirmar Busca
+          </button>
+        </div>
         <div class="glassmorphism p-6 hover-scale">
           <table id="tabela-consultas-gerais" class="w-full text-left">
             <thead>
@@ -195,6 +204,15 @@
       <!-- Seção de Consultas do Dia -->
       <section id="consultas-dia" class="section hidden">
         <h2 class="text-3xl font-bold mb-6">Consultas do Dia</h2>
+        <!-- Filtros para Consultas do Dia -->
+        <div class="mb-4 flex space-x-2">
+          <input type="text" id="filter-consulta-dia-nome" placeholder="Nome do paciente" class="p-2 border rounded">
+          <input type="date" id="filter-consulta-dia-data" class="p-2 border rounded">
+          <input type="time" id="filter-consulta-dia-horario" class="p-2 border rounded">
+          <button onclick="filtrarConsultasDia()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+            Confirmar Busca
+          </button>
+        </div>
         <div class="glassmorphism p-6 hover-scale">
           <table id="tabela-consultas-dia" class="w-full text-left">
             <thead>
@@ -212,7 +230,7 @@
               </tr>
             </thead>
             <tbody>
-              <!-- Dados das consultas do dia serão preenchidos aqui -->
+              <!-- Dados das consultas serão preenchidos aqui -->
             </tbody>
           </table>
         </div>
@@ -221,6 +239,13 @@
       <!-- Seção de Pacientes -->
       <section id="pacientes" class="section hidden">
         <h2 class="text-3xl font-bold mb-6">Pacientes</h2>
+        <!-- Filtros para Pacientes -->
+        <div class="mb-4 flex space-x-2">
+          <input type="text" id="filter-paciente-nome" placeholder="Nome do paciente" class="p-2 border rounded">
+          <button onclick="filtrarPacientes()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+            Confirmar Busca
+          </button>
+        </div>
         <div class="glassmorphism p-6 hover-scale">
           <table id="tabela-pacientes" class="w-full text-left">
             <thead>
