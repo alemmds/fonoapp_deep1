@@ -115,43 +115,22 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // Função para editar paciente
-    window.editPaciente = (index) => {
-        const pac = currentUser.dbPacientes.pacientes[index];
-        document.getElementById("paciente-nome").value = pac.nome;
-        document.getElementById("paciente-cpf").value = pac.cpf;
-        document.getElementById("paciente-idade").value = pac.idade;
-        document.getElementById("paciente-responsavel").value = pac.responsavel || "";
-        document.getElementById("paciente-telefone").value = pac.telefone;
-        document.getElementById("paciente-email").value = pac.email;
-        document.getElementById("paciente-ultima-consulta").value = pac.ultimaConsulta || "";
-        showScreen("cadastro-pacientes");
-    };
-
-    // Função para excluir paciente
-    window.deletePaciente = (index) => {
-        if (confirm("Confirmar exclusão do paciente?")) {
-            currentUser.dbPacientes.pacientes.splice(index, 1);
-            saveData("db_usuarios", dbUsuarios);
-            updateListaPacientes();
-        }
-    };
-
-    // Cadastro e edição de especialistas
-    document.getElementById("form-cadastro-especialista").addEventListener("submit", (e) => {
+    // Cadastro de pacientes
+    document.getElementById("form-cadastro-paciente").addEventListener("submit", (e) => {
         e.preventDefault();
-        const especialista = {
-            nome: document.getElementById("especialista-nome").value,
-            cpf: document.getElementById("especialista-cpf").value,
-            especialidade: document.getElementById("especialista-especialidade").value,
-            turno: document.getElementById("especialista-turno").value,
-            telefone: document.getElementById("especialista-telefone").value,
-            email: document.getElementById("especialista-email").value,
+        const paciente = {
+            nome: document.getElementById("paciente-nome").value,
+            cpf: document.getElementById("paciente-cpf").value,
+            idade: document.getElementById("paciente-idade").value,
+            responsavel: document.getElementById("paciente-responsavel").value,
+            telefone: document.getElementById("paciente-telefone").value,
+            email: document.getElementById("paciente-email").value,
+            ultimaConsulta: document.getElementById("paciente-ultima-consulta").value,
         };
-        currentUser.dbCadastro.especialistas.push(especialista);
+        currentUser.dbPacientes.pacientes.push(paciente);
         saveData("db_usuarios", dbUsuarios);
-        updateListaEspecialistas();
-        e.target.reset();
+        updateListaPacientes();
+        e.target.reset(); // Limpa o formulário após salvar
     });
 
     // Atualiza a tabela de especialistas
@@ -176,45 +155,21 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // Função para editar especialista
-    window.editEspecialista = (index) => {
-        const esp = currentUser.dbCadastro.especialistas[index];
-        document.getElementById("especialista-nome").value = esp.nome;
-        document.getElementById("especialista-cpf").value = esp.cpf;
-        document.getElementById("especialista-especialidade").value = esp.especialidade;
-        document.getElementById("especialista-turno").value = esp.turno;
-        document.getElementById("especialista-telefone").value = esp.telefone;
-        document.getElementById("especialista-email").value = esp.email;
-        showScreen("cadastro-especialistas");
-    };
-
-    // Função para excluir especialista
-    window.deleteEspecialista = (index) => {
-        if (confirm("Confirmar exclusão do especialista?")) {
-            currentUser.dbCadastro.especialistas.splice(index, 1);
-            saveData("db_usuarios", dbUsuarios);
-            updateListaEspecialistas();
-        }
-    };
-
-    // Cadastro e edição de consultas
-    document.getElementById("form-cadastro-consulta").addEventListener("submit", (e) => {
+    // Cadastro de especialistas
+    document.getElementById("form-cadastro-especialista").addEventListener("submit", (e) => {
         e.preventDefault();
-        const consulta = {
-            data: document.getElementById("consulta-data").value,
-            horario: document.getElementById("consulta-horario").value,
-            nomePaciente: document.getElementById("consulta-nomePaciente").value,
-            idade: document.getElementById("consulta-idade").value,
-            responsavel: document.getElementById("consulta-responsavel").value,
-            telefone: document.getElementById("consulta-telefone").value,
-            especialidade: document.getElementById("consulta-especialidade").value,
-            consultorio: document.getElementById("consulta-consultorio").value,
-            especialista: document.getElementById("consulta-especialista").value,
+        const especialista = {
+            nome: document.getElementById("especialista-nome").value,
+            cpf: document.getElementById("especialista-cpf").value,
+            especialidade: document.getElementById("especialista-especialidade").value,
+            turno: document.getElementById("especialista-turno").value,
+            telefone: document.getElementById("especialista-telefone").value,
+            email: document.getElementById("especialista-email").value,
         };
-        currentUser.dbConsultas.consultas.push(consulta);
+        currentUser.dbCadastro.especialistas.push(especialista);
         saveData("db_usuarios", dbUsuarios);
-        updateListaConsultas();
-        e.target.reset();
+        updateListaEspecialistas();
+        e.target.reset(); // Limpa o formulário após salvar
     });
 
     // Atualiza a tabela de consultas
@@ -242,29 +197,25 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // Função para editar consulta
-    window.editConsulta = (index) => {
-        const cons = currentUser.dbConsultas.consultas[index];
-        document.getElementById("consulta-data").value = cons.data;
-        document.getElementById("consulta-horario").value = cons.horario;
-        document.getElementById("consulta-nomePaciente").value = cons.nomePaciente;
-        document.getElementById("consulta-idade").value = cons.idade;
-        document.getElementById("consulta-responsavel").value = cons.responsavel;
-        document.getElementById("consulta-telefone").value = cons.telefone;
-        document.getElementById("consulta-especialidade").value = cons.especialidade;
-        document.getElementById("consulta-consultorio").value = cons.consultorio;
-        document.getElementById("consulta-especialista").value = cons.especialista;
-        showScreen("cadastro-consultas");
-    };
-
-    // Função para excluir consulta
-    window.deleteConsulta = (index) => {
-        if (confirm("Confirmar exclusão da consulta?")) {
-            currentUser.dbConsultas.consultas.splice(index, 1);
-            saveData("db_usuarios", dbUsuarios);
-            updateListaConsultas();
-        }
-    };
+    // Cadastro de consultas
+    document.getElementById("form-cadastro-consulta").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const consulta = {
+            data: document.getElementById("consulta-data").value,
+            horario: document.getElementById("consulta-horario").value,
+            nomePaciente: document.getElementById("consulta-nomePaciente").value,
+            idade: document.getElementById("consulta-idade").value,
+            responsavel: document.getElementById("consulta-responsavel").value,
+            telefone: document.getElementById("consulta-telefone").value,
+            especialidade: document.getElementById("consulta-especialidade").value,
+            consultorio: document.getElementById("consulta-consultorio").value,
+            especialista: document.getElementById("consulta-especialista").value,
+        };
+        currentUser.dbConsultas.consultas.push(consulta);
+        saveData("db_usuarios", dbUsuarios);
+        updateListaConsultas();
+        e.target.reset(); // Limpa o formulário após salvar
+    });
 
     // Registra o Service Worker (se disponível)
     if ("serviceWorker" in navigator) {
