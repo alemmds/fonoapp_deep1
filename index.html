@@ -6,97 +6,38 @@
   <title>FonoClinic</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="styles.css">
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#1e3a8a">
 </head>
 <body class="bg-gray-100 font-sans">
-  <!-- Tela de Login/Cadastro -->
-  <div id="login-screen" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-96">
-      <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
-      <form id="login-form">
-        <div class="mb-4">
-          <label for="login-nome" class="block text-sm font-medium text-gray-700">Nome</label>
-          <input type="text" id="login-nome" class="mt-1 p-2 w-full border rounded" required>
-        </div>
-        <div class="mb-6">
-          <label for="login-senha" class="block text-sm font-medium text-gray-700">Senha</label>
-          <input type="password" id="login-senha" class="mt-1 p-2 w-full border rounded" required>
-        </div>
-        <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-          Entrar
-        </button>
-      </form>
-      <p class="mt-4 text-center text-sm text-gray-600">
-        Não tem uma conta? <a href="#" id="show-register" class="text-blue-600 hover:underline">Cadastre-se</a>
-      </p>
-    </div>
-  </div>
-
-  <!-- Tela de Cadastro -->
-  <div id="register-screen" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 hidden">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-96">
-      <h2 class="text-2xl font-bold mb-6 text-center">Cadastro</h2>
-      <form id="register-form">
-        <div class="mb-4">
-          <label for="register-name" class="block text-sm font-medium text-gray-700">Nome</label>
-          <input type="text" id="register-name" class="mt-1 p-2 w-full border rounded" required>
-        </div>
-        <div class="mb-4">
-          <label for="register-password" class="block text-sm font-medium text-gray-700">Senha</label>
-          <input type="password" id="register-password" class="mt-1 p-2 w-full border rounded" required>
-        </div>
-        <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-          Cadastrar
-        </button>
-      </form>
-      <p class="mt-4 text-center text-sm text-gray-600">
-        Já tem uma conta? <a href="#" id="show-login" class="text-blue-600 hover:underline">Faça login</a>
-      </p>
-    </div>
-  </div>
-
   <!-- Container Principal -->
-  <div id="main-container" class="hidden flex min-h-screen">
+  <div class="flex min-h-screen">
     <!-- Menu Lateral -->
-    <div class="w-64 bg-blue-900 text-white p-6 relative transition-all duration-300" id="menu-lateral">
-      <!-- Botão de Minimizar/Maximizar -->
-      <button id="toggle-fullscreen" class="absolute top-2 right-2 p-2 bg-blue-800 rounded-full hover:bg-blue-700 transition">
-        <svg id="maximize-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-        </svg>
-        <svg id="minimize-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-
-      <!-- Título e Menu -->
+    <div class="w-64 bg-blue-900 text-white p-6">
       <h1 class="text-2xl font-bold mb-8">FonoClinic</h1>
       <nav>
         <ul>
           <!-- Sessão de Cadastro -->
           <li class="mb-4">
-            <a href="#cadastro" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-pacientes')">
-              <span class="mr-2 text-3xl">📌</span>
-              <span class="text-xl">Cadastro</span>
+            <a href="#cadastro" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro')">
+              <span class="mr-2 text-3xl">📌</span> <!-- Ícone maior -->
+              <span class="text-xl">Cadastro</span> <!-- Texto maior -->
             </a>
             <ul class="ml-4 mt-2">
               <li>
                 <a href="#cadastro-pacientes" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-pacientes')">
-                  <span class="mr-2 text-2xl">👤</span>
-                  <span class="text-lg">Pacientes</span>
+                  <span class="mr-2 text-2xl">👤</span> <!-- Ícone maior -->
+                  <span class="text-lg">Pacientes</span> <!-- Texto maior -->
                 </a>
               </li>
               <li>
                 <a href="#cadastro-especialistas" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-especialistas')">
-                  <span class="mr-2 text-2xl">👥</span>
-                  <span class="text-lg">Especialistas</span>
+                  <span class="mr-2 text-2xl">👥</span> <!-- Ícone maior -->
+                  <span class="text-lg">Especialistas</span> <!-- Texto maior -->
                 </a>
               </li>
               <li>
                 <a href="#cadastro-consultas" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-consultas')">
-                  <span class="mr-2 text-2xl">🗓️</span>
-                  <span class="text-lg">Consultas</span>
+                  <span class="mr-2 text-2xl">🗓️</span> <!-- Ícone maior -->
+                  <span class="text-lg">Consultas</span> <!-- Texto maior -->
                 </a>
               </li>
             </ul>
@@ -104,21 +45,21 @@
 
           <!-- Sessão de Consultas -->
           <li class="mb-4">
-            <a href="#consultas" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas-gerais')">
-              <span class="mr-2 text-3xl">📅</span>
-              <span class="text-xl">Consultas</span>
+            <a href="#consultas" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas')">
+              <span class="mr-2 text-3xl">📅</span> <!-- Ícone maior -->
+              <span class="text-xl">Consultas</span> <!-- Texto maior -->
             </a>
             <ul class="ml-4 mt-2">
               <li>
                 <a href="#consultas-gerais" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas-gerais')">
-                  <span class="mr-2 text-2xl">📋</span>
-                  <span class="text-lg">Consultas Gerais</span>
+                  <span class="mr-2 text-2xl">📋</span> <!-- Ícone maior -->
+                  <span class="text-lg">Consultas Gerais</span> <!-- Texto maior -->
                 </a>
               </li>
               <li>
                 <a href="#consultas-dia" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas-dia')">
-                  <span class="mr-2 text-2xl">📅</span>
-                  <span class="text-lg">Consultas do Dia</span>
+                  <span class="mr-2 text-2xl">📅</span> <!-- Ícone maior -->
+                  <span class="text-lg">Consultas do Dia</span> <!-- Texto maior -->
                 </a>
               </li>
             </ul>
@@ -127,16 +68,8 @@
           <!-- Sessão de Pacientes -->
           <li class="mb-4">
             <a href="#pacientes" class="menu-item flex items-center p-2 rounded" onclick="showSection('pacientes')">
-              <span class="mr-2 text-3xl">👤</span>
-              <span class="text-xl">Pacientes</span>
-            </a>
-          </li>
-
-          <!-- Sessão de Profissionais -->
-          <li class="mb-4">
-            <a href="#profissionais" class="menu-item flex items-center p-2 rounded" onclick="showSection('profissionais')">
-              <span class="mr-2 text-3xl">👨‍⚕️</span>
-              <span class="text-xl">Profissionais</span>
+              <span class="mr-2 text-3xl">👤</span> <!-- Ícone maior -->
+              <span class="text-xl">Pacientes</span> <!-- Texto maior -->
             </a>
           </li>
         </ul>
@@ -203,9 +136,15 @@
               <input type="number" id="idade-paciente-consulta" class="p-2 border rounded" placeholder="Idade" required>
               <input type="text" id="responsavel-consulta" class="p-2 border rounded" placeholder="Responsável">
               <input type="tel" id="telefone-consulta" class="p-2 border rounded" placeholder="Telefone" required>
-              <input type="text" id="especialidade-consulta" class="p-2 border rounded" placeholder="Especialidade" required>
-              <input type="text" id="consultorio-consulta" class="p-2 border rounded" placeholder="Consultório" required>
-              <input type="text" id="especialista-consulta" class="p-2 border rounded" placeholder="Especialista" required>
+              <select id="especialidade-consulta" class="p-2 border rounded" required>
+                <option value="">Selecione a especialidade</option>
+              </select>
+              <select id="consultorio-consulta" class="p-2 border rounded" required>
+                <option value="">Selecione o consultório</option>
+              </select>
+              <select id="especialista-consulta" class="p-2 border rounded" required>
+                <option value="">Selecione o especialista</option>
+              </select>
             </div>
             <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
               Agendar Consulta
@@ -224,11 +163,6 @@
                 <th class="p-2">Data</th>
                 <th class="p-2">Horário</th>
                 <th class="p-2">Paciente</th>
-                <th class="p-2">Idade</th>
-                <th class="p-2">Responsável</th>
-                <th class="p-2">Telefone</th>
-                <th class="p-2">Especialidade</th>
-                <th class="p-2">Consultório</th>
                 <th class="p-2">Especialista</th>
                 <th class="p-2">Ações</th>
               </tr>
@@ -247,14 +181,8 @@
           <table id="tabela-consultas-dia" class="w-full text-left">
             <thead>
               <tr>
-                <th class="p-2">Data</th>
                 <th class="p-2">Horário</th>
                 <th class="p-2">Paciente</th>
-                <th class="p-2">Idade</th>
-                <th class="p-2">Responsável</th>
-                <th class="p-2">Telefone</th>
-                <th class="p-2">Especialidade</th>
-                <th class="p-2">Consultório</th>
                 <th class="p-2">Especialista</th>
                 <th class="p-2">Ações</th>
               </tr>
@@ -274,40 +202,14 @@
             <thead>
               <tr>
                 <th class="p-2">Nome</th>
-                <th class="p-2">CPF</th>
                 <th class="p-2">Idade</th>
                 <th class="p-2">Responsável</th>
                 <th class="p-2">Telefone</th>
-                <th class="p-2">Email</th>
-                <th class="p-2">Última Consulta</th>
                 <th class="p-2">Ações</th>
               </tr>
             </thead>
             <tbody>
               <!-- Dados dos pacientes serão preenchidos aqui -->
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- Seção de Profissionais -->
-      <section id="profissionais" class="section hidden">
-        <h2 class="text-3xl font-bold mb-6">Profissionais</h2>
-        <div class="glassmorphism p-6 hover-scale">
-          <table id="tabela-profissionais" class="w-full text-left">
-            <thead>
-              <tr>
-                <th class="p-2">Nome</th>
-                <th class="p-2">CPF</th>
-                <th class="p-2">Especialidade</th>
-                <th class="p-2">Turno</th>
-                <th class="p-2">Telefone</th>
-                <th class="p-2">Email</th>
-                <th class="p-2">Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Dados dos profissionais serão preenchidos aqui -->
             </tbody>
           </table>
         </div>
