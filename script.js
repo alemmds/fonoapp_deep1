@@ -77,6 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     saveData('db_pacientes', dbPacientes);
     forms.paciente.reset();
     updatePacientesTable();
+    alert('Paciente salvo com sucesso!');
   });
 
   // Função para editar um paciente
@@ -102,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
       dbPacientes = dbPacientes.filter(p => p.id !== id);
       saveData('db_pacientes', dbPacientes);
       updatePacientesTable();
+      alert('Paciente excluído com sucesso!');
     }
   };
 
@@ -154,6 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
     saveData('db_especialistas', dbEspecialistas);
     forms.especialista.reset();
     updateProfissionaisTable();
+    alert('Especialista salvo com sucesso!');
   });
 
   // Função para editar um especialista
@@ -178,6 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
       dbEspecialistas = dbEspecialistas.filter(e => e.id !== id);
       saveData('db_especialistas', dbEspecialistas);
       updateProfissionaisTable();
+      alert('Especialista excluído com sucesso!');
     }
   };
 
@@ -232,6 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
     saveData('db_consultas', dbConsultas);
     forms.consulta.reset();
     updateConsultasTables();
+    alert('Consulta salva com sucesso!');
   });
 
   // Função para editar uma consulta
@@ -259,6 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
       dbConsultas = dbConsultas.filter(c => c.id !== id);
       saveData('db_consultas', dbConsultas);
       updateConsultasTables();
+      alert('Consulta excluída com sucesso!');
     }
   };
 
