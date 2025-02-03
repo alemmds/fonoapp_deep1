@@ -12,7 +12,7 @@ body {
   color: #333;
 }
 
-/* Container principal */
+/* Container Principal */
 .flex {
   display: flex;
 }
@@ -21,37 +21,58 @@ body {
   min-height: 100vh;
 }
 
-/* Menu lateral */
-.bg-blue-900 {
-  background-color: #1e3a8a;
-}
-
-.text-white {
+/* Menu Lateral */
+#menu-lateral {
+  width: 16rem; /* Largura padrão */
+  background-color: #1e3a8a; /* Azul escuro */
   color: #fff;
-}
-
-.p-6 {
   padding: 1.5rem;
+  position: relative;
+  transition: width 0.3s ease;
 }
 
-.w-64 {
-  width: 16rem;
+#menu-lateral.minimizado {
+  width: 4rem; /* Largura reduzida */
+  overflow: hidden;
 }
 
-/* Estilos para o título do menu */
-.text-2xl {
-  font-size: 1.5rem;
+#menu-lateral.minimizado h1,
+#menu-lateral.minimizado nav {
+  display: none; /* Oculta o título e o menu */
 }
 
-.font-bold {
-  font-weight: 700;
+#menu-lateral.minimizado #toggle-menu {
+  right: 0.5rem; /* Ajusta a posição do botão */
 }
 
-.mb-8 {
-  margin-bottom: 2rem;
+/* Botão de Minimizar/Maximizar */
+#toggle-menu {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.5rem;
+  background-color: #1e40af; /* Azul mais claro */
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-/* Estilos para os itens do menu */
+#toggle-menu:hover {
+  background-color: #1e3a8a; /* Azul escuro */
+}
+
+#menu-icon,
+#close-icon {
+  transition: opacity 0.3s ease;
+}
+
+#menu-icon.hidden,
+#close-icon.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Itens do Menu */
 .menu-item {
   display: flex;
   align-items: center;
@@ -61,30 +82,10 @@ body {
 }
 
 .menu-item:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.1); /* Efeito hover */
 }
 
-.text-3xl {
-  font-size: 1.875rem;
-}
-
-.text-xl {
-  font-size: 1.25rem;
-}
-
-.mr-2 {
-  margin-right: 0.5rem;
-}
-
-.ml-4 {
-  margin-left: 1rem;
-}
-
-.mt-2 {
-  margin-top: 0.5rem;
-}
-
-/* Conteúdo principal */
+/* Conteúdo Principal */
 .flex-1 {
   flex: 1;
 }
@@ -93,7 +94,7 @@ body {
   padding: 2rem;
 }
 
-/* Estilos para as seções */
+/* Seções */
 .section {
   display: none;
 }
@@ -119,7 +120,7 @@ body {
   animation: fadeIn 0.5s ease-in-out;
 }
 
-/* Efeito glassmorphism */
+/* Efeito Glassmorphism */
 .glassmorphism {
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(10px);
@@ -136,7 +137,7 @@ body {
   transform: scale(1.02);
 }
 
-/* Estilos para formulários */
+/* Estilos para Formulários */
 .grid {
   display: grid;
 }
@@ -165,7 +166,7 @@ body {
   border-radius: 0.375rem;
 }
 
-/* Estilos para botões */
+/* Estilos para Botões */
 .bg-blue-600 {
   background-color: #2563eb;
 }
@@ -188,15 +189,11 @@ body {
   padding-bottom: 0.5rem;
 }
 
-.rounded {
-  border-radius: 0.375rem;
-}
-
 .transition {
   transition: all 0.3s ease;
 }
 
-/* Estilos para tabelas */
+/* Estilos para Tabelas */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -217,7 +214,7 @@ tr:hover {
   background-color: #f3f4f6;
 }
 
-/* Responsividade para tabelas */
+/* Responsividade para Tabelas */
 @media (max-width: 768px) {
   table {
     display: block;
@@ -226,7 +223,7 @@ tr:hover {
   }
 }
 
-/* Estilos para o botão de minimizar/maximizar */
+/* Estilos para o Botão de Minimizar/Maximizar */
 #toggle-menu {
   display: flex;
   align-items: center;
@@ -245,7 +242,7 @@ tr:hover {
   pointer-events: none;
 }
 
-/* Estilos para o menu lateral minimizado */
+/* Estilos para o Menu Lateral Minimizado */
 #menu-lateral.minimizado {
   width: 4rem; /* Largura reduzida */
   overflow: hidden;
