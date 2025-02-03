@@ -1,134 +1,143 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FONOCLINI</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FonoClinic - Gerenciamento Premium</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .active-tab {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
 </head>
-<body>
-  <!-- Tela de Login -->
-  <div id="login-screen">
-    <div class="bg-white">
-      <h2>FONOCLINI</h2>
-      <p>Por favor, faça login para continuar.</p>
-      <form id="login-form">
-        <input type="text" id="login-name" placeholder="Nome" required>
-        <input type="password" id="login-password" placeholder="Senha" required>
-        <button type="submit">Login</button>
-      </form>
-      <p>Não tem uma conta? <a href="#" id="show-register">Cadastre-se</a></p>
-    </div>
-  </div>
-
-  <!-- Tela de Cadastro -->
-  <div id="register-screen" class="hidden">
-    <div class="bg-white">
-      <h2>Cadastro</h2>
-      <form id="register-form">
-        <input type="text" id="register-name" placeholder="Nome" required>
-        <input type="email" id="register-email" placeholder="E-mail" required>
-        <input type="password" id="register-password" placeholder="Senha" required>
-        <button type="submit">Cadastrar</button>
-      </form>
-      <p>Já tem uma conta? <a href="#" id="show-login">Faça login</a></p>
-    </div>
-  </div>
-
-  <!-- Container Principal -->
-  <div id="main-container" class="hidden flex min-h-screen">
-    <!-- Menu Lateral -->
-    <div id="menu-lateral" class="bg-blue-900 text-white p-6 w-64">
-      <h1 class="text-2xl font-bold mb-8">FONOCLINI</h1>
-      <nav>
-        <ul>
-          <li class="menu-item" onclick="showSection('cadastro-pacientes')">
-            <span class="text-xl">👤</span>
-            <span class="ml-4">Pacientes</span>
-          </li>
-          <li class="menu-item" onclick="showSection('cadastro-especialistas')">
-            <span class="text-xl">👨‍⚕️</span>
-            <span class="ml-4">Especialistas</span>
-          </li>
-          <li class="menu-item" onclick="showSection('cadastro-consultas')">
-            <span class="text-xl">📅</span>
-            <span class="ml-4">Consultas</span>
-          </li>
-        </ul>
-      </nav>
-      <!-- Nome do Usuário -->
-      <div id="user-info" class="mt-auto p-4">
-        <p>Olá, <span id="user-name"></span></p>
-      </div>
+<body class="bg-gray-100">
+    <!-- Tela de Login -->
+    <div id="login-screen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-lg w-96">
+            <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+            <form id="loginForm">
+                <input type="text" placeholder="Usuário" class="w-full mb-4 p-2 border rounded" required>
+                <input type="password" placeholder="Senha" class="w-full mb-6 p-2 border rounded" required>
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+                    Entrar
+                </button>
+            </form>
+        </div>
     </div>
 
-    <!-- Conteúdo Principal -->
-    <div class="flex-1 p-8">
-      <!-- Seção de Cadastro de Pacientes -->
-      <div id="cadastro-pacientes" class="section">
-        <h2 class="text-2xl font-bold mb-4">Cadastro de Pacientes</h2>
-        <form id="form-paciente">
-          <input type="text" id="paciente-nome" placeholder="Nome" required>
-          <input type="email" id="paciente-email" placeholder="E-mail" required>
-          <button type="submit">Salvar</button>
-        </form>
-        <table id="tabela-pacientes" class="mt-4">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>E-mail</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
+    <!-- Interface Principal -->
+    <div id="main-interface" class="hidden min-h-screen flex">
+        <!-- Menu Lateral -->
+        <div class="w-64 bg-blue-900 text-white p-6 fixed h-full">
+            <h1 class="text-2xl font-bold mb-8">FonoClinic</h1>
+            <nav>
+                <ul class="space-y-4">
+                    <li>
+                        <button data-section="cadastro" class="menu-btn w-full text-left p-3 rounded hover:bg-blue-800 flex items-center">
+                            📌 Cadastro
+                        </button>
+                        <ul class="ml-4 mt-2 space-y-2">
+                            <li>
+                                <button data-section="consultas" class="submenu-btn w-full text-left p-2 rounded hover:bg-blue-800">
+                                    🗓️ Nova Consulta
+                                </button>
+                            </li>
+                            <li>
+                                <button data-section="pacientes" class="submenu-btn w-full text-left p-2 rounded hover:bg-blue-800">
+                                    👤 Novo Paciente
+                                </button>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <button data-section="consultas-gerais" class="menu-btn w-full text-left p-3 rounded hover:bg-blue-800">
+                            📅 Consultas Agendadas
+                        </button>
+                    </li>
+                    <li>
+                        <button data-section="pacientes-list" class="menu-btn w-full text-left p-3 rounded hover:bg-blue-800">
+                            📋 Lista de Pacientes
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
 
-      <!-- Seção de Cadastro de Especialistas -->
-      <div id="cadastro-especialistas" class="section hidden">
-        <h2 class="text-2xl font-bold mb-4">Cadastro de Especialistas</h2>
-        <form id="form-especialista">
-          <input type="text" id="especialista-nome" placeholder="Nome" required>
-          <input type="text" id="especialista-especialidade" placeholder="Especialidade" required>
-          <button type="submit">Salvar</button>
-        </form>
-        <table id="tabela-especialistas" class="mt-4">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Especialidade</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
+        <!-- Conteúdo Principal -->
+        <div class="ml-64 p-8 flex-1">
+            <!-- Seção de Cadastro de Consultas -->
+            <section id="consultas" class="section hidden glassmorphism p-6 mb-8">
+                <h2 class="text-2xl font-bold mb-6">Agendar Nova Consulta</h2>
+                <form id="consultaForm" class="grid grid-cols-2 gap-4">
+                    <input type="date" class="p-2 border rounded" required>
+                    <input type="text" placeholder="Nome do Paciente" class="p-2 border rounded" required>
+                    <input type="number" placeholder="Idade" class="p-2 border rounded" required>
+                    <input type="text" placeholder="Responsável" class="p-2 border rounded">
+                    <input type="tel" placeholder="Telefone" class="p-2 border rounded" required>
+                    <select class="p-2 border rounded" required>
+                        <option value="">Especialidade</option>
+                        <option>Fonoaudiologia</option>
+                        <option>Ortopedia</option>
+                    </select>
+                    <input type="text" placeholder="Consultório" class="p-2 border rounded" required>
+                    <input type="text" placeholder="Especialista" class="p-2 border rounded" required>
+                    <button type="submit" class="col-span-2 bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+                        Agendar Consulta
+                    </button>
+                </form>
+            </section>
 
-      <!-- Seção de Cadastro de Consultas -->
-      <div id="cadastro-consultas" class="section hidden">
-        <h2 class="text-2xl font-bold mb-4">Cadastro de Consultas</h2>
-        <form id="form-consulta">
-          <input type="text" id="consulta-paciente" placeholder="Paciente" required>
-          <input type="text" id="consulta-especialista" placeholder="Especialista" required>
-          <input type="date" id="consulta-data" placeholder="Data" required>
-          <button type="submit">Salvar</button>
-        </form>
-        <table id="tabela-consultas" class="mt-4">
-          <thead>
-            <tr>
-              <th>Paciente</th>
-              <th>Especialista</th>
-              <th>Data</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
+            <!-- Seção de Consultas Gerais -->
+            <section id="consultas-gerais" class="section hidden">
+                <div class="glassmorphism p-6">
+                    <h2 class="text-2xl font-bold mb-6">Consultas Agendadas</h2>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="p-3 text-left">Data</th>
+                                    <th class="p-3 text-left">Paciente</th>
+                                    <th class="p-3 text-left">Especialidade</th>
+                                    <th class="p-3 text-left">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="consultasBody">
+                                <!-- Dados dinâmicos -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção de Pacientes -->
+            <section id="pacientes-list" class="section hidden">
+                <div class="glassmorphism p-6">
+                    <h2 class="text-2xl font-bold mb-6">Lista de Pacientes</h2>
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="p-3 text-left">Nome</th>
+                                <th class="p-3 text-left">Idade</th>
+                                <th class="p-3 text-left">Contato</th>
+                                <th class="p-3 text-left">Histórico</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pacientesBody">
+                            <!-- Dados dinâmicos -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
     </div>
-  </div>
 
-  <!-- Scripts -->
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
