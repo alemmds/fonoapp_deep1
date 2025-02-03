@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Base de dados armazenada em localStorage
+  // Carrega os usuários do localStorage (se houver) ou define um array vazio
   let dbUsuarios = JSON.parse(localStorage.getItem("db_usuarios")) || [];
   let currentUser = null;
-  // Índices de edição para cada categoria
+  // Índices para edição de cada categoria
   let editingPacienteIndex = null;
   let editingEspecialistaIndex = null;
   let editingConsultaIndex = null;
 
-  // Salvar os dados no localStorage
+  // Função para salvar dados no localStorage
   const saveData = (key, data) => {
     try {
       localStorage.setItem(key, JSON.stringify(data));
@@ -17,18 +17,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Função para exibir apenas a tela (section) desejada
+  // Função para exibir apenas a tela (section) desejada no web app
   window.showScreen = (screenId) => {
     document.querySelectorAll(".screen").forEach((screen) => {
       screen.style.display = "none";
     });
-    document.getElementById(screenId).style.display = "block";
+    const target = document.getElementById(screenId);
+    if (target) target.style.display = "block";
   };
 
-  // Função para "sair" e voltar à tela de login
+  // Função para "sair" do app (logout) e voltar à tela de login
   window.logout = () => {
     currentUser = null;
-    document.getElementById("main-container").classList.add("hidden");
+    document.getElementById("main-container").style.display = "none";
     document.getElementById("login-screen").style.display = "flex";
   };
 
@@ -47,27 +48,25 @@ document.addEventListener("DOMContentLoaded", () => {
   // Cadastro de novo usuário
   document.getElementById("register-form").addEventListener("submit", (e) => {
     e.preventDefault();
-    const formData = {
+    const novoUser = {
       nome: document.getElementById("register-name").value,
       email: document.getElementById("register-email").value,
       senha: document.getElementById("register-password").value,
       dbPacientes: { pacientes: [] },
       dbCadastro: { especialistas: [] },
-      dbConsultas: { consultas: [] },
+      dbConsultas: { consultas: [] }
     };
 
-    if (dbUsuarios.some((u) => u.email === formData.email)) {
+    if (dbUsuarios.some((u) => u.email === novoUser.email)) {
       alert("E-mail já cadastrado!");
       return;
     }
-
-    dbUsuarios.push(formData);
+    dbUsuarios.push(novoUser);
     saveData("db_usuarios", dbUsuarios);
-    alert("Cadastro realizado!");
+    alert("Cadastro realizado com sucesso!");
     document.getElementById("register-form").reset();
-    // Volta para a tela de login
     document.getElementById("register-screen").classList.add("hidden");
-    document.getElementById("login-screen").style.display = "flex";
+    document.getElementById("login-screen").classList.remove("hidden");
   });
 
   // Login do usuário
@@ -79,8 +78,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const user = dbUsuarios.find((u) => u.nome === nome && u.senha === senha);
     if (user) {
       currentUser = user;
-      document.getElementById("login-screen").classList.add("hidden");
-      document.getElementById("main-container").classList.remove("hidden");
+      document.getElementById("login-screen").style.display = "none";
+      document.getElementById("main-container").style.display = "flex";
       document.getElementById("user-greeting").textContent = `Olá, ${currentUser.nome}`;
       // Exibe a tela de cadastro de pacientes por padrão
       showScreen("cadastro-pacientes");
@@ -90,14 +89,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Atualiza todas as tabelas de visualização
+  // Atualiza todas as tabelas de listagens
   const updateAllTables = () => {
     updateListaPacientes();
     updateListaEspecialistas();
     updateListaConsultas();
   };
 
-  // Atualiza a tabela de pacientes
+  // Atualiza a tabela de pacientes (lista de pacientes)
   const updateListaPacientes = () => {
     const tbody = document.querySelector("#tabela-pacientes tbody");
     tbody.innerHTML = "";
@@ -120,19 +119,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  // Atualiza a tabela de especialistas
+  // Atualiza a tabela de especialistas (lista de especialistas)
   const updateListaEspecialistas = () => {
     const tbody = document.querySelector("#tabela-profissionais tbody");
     tbody.innerHTML = "";
-    currentUser.dbCadastro.especialistas.forEach((esp, index) => {
+    currentUser.dbCadastro.especialistas.forEach((especialista, index) => {
       tbody.innerHTML += `
         <tr>
-          <td>${esp.nome}</td>
-          <td>${esp.cpf}</td>
-          <td>${esp.especialidade}</td>
-          <td>${esp.turno}</td>
-          <td>${esp.telefone}</td>
-          <td>${esp.email}</td>
+          <td>${especialista.nome}</td>
+          <td>${especialista.cpf}</td>
+          <td>${especialista.especialidade}</td>
+          <td>${especialista.turno}</td>
+          <td>${especialista.telefone}</td>
+          <td>${especialista.email}</td>
           <td>
             <button onclick="editEspecialista(${index})">Editar</button>
             <button onclick="deleteEspecialista(${index})">Excluir</button>
@@ -142,22 +141,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  // Atualiza a tabela de consultas
+  // Atualiza a tabela de consultas (lista de consultas)
   const updateListaConsultas = () => {
     const tbody = document.querySelector("#tabela-consultas-gerais tbody");
     tbody.innerHTML = "";
-    currentUser.dbConsultas.consultas.forEach((cons, index) => {
+    currentUser.dbConsultas.consultas.forEach((consulta, index) => {
       tbody.innerHTML += `
         <tr>
-          <td>${cons.data}</td>
-          <td>${cons.horario}</td>
-          <td>${cons.nomePaciente}</td>
-          <td>${cons.idade}</td>
-          <td>${cons.responsavel || ""}</td>
-          <td>${cons.telefone}</td>
-          <td>${cons.especialidade}</td>
-          <td>${cons.consultorio}</td>
-          <td>${cons.especialista}</td>
+          <td>${consulta.data}</td>
+          <td>${consulta.horario}</td>
+          <td>${consulta.nomePaciente}</td>
+          <td>${consulta.idade}</td>
+          <td>${consulta.responsavel || ""}</td>
+          <td>${consulta.telefone}</td>
+          <td>${consulta.especialidade}</td>
+          <td>${consulta.consultorio}</td>
+          <td>${consulta.especialista}</td>
           <td>
             <button onclick="editConsulta(${index})">Editar</button>
             <button onclick="deleteConsulta(${index})">Excluir</button>
@@ -167,44 +166,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  // CADASTRO / EDIÇÃO DE PACIENTES
-  document.getElementById("form-cadastro-paciente").addEventListener("submit", (e) => {
-    e.preventDefault();
-    const paciente = {
-      nome: document.getElementById("paciente-nome").value,
-      cpf: document.getElementById("paciente-cpf").value,
-      idade: document.getElementById("paciente-idade").value,
-      responsavel: document.getElementById("paciente-responsavel").value,
-      telefone: document.getElementById("paciente-telefone").value,
-      email: document.getElementById("paciente-email").value,
-      ultimaConsulta: document.getElementById("paciente-ultima-consulta").value,
-    };
-
-    if (editingPacienteIndex !== null) {
-      currentUser.dbPacientes.pacientes[editingPacienteIndex] = paciente;
-      editingPacienteIndex = null;
-    } else {
-      currentUser.dbPacientes.pacientes.push(paciente);
-    }
-    saveData("db_usuarios", dbUsuarios);
-    updateListaPacientes();
-    e.target.reset();
-  });
-
-  // Funções para editar e excluir pacientes
+  // Funções para pacientes
   window.editPaciente = (index) => {
     editingPacienteIndex = index;
     const pac = currentUser.dbPacientes.pacientes[index];
     document.getElementById("paciente-nome").value = pac.nome;
     document.getElementById("paciente-cpf").value = pac.cpf;
     document.getElementById("paciente-idade").value = pac.idade;
-    document.getElementById("paciente-responsavel").value = pac.responsavel;
+    document.getElementById("paciente-responsavel").value = pac.responsavel || "";
     document.getElementById("paciente-telefone").value = pac.telefone;
     document.getElementById("paciente-email").value = pac.email;
-    document.getElementById("paciente-ultima-consulta").value = pac.ultimaConsulta;
-    // Exibe a tela de cadastro de pacientes para edição
+    document.getElementById("paciente-ultima-consulta").value = pac.ultimaConsulta || "";
     showScreen("cadastro-pacientes");
   };
+
   window.deletePaciente = (index) => {
     if (confirm("Confirmar exclusão do paciente?")) {
       currentUser.dbPacientes.pacientes.splice(index, 1);
@@ -213,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // CADASTRO / EDIÇÃO DE ESPECIALISTAS
+  // Cadastro e edição de especialistas
   document.getElementById("form-cadastro-especialista").addEventListener("submit", (e) => {
     e.preventDefault();
     const especialista = {
@@ -224,7 +199,6 @@ document.addEventListener("DOMContentLoaded", () => {
       telefone: document.getElementById("especialista-telefone").value,
       email: document.getElementById("especialista-email").value,
     };
-
     if (editingEspecialistaIndex !== null) {
       currentUser.dbCadastro.especialistas[editingEspecialistaIndex] = especialista;
       editingEspecialistaIndex = null;
@@ -235,6 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateListaEspecialistas();
     e.target.reset();
   });
+
   window.editEspecialista = (index) => {
     editingEspecialistaIndex = index;
     const esp = currentUser.dbCadastro.especialistas[index];
@@ -246,6 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("especialista-email").value = esp.email;
     showScreen("cadastro-especialistas");
   };
+
   window.deleteEspecialista = (index) => {
     if (confirm("Confirmar exclusão do especialista?")) {
       currentUser.dbCadastro.especialistas.splice(index, 1);
@@ -254,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // CADASTRO / EDIÇÃO DE CONSULTAS
+  // Cadastro e edição de consultas
   document.getElementById("form-cadastro-consulta").addEventListener("submit", (e) => {
     e.preventDefault();
     const consulta = {
@@ -268,7 +244,6 @@ document.addEventListener("DOMContentLoaded", () => {
       consultorio: document.getElementById("consulta-consultorio").value,
       especialista: document.getElementById("consulta-especialista").value,
     };
-
     if (editingConsultaIndex !== null) {
       currentUser.dbConsultas.consultas[editingConsultaIndex] = consulta;
       editingConsultaIndex = null;
@@ -279,6 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateListaConsultas();
     e.target.reset();
   });
+
   window.editConsulta = (index) => {
     editingConsultaIndex = index;
     const cons = currentUser.dbConsultas.consultas[index];
@@ -293,6 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("consulta-especialista").value = cons.especialista;
     showScreen("cadastro-consultas");
   };
+
   window.deleteConsulta = (index) => {
     if (confirm("Confirmar exclusão da consulta?")) {
       currentUser.dbConsultas.consultas.splice(index, 1);
@@ -301,7 +278,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Registra o Service Worker (se aplicável)
+  // Registra o Service Worker (se disponível)
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker
       .register("/service-worker.js")
