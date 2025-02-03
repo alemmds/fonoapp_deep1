@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Mapeamento das seções
   const sections = {
     'cadastro-pacientes': document.getElementById('cadastro-pacientes'),
     'cadastro-especialistas': document.getElementById('cadastro-especialistas'),
@@ -9,21 +10,22 @@ document.addEventListener('DOMContentLoaded', () => {
     'profissionais': document.getElementById('profissionais')
   };
 
+  // Mapeamento dos formulários
   const forms = {
     paciente: document.getElementById('form-paciente'),
     especialista: document.getElementById('form-especialista'),
     consulta: document.getElementById('form-consulta')
   };
 
-  // Carrega os dados dos arquivos JSON
-  let dbCadastro = JSON.parse(localStorage.getItem('db_cadastro')) || { especialistas: [], consultorios: [] };
-  let dbPacientes = JSON.parse(localStorage.getItem('db_pacientes')) || { pacientes: [] };
-  let dbConsultas = JSON.parse(localStorage.getItem('db_consultas')) || { consultas: [] };
+  // Carrega os dados do localStorage
+  let dbPacientes = JSON.parse(localStorage.getItem('db_pacientes')) || [];
+  let dbEspecialistas = JSON.parse(localStorage.getItem('db_especialistas')) || [];
+  let dbConsultas = JSON.parse(localStorage.getItem('db_consultas')) || [];
 
   // Variável global para armazenar o ID em edição
   let editingId = null;
 
-  // Função para salvar dados no LocalStorage
+  // Função para salvar dados no localStorage
   const saveData = (key, data) => {
     localStorage.setItem(key, JSON.stringify(data));
   };
@@ -64,12 +66,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (editingId) {
       // Atualiza o paciente existente
-      const index = dbPacientes.pacientes.findIndex(p => p.id === editingId);
-      dbPacientes.pacientes[index] = paciente;
+      const index = dbPacientes.findIndex(p => p.id === editingId);
+      dbPacientes[index] = paciente;
       editingId = null; // Reseta o ID em edição
     } else {
       // Adiciona um novo paciente
-      dbPacientes.pacientes.push(paciente);
+      dbPacientes.push(paciente);
     }
 
     saveData('db_pacientes', dbPacientes);
@@ -79,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Função para editar um paciente
   window.editarPaciente = (id) => {
-    const paciente = dbPacientes.pacientes.find(p => p.id === id);
+    const paciente = dbPacientes.find(p => p.id === id);
     if (paciente) {
       document.getElementById('nome-paciente').value = paciente.nome;
       document.getElementById('cpf-paciente').value = paciente.cpf;
@@ -89,18 +91,15 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('email-paciente').value = paciente.email;
       document.getElementById('ultima-consulta').value = paciente.ultimaConsulta;
 
-      // Armazena o ID do paciente em edição
-      editingId = paciente.id;
-
-      // Mostra a seção de cadastro de pacientes
-      showSection('cadastro-pacientes');
+      editingId = paciente.id; // Armazena o ID do paciente em edição
+      showSection('cadastro-pacientes'); // Mostra a seção de cadastro de pacientes
     }
   };
 
   // Função para excluir um paciente
   window.excluirPaciente = (id) => {
     if (confirm('Tem certeza que deseja excluir este paciente?')) {
-      dbPacientes.pacientes = dbPacientes.pacientes.filter(p => p.id !== id);
+      dbPacientes = dbPacientes.filter(p => p.id !== id);
       saveData('db_pacientes', dbPacientes);
       updatePacientesTable();
     }
@@ -110,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const updatePacientesTable = () => {
     const tabelaPacientes = document.getElementById('tabela-pacientes').getElementsByTagName('tbody')[0];
     tabelaPacientes.innerHTML = '';
-    dbPacientes.pacientes.forEach(paciente => {
+    dbPacientes.forEach(paciente => {
       const row = document.createElement('tr');
       row.innerHTML = `
         <td class="p-2">${paciente.nome}</td>
@@ -144,22 +143,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (editingId) {
       // Atualiza o especialista existente
-      const index = dbCadastro.especialistas.findIndex(e => e.id === editingId);
-      dbCadastro.especialistas[index] = especialista;
+      const index = dbEspecialistas.findIndex(e => e.id === editingId);
+      dbEspecialistas[index] = especialista;
       editingId = null; // Reseta o ID em edição
     } else {
       // Adiciona um novo especialista
-      dbCadastro.especialistas.push(especialista);
+      dbEspecialistas.push(especialista);
     }
 
-    saveData('db_cadastro', dbCadastro);
+    saveData('db_especialistas', dbEspecialistas);
     forms.especialista.reset();
     updateProfissionaisTable();
   });
 
   // Função para editar um especialista
   window.editarEspecialista = (id) => {
-    const especialista = dbCadastro.especialistas.find(e => e.id === id);
+    const especialista = dbEspecialistas.find(e => e.id === id);
     if (especialista) {
       document.getElementById('nome-especialista').value = especialista.nome;
       document.getElementById('cpf-especialista').value = especialista.cpf;
@@ -168,19 +167,16 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('telefone-especialista').value = especialista.telefone;
       document.getElementById('email-especialista').value = especialista.email;
 
-      // Armazena o ID do especialista em edição
-      editingId = especialista.id;
-
-      // Mostra a seção de cadastro de especialistas
-      showSection('cadastro-especialistas');
+      editingId = especialista.id; // Armazena o ID do especialista em edição
+      showSection('cadastro-especialistas'); // Mostra a seção de cadastro de especialistas
     }
   };
 
   // Função para excluir um especialista
   window.excluirEspecialista = (id) => {
     if (confirm('Tem certeza que deseja excluir este especialista?')) {
-      dbCadastro.especialistas = dbCadastro.especialistas.filter(e => e.id !== id);
-      saveData('db_cadastro', dbCadastro);
+      dbEspecialistas = dbEspecialistas.filter(e => e.id !== id);
+      saveData('db_especialistas', dbEspecialistas);
       updateProfissionaisTable();
     }
   };
@@ -189,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const updateProfissionaisTable = () => {
     const tabelaProfissionais = document.getElementById('tabela-profissionais').getElementsByTagName('tbody')[0];
     tabelaProfissionais.innerHTML = '';
-    dbCadastro.especialistas.forEach(especialista => {
+    dbEspecialistas.forEach(especialista => {
       const row = document.createElement('tr');
       row.innerHTML = `
         <td class="p-2">${especialista.nome}</td>
@@ -225,12 +221,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (editingId) {
       // Atualiza a consulta existente
-      const index = dbConsultas.consultas.findIndex(c => c.id === editingId);
-      dbConsultas.consultas[index] = consulta;
+      const index = dbConsultas.findIndex(c => c.id === editingId);
+      dbConsultas[index] = consulta;
       editingId = null; // Reseta o ID em edição
     } else {
       // Adiciona uma nova consulta
-      dbConsultas.consultas.push(consulta);
+      dbConsultas.push(consulta);
     }
 
     saveData('db_consultas', dbConsultas);
@@ -240,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Função para editar uma consulta
   window.editarConsulta = (id) => {
-    const consulta = dbConsultas.consultas.find(c => c.id === id);
+    const consulta = dbConsultas.find(c => c.id === id);
     if (consulta) {
       document.getElementById('data-consulta').value = consulta.data;
       document.getElementById('horario-consulta').value = consulta.horario;
@@ -252,18 +248,15 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('consultorio-consulta').value = consulta.consultorio;
       document.getElementById('especialista-consulta').value = consulta.especialista;
 
-      // Armazena o ID da consulta em edição
-      editingId = consulta.id;
-
-      // Mostra a seção de cadastro de consultas
-      showSection('cadastro-consultas');
+      editingId = consulta.id; // Armazena o ID da consulta em edição
+      showSection('cadastro-consultas'); // Mostra a seção de cadastro de consultas
     }
   };
 
   // Função para excluir uma consulta
   window.excluirConsulta = (id) => {
     if (confirm('Tem certeza que deseja excluir esta consulta?')) {
-      dbConsultas.consultas = dbConsultas.consultas.filter(c => c.id !== id);
+      dbConsultas = dbConsultas.filter(c => c.id !== id);
       saveData('db_consultas', dbConsultas);
       updateConsultasTables();
     }
@@ -278,7 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
     tabelaConsultasGerais.innerHTML = '';
     tabelaConsultasDia.innerHTML = '';
 
-    dbConsultas.consultas.forEach(consulta => {
+    dbConsultas.forEach(consulta => {
       const row = document.createElement('tr');
       row.innerHTML = `
         <td class="p-2">${consulta.data}</td>
