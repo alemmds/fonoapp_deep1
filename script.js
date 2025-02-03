@@ -364,11 +364,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Simulação de login (substitua por lógica real)
   document.getElementById('login-form').addEventListener('submit', (e) => {
     e.preventDefault();
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
+    const nome = document.getElementById('login-nome').value;
+    const senha = document.getElementById('login-senha').value;
 
     // Simulação de autenticação
-    if (email && password) {
+    if (nome && senha) {
       alert('Login realizado com sucesso!');
       document.getElementById('login-screen').classList.add('hidden');
       document.getElementById('main-container').classList.remove('hidden');
@@ -380,12 +380,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Simulação de cadastro (substitua por lógica real)
   document.getElementById('register-form').addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = document.getElementById('register-name').value;
-    const email = document.getElementById('register-email').value;
-    const password = document.getElementById('register-password').value;
+    const nome = document.getElementById('register-name').value;
+    const senha = document.getElementById('register-password').value;
 
     // Simulação de cadastro
-    if (name && email && password) {
+    if (nome && senha) {
       alert('Cadastro realizado com sucesso!');
       document.getElementById('register-screen').classList.add('hidden');
       document.getElementById('login-screen').classList.remove('hidden');
