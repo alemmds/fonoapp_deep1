@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Função para excluir um paciente
+  /  // Função para excluir um paciente
   window.excluirPaciente = (id) => {
     if (confirm('Tem certeza que deseja excluir este paciente?')) {
       dbPacientes = dbPacientes.filter(p => p.id !== id);
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
       row.innerHTML = `
         <td class="p-2">${paciente.nome}</td>
         <td class="p-2">${paciente.cpf}</td>
-        <td class="p-2">${paciente.idade}</td>
+        <td class="p-2">${paciente.idade</td>
         <td class="p-2">${paciente.responsavel}</td>
         <td class="p-2">${paciente.telefone}</td>
         <td class="p-2">${paciente.email}</td>
@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
     forms.consulta.reset();
     updateConsultasTables();
     alert('Consulta salva com sucesso!');
-  };
+  });
 
   // Função para editar uma consulta
   window.editarConsulta = (id) => {
@@ -277,10 +277,10 @@ document.addEventListener('DOMContentLoaded', () => {
         <td class="p-2">${consulta.horario}</td>
         <td class="p-2">${consulta.paciente}</td>
         <td class="p-2">${consulta.idade}</td>
-        <td class="p-2">${consulta.responsavel</td>
+        <td class="p-2">${consulta.responsavel}</td>
         <td class="p-2">${consulta.telefone}</td>
         <td class="p-2">${consulta.especialidade}</td>
-        <td class="p-2">${consulta.consultorio}</td>
+        <td class="p-2">${consulta.consultorio</td>
         <td class="p-2">${consulta.especialista}</td>
         <td class="p-2 flex space-x-2">
           <button onclick="editarConsulta(${consulta.id})" class="bg-yellow-500 text-white px-2 py-1 rounded">Editar</button>
