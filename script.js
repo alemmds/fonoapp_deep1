@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Eventos de clique para os itens do menu
   document.querySelectorAll('.menu-item').forEach(item => {
-    item.addEventListener('click', () => {
+        item.addEventListener('click', () => {
       const sectionId = item.getAttribute('data-section');
       showSection(sectionId);
     });
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
   forms.paciente.addEventListener('submit', (e) => {
     e.preventDefault();
     const paciente = {
-      id: editingId || Date.now(), // Usa o ID em edição ou gera um novo
+      id: editingId || Date.now(),
       nome: document.getElementById('nome-paciente').value,
       cpf: document.getElementById('cpf-paciente').value,
       idade: document.getElementById('idade-paciente').value,
@@ -73,12 +73,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     if (editingId) {
-      // Atualiza o paciente existente
       const index = dbPacientes.findIndex(p => p.id === editingId);
       dbPacientes[index] = paciente;
       editingId = null;
     } else {
-      // Adiciona um novo paciente
       dbPacientes.push(paciente);
     }
 
@@ -122,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const row = document.createElement('tr');
       row.innerHTML = `
         <td class="p-2">${paciente.nome}</td>
-        <td class="p-2">${paciente.cpf</td>
+        <td class="p-2">${paciente.cpf}</td>
         <td class="p-2">${paciente.idade}</td>
         <td class="p-2">${paciente.responsavel}</td>
         <td class="p-2">${paciente.telefone}</td>
@@ -141,11 +139,11 @@ document.addEventListener('DOMContentLoaded', () => {
   forms.especialista.addEventListener('submit', (e) => {
     e.preventDefault();
     const especialista = {
-      id: editingId || Date.now(), // Usa o ID em edição ou gera um novo
+      id: editingId || Date.now(),
       nome: document.getElementById('nome-especialista').value,
       cpf: document.getElementById('cpf-especialista').value,
       especialidade: document.getElementById('especialidade').value,
-      turno = document.getElementById('turno-especialista').value,
+      turno: document.getElementById('turno-especialista').value,
       telefone: document.getElementById('telefone-especialista').value,
       email: document.getElementById('email-especialista').value
     };
@@ -215,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
   forms.consulta.addEventListener('submit', (e) => {
     e.preventDefault();
     const consulta = {
-      id: editingId || Date.now(), // Usa o ID em edição ou gera um novo
+      id: editingId || Date.now(),
       data: document.getElementById('data-consulta').value,
       horario: document.getElementById('horario-consulta').value,
       paciente: document.getElementById('nome-paciente-consulta').value,
@@ -282,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const row = document.createElement('tr');
       row.innerHTML = `
         <td class="p-2">${consulta.data}</td>
-        <td class="p-2">${consulta.horario}</td>
+        <td class="p-2">${consulta.horario</td>
         <td class="p-2">${consulta.paciente}</td>
         <td class="p-2">${consulta.idade}</td>
         <td class="p-2">${consulta.responsavel}</td>
@@ -325,8 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// FUNÇÕES DE FILTRO - adicionadas para as abas Consultas Gerais, Consultas do Dia e Pacientes
-
+// Funções de Filtro
 window.filtrarConsultasGerais = function() {
   const nome = document.getElementById("filter-consulta-geral-nome").value.toLowerCase();
   const data = document.getElementById("filter-consulta-geral-data").value;
@@ -338,13 +335,13 @@ window.filtrarConsultasGerais = function() {
   for (let i = 0; i < rows.length; i++) {
     const cells = rows[i].getElementsByTagName("td");
     if (cells.length >= 3) {
+      const cellNome = cells[2].textContent.trim().toLowerCase();
       const cellData = cells[0].textContent.trim();
       const cellHorario = cells[1].textContent.trim();
-      const cellNome = cells[2].textContent.trim().toLowerCase();
       
       const matchNome = !nome || cellNome.includes(nome);
-      const matchData = !data || cellData.includes(data);
-      const matchHorario = !horario || cellHorario.includes(horario);
+      const matchData = !data || cellData === data;
+      const matchHorario = !horario || cellHorario === horario;
       
       rows[i].style.display = (matchNome && matchData && matchHorario) ? "" : "none";
     }
@@ -362,14 +359,14 @@ window.filtrarConsultasDia = function() {
   for (let i = 0; i < rows.length; i++) {
     const cells = rows[i].getElementsByTagName("td");
     if (cells.length >= 3) {
+      const cellNome = cells[2].textContent.trim().toLowerCase();
       const cellData = cells[0].textContent.trim();
       const cellHorario = cells[1].textContent.trim();
-      const cellNome = cells[2].textContent.trim().toLowerCase();
-
+      
       const matchNome = !nome || cellNome.includes(nome);
-      const matchData = !data || cellData.includes(data);
-      const matchHorario = !horario || cellHorario.includes(horario);
-
+      const matchData = !data || cellData === data;
+      const matchHorario = !horario || cellHorario === horario;
+      
       rows[i].style.display = (matchNome && matchData && matchHorario) ? "" : "none";
     }
   }
