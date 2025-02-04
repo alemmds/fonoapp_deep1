@@ -50,6 +50,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // Evento de clique para o botão de minimizar/maximizar
   document.getElementById('toggle-menu').addEventListener('click', toggleMenu);
 
+  // Eventos de clique para os itens do menu
+  document.querySelectorAll('.menu-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const sectionId = item.getAttribute('data-section');
+      showSection(sectionId);
+    });
+  });
+
   // Função para adicionar/atualizar um paciente
   forms.paciente.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -96,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /  // Função para excluir um paciente
+  // Função para excluir um paciente
   window.excluirPaciente = (id) => {
     if (confirm('Tem certeza que deseja excluir este paciente?')) {
       dbPacientes = dbPacientes.filter(p => p.id !== id);
@@ -114,8 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const row = document.createElement('tr');
       row.innerHTML = `
         <td class="p-2">${paciente.nome}</td>
-        <td class="p-2">${paciente.cpf}</td>
-        <td class="p-2">${paciente.idade</td>
+        <td class="p-2">${paciente.cpf</td>
+        <td class="p-2">${paciente.idade}</td>
         <td class="p-2">${paciente.responsavel}</td>
         <td class="p-2">${paciente.telefone}</td>
         <td class="p-2">${paciente.email}</td>
@@ -137,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
       nome: document.getElementById('nome-especialista').value,
       cpf: document.getElementById('cpf-especialista').value,
       especialidade: document.getElementById('especialidade').value,
-      turno: document.getElementById('turno-especialista').value,
+      turno = document.getElementById('turno-especialista').value,
       telefone: document.getElementById('telefone-especialista').value,
       email: document.getElementById('email-especialista').value
     };
@@ -280,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <td class="p-2">${consulta.responsavel}</td>
         <td class="p-2">${consulta.telefone}</td>
         <td class="p-2">${consulta.especialidade}</td>
-        <td class="p-2">${consulta.consultorio</td>
+        <td class="p-2">${consulta.consultorio}</td>
         <td class="p-2">${consulta.especialista}</td>
         <td class="p-2 flex space-x-2">
           <button onclick="editarConsulta(${consulta.id})" class="bg-yellow-500 text-white px-2 py-1 rounded">Editar</button>
