@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
     forms.consulta.reset();
     updateConsultasTables();
     alert('Consulta salva com sucesso!');
-  });
+  };
 
   // Função para editar uma consulta
   window.editarConsulta = (id) => {
@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <td class="p-2">${consulta.horario}</td>
         <td class="p-2">${consulta.paciente}</td>
         <td class="p-2">${consulta.idade}</td>
-        <td class="p-2">${consulta.responsavel}</td>
+        <td class="p-2">${consulta.responsavel</td>
         <td class="p-2">${consulta.telefone}</td>
         <td class="p-2">${consulta.especialidade}</td>
         <td class="p-2">${consulta.consultorio}</td>
