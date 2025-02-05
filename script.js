@@ -376,13 +376,12 @@ document.addEventListener('DOMContentLoaded', () => {
       tbodyGeral.appendChild(row);
     });
 
-    // Atualiza a tabela de consultas do dia (pode incluir filtros conforme necessário)
+    // Atualiza a tabela de consultas do dia
     const tabelaDia = document.getElementById('tabela-consultas-dia');
     const tbodyDia = tabelaDia.querySelector('tbody');
     tbodyDia.innerHTML = '';
 
     consultas.forEach(consulta => {
-      // Aqui você pode filtrar as consultas conforme a data atual, se desejar
       const rowDia = document.createElement('tr');
       rowDia.innerHTML = `
         <td class="p-2">${consulta.data}</td>
