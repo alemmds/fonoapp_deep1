@@ -1,317 +1,312 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FonoClinic</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body class="bg-gray-100 font-sans">
-  <!-- Container Principal -->
-  <div class="flex min-h-screen">
-    <!-- Menu Lateral -->
-    <div id="menu-lateral" class="w-64 bg-blue-900 text-white p-6 relative transition-all duration-300">
-      <!-- Botão de Minimizar/Maximizar -->
-      <button id="toggle-menu" class="absolute top-2 right-2 p-2 bg-blue-800 rounded-full hover:bg-blue-700 transition">
-        <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-        <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-      <!-- Título e Menu -->
-      <h1 class="text-2xl font-bold mb-8">FonoClinic</h1>
-      <nav>
-        <ul>
-          <!-- Sessão de Cadastro -->
-          <li class="mb-4">
-            <a href="#cadastro" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-pacientes')">
-              <span class="mr-2 text-3xl">📌</span>
-              <span class="text-xl">Cadastro</span>
-            </a>
-            <ul class="ml-4 mt-2">
-              <li>
-                <a href="#cadastro-pacientes" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-pacientes')">
-                  <span class="mr-2 text-2xl">👤</span>
-                  <span class="text-lg">Pacientes</span>
-                </a>
-              </li>
-              <li>
-                <a href="#cadastro-especialistas" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-especialistas')">
-                  <span class="mr-2 text-2xl">👥</span>
-                  <span class="text-lg">Especialistas</span>
-                </a>
-              </li>
-              <li>
-                <a href="#cadastro-consultas" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-consultas')">
-                  <span class="mr-2 text-2xl">🗓️</span>
-                  <span class="text-lg">Consultas</span>
-                </a>
-              </li>
-            </ul>
-          </li>
-  
-          <!-- Sessão de Consultas -->
-          <li class="mb-4">
-            <a href="#consultas" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas-gerais')">
-              <span class="mr-2 text-3xl">📅</span>
-              <span class="text-xl">Consultas</span>
-            </a>
-            <ul class="ml-4 mt-2">
-              <li>
-                <a href="#consultas-gerais" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas-gerais')">
-                  <span class="mr-2 text-2xl">📋</span>
-                  <span class="text-lg">Consultas Gerais</span>
-                </a>
-              </li>
-              <li>
-                <a href="#consultas-dia" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas-dia')">
-                  <span class="mr-2 text-2xl">📅</span>
-                  <span class="text-lg">Consultas do Dia</span>
-                </a>
-              </li>
-            </ul>
-          </li>
-  
-          <!-- Sessão de Pacientes -->
-          <li class="mb-4">
-            <a href="#pacientes" class="menu-item flex items-center p-2 rounded" onclick="showSection('pacientes')">
-              <span class="mr-2 text-3xl">👤</span>
-              <span class="text-xl">Pacientes</span>
-            </a>
-          </li>
-  
-          <!-- Sessão de Profissionais -->
-          <li class="mb-4">
-            <a href="#profissionais" class="menu-item flex items-center p-2 rounded" onclick="showSection('profissionais')">
-              <span class="mr-2 text-3xl">👨‍⚕️</span>
-              <span class="text-xl">Profissionais</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  
-    <!-- Conteúdo Principal -->
-    <div class="flex-1 p-8">
-      <!-- Seção de Boas-Vindas -->
-      <section id="welcome" class="section hidden">
-        <h2 class="text-3xl font-bold mb-6">Bem-vindo à FonoClinic</h2>
-        <div class="glassmorphism p-6 hover-scale">
-          <p>Você acessou o sistema da FonoClinic, a sua clínica de confiança, especializada nos melhores atendimentos.</p>
-          <p class="mt-4">Utilize o menu à esquerda para navegar entre as seções e acessar os formulários e demais informações.</p>
-        </div>
-      </section>
-      
-      <!-- Seção de Cadastro de Pacientes -->
-      <section id="cadastro-pacientes" class="section hidden">
-        <h2 class="text-3xl font-bold mb-6">Cadastro de Pacientes</h2>
-        <div class="glassmorphism p-6 hover-scale">
-          <form id="form-paciente">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input type="text" id="nome-paciente" class="p-2 border rounded" placeholder="Nome do Paciente" required>
-              <input type="text" id="cpf-paciente" class="p-2 border rounded" placeholder="CPF" required>
-              <input type="number" id="idade-paciente" class="p-2 border rounded" placeholder="Idade" required>
-              <input type="text" id="responsavel-paciente" class="p-2 border rounded" placeholder="Responsável">
-              <input type="tel" id="telefone-paciente" class="p-2 border rounded" placeholder="Telefone" required>
-              <input type="email" id="email-paciente" class="p-2 border rounded" placeholder="Email" required>
-              <input type="date" id="ultima-consulta" class="p-2 border rounded" placeholder="Última Consulta">
-            </div>
-            <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-              Cadastrar Paciente
-            </button>
-          </form>
-        </div>
-      </section>
-  
-      <!-- Seção de Cadastro de Especialistas -->
-      <section id="cadastro-especialistas" class="section hidden">
-        <h2 class="text-3xl font-bold mb-6">Cadastro de Especialistas</h2>
-        <div class="glassmorphism p-6 hover-scale">
-          <form id="form-especialista">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input type="text" id="nome-especialista" class="p-2 border rounded" placeholder="Nome do Especialista" required>
-              <input type="text" id="cpf-especialista" class="p-2 border rounded" placeholder="CPF" required>
-              <input type="text" id="especialidade" class="p-2 border rounded" placeholder="Especialidade" required>
-              <select id="turno-especialista" class="p-2 border rounded" required>
-                <option value="">Selecione o turno</option>
-                <option value="Manhã">Manhã</option>
-                <option value="Tarde">Tarde</option>
-                <option value="Noite">Noite</option>
-              </select>
-              <input type="tel" id="telefone-especialista" class="p-2 border rounded" placeholder="Telefone" required>
-              <input type="email" id="email-especialista" class="p-2 border rounded" placeholder="Email" required>
-            </div>
-            <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-              Cadastrar Especialista
-            </button>
-          </form>
-        </div>
-      </section>
-  
-      <!-- Seção de Cadastro de Consultas -->
-      <section id="cadastro-consultas" class="section hidden">
-        <h2 class="text-3xl font-bold mb-6">Cadastro de Consultas</h2>
-        <div class="glassmorphism p-6 hover-scale">
-          <form id="form-consulta">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input type="date" id="data-consulta" class="p-2 border rounded" required>
-              <input type="time" id="horario-consulta" class="p-2 border rounded" required>
-              <input type="text" id="paciente-consulta" class="p-2 border rounded" placeholder="Nome do Paciente" required>
-              <input type="number" id="idade-consulta" class="p-2 border rounded" placeholder="Idade" required>
-              <input type="text" id="responsavel-consulta" class="p-2 border rounded" placeholder="Responsável">
-              <input type="tel" id="telefone-consulta" class="p-2 border rounded" placeholder="Telefone" required>
-              <input type="text" id="especialidade-consulta" class="p-2 border rounded" placeholder="Especialidade">
-              <input type="text" id="consultorio-consulta" class="p-2 border rounded" placeholder="Consultório">
-              <input type="text" id="especialista-consulta" class="p-2 border rounded" placeholder="Especialista">
-            </div>
-            <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-              Agendar Consulta
-            </button>
-          </form>
-        </div>
-      </section>
-  
-      <!-- Seção de Consultas Gerais -->
-      <section id="consultas-gerais" class="section hidden">
-        <h2 class="text-3xl font-bold mb-6">Consultas Gerais</h2>
-        <div class="mb-4 flex space-x-2">
-          <input type="text" id="filter-consulta-geral-nome" placeholder="Nome do paciente" class="p-2 border rounded">
-          <input type="date" id="filter-consulta-geral-data" class="p-2 border rounded">
-          <input type="time" id="filter-consulta-geral-horario" class="p-2 border rounded">
-          <button onclick="filtrarConsultasGerais()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-            Confirmar Busca
-          </button>
-        </div>
-        <div class="glassmorphism p-6 hover-scale">
-          <table id="tabela-consultas-gerais" class="w-full text-left">
-            <thead>
-              <tr>
-                <th class="p-2">Data</th>
-                <th class="p-2">Horário</th>
-                <th class="p-2">Paciente</th>
-                <th class="p-2">Idade</th>
-                <th class="p-2">Responsável</th>
-                <th class="p-2">Telefone</th>
-                <th class="p-2">Especialidade</th>
-                <th class="p-2">Consultório</th>
-                <th class="p-2">Especialista</th>
-                <th class="p-2">Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Dados das consultas serão preenchidos via script.js -->
-            </tbody>
-          </table>
-        </div>
-      </section>
-  
-      <!-- Seção de Consultas do Dia -->
-      <section id="consultas-dia" class="section hidden">
-        <h2 class="text-3xl font-bold mb-6">Consultas do Dia</h2>
-        <div class="mb-4 flex space-x-2">
-          <input type="text" id="filter-consulta-dia-nome" placeholder="Nome do paciente" class="p-2 border rounded">
-          <input type="date" id="filter-consulta-dia-data" class="p-2 border rounded">
-          <input type="time" id="filter-consulta-dia-horario" class="p-2 border rounded">
-          <button onclick="filtrarConsultasDia()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-            Confirmar Busca
-          </button>
-        </div>
-        <div class="glassmorphism p-6 hover-scale">
-          <table id="tabela-consultas-dia" class="w-full text-left">
-            <thead>
-              <tr>
-                <th class="p-2">Data</th>
-                <th class="p-2">Horário</th>
-                <th class="p-2">Paciente</th>
-                <th class="p-2">Idade</th>
-                <th class="p-2">Responsável</th>
-                <th class="p-2">Telefone</th>
-                <th class="p-2">Especialidade</th>
-                <th class="p-2">Consultório</th>
-                <th class="p-2">Especialista</th>
-                <th class="p-2">Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Dados das consultas do dia serão preenchidos via script.js -->
-            </tbody>
-          </table>
-        </div>
-      </section>
-  
-      <!-- Seção de Pacientes -->
-      <section id="pacientes" class="section hidden">
-        <h2 class="text-3xl font-bold mb-6">Pacientes</h2>
-        <div class="mb-4 flex space-x-2">
-          <input type="text" id="filter-paciente-nome" placeholder="Nome do paciente" class="p-2 border rounded">
-          <button onclick="filtrarPacientes()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-            Confirmar Busca
-          </button>
-        </div>
-        <div class="glassmorphism p-6 hover-scale">
-          <table id="tabela-pacientes" class="w-full text-left">
-            <thead>
-              <tr>
-                <th class="p-2">Nome</th>
-                <th class="p-2">CPF</th>
-                <th class="p-2">Idade</th>
-                <th class="p-2">Responsável</th>
-                <th class="p-2">Telefone</th>
-                <th class="p-2">Email</th>
-                <th class="p-2">Última Consulta</th>
-                <th class="p-2">Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Dados dos pacientes serão preenchidos via script.js -->
-            </tbody>
-          </table>
-        </div>
-      </section>
-  
-      <!-- Seção de Profissionais -->
-      <section id="profissionais" class="section hidden">
-        <h2 class="text-3xl font-bold mb-6">Profissionais</h2>
-        <div class="glassmorphism p-6 hover-scale">
-          <table id="tabela-profissionais" class="w-full text-left">
-            <thead>
-              <tr>
-                <th class="p-2">Nome</th>
-                <th class="p-2">CPF</th>
-                <th class="p-2">Especialidade</th>
-                <th class="p-2">Turno</th>
-                <th class="p-2">Telefone</th>
-                <th class="p-2">Email</th>
-                <th class="p-2">Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Dados dos profissionais serão preenchidos via script.js -->
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </div>
-  </div>
-  
-  <!-- Tela de Login (Overlay) -->
-  <div id="login-screen">
-    <div class="login-container">
-      <h2 class="text-2xl font-bold mb-4">Acesse o Sistema</h2>
-      <form id="login-form">
-        <input type="password" id="login-password" class="p-2 border rounded w-full" placeholder="Digite a senha" required>
-        <div id="login-error" class="hidden text-red-500 mt-2">Senha incorreta!</div>
-        <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition w-full">
-          Entrar
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FonoClinic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="bg-gray-100 font-sans">
+    <!-- Container Principal -->
+    <div class="flex min-h-screen">
+      <!-- Menu Lateral -->
+      <div id="menu-lateral" class="w-64 bg-blue-900 text-white p-6 relative transition-all duration-300">
+        <!-- Botão de Minimizar/Maximizar -->
+        <button id="toggle-menu" class="absolute top-2 right-2 p-2 bg-blue-800 rounded-full hover:bg-blue-700 transition">
+          <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
         </button>
-      </form>
+        <!-- Título e Menu -->
+        <h1 class="text-2xl font-bold mb-8">FonoClinic</h1>
+        <nav>
+          <ul>
+            <!-- Sessão de Cadastro -->
+            <li class="mb-4">
+              <a href="#cadastro" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-pacientes')">
+                <span class="mr-2 text-3xl">📌</span>
+                <span class="text-xl">Cadastro</span>
+              </a>
+              <ul class="ml-4 mt-2">
+                <li>
+                  <a href="#cadastro-pacientes" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-pacientes')">
+                    <span class="mr-2 text-2xl">👤</span>
+                    <span class="text-lg">Pacientes</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#cadastro-especialistas" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-especialistas')">
+                    <span class="mr-2 text-2xl">👥</span>
+                    <span class="text-lg">Especialistas</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#cadastro-consultas" class="menu-item flex items-center p-2 rounded" onclick="showSection('cadastro-consultas')">
+                    <span class="mr-2 text-2xl">🗓️</span>
+                    <span class="text-lg">Consultas</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+            <!-- Sessão de Consultas -->
+            <li class="mb-4">
+              <a href="#consultas" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas-gerais')">
+                <span class="mr-2 text-3xl">📅</span>
+                <span class="text-xl">Consultas</span>
+              </a>
+              <ul class="ml-4 mt-2">
+                <li>
+                  <a href="#consultas-gerais" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas-gerais')">
+                    <span class="mr-2 text-2xl">📋</span>
+                    <span class="text-lg">Consultas Gerais</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#consultas-dia" class="menu-item flex items-center p-2 rounded" onclick="showSection('consultas-dia')">
+                    <span class="mr-2 text-2xl">📅</span>
+                    <span class="text-lg">Consultas do Dia</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+            <!-- Sessão de Pacientes -->
+            <li class="mb-4">
+              <a href="#pacientes" class="menu-item flex items-center p-2 rounded" onclick="showSection('pacientes')">
+                <span class="mr-2 text-3xl">👤</span>
+                <span class="text-xl">Pacientes</span>
+              </a>
+            </li>
+
+            <!-- Sessão de Profissionais -->
+            <li class="mb-4">
+              <a href="#profissionais" class="menu-item flex items-center p-2 rounded" onclick="showSection('profissionais')">
+                <span class="mr-2 text-3xl">👨‍⚕️</span>
+                <span class="text-xl">Profissionais</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Conteúdo Principal -->
+      <div class="flex-1 p-8">
+        <!-- Seção de Boas-Vindas -->
+        <section id="welcome" class="section hidden">
+          <h2 class="text-3xl font-bold mb-6">Bem-vindo à FonoClinic</h2>
+          <div class="glassmorphism p-6 hover-scale">
+            <p>Você acessou o sistema da FonoClinic, a sua clínica de confiança, especializada nos melhores atendimentos.</p>
+            <p class="mt-4">Utilize o menu à esquerda para navegar entre as seções e acessar os formulários e demais informações.</p>
+          </div>
+        </section>
+
+        <!-- Seção de Cadastro de Pacientes -->
+        <section id="cadastro-pacientes" class="section hidden">
+          <h2 class="text-3xl font-bold mb-6">Cadastro de Pacientes</h2>
+          <div class="glassmorphism p-6 hover-scale">
+            <form id="form-paciente">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" id="nome-paciente" class="p-2 border rounded" placeholder="Nome do Paciente" required>
+                <input type="text" id="cpf-paciente" class="p-2 border rounded" placeholder="CPF" required>
+                <input type="number" id="idade-paciente" class="p-2 border rounded" placeholder="Idade" required>
+                <input type="text" id="responsavel-paciente" class="p-2 border rounded" placeholder="Responsável">
+                <input type="tel" id="telefone-paciente" class="p-2 border rounded" placeholder="Telefone" required>
+                <input type="email" id="email-paciente" class="p-2 border rounded" placeholder="Email" required>
+                <input type="date" id="ultima-consulta" class="p-2 border rounded" placeholder="Última Consulta">
+              </div>
+              <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                Cadastrar Paciente
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <!-- Seção de Cadastro de Especialistas -->
+        <section id="cadastro-especialistas" class="section hidden">
+          <h2 class="text-3xl font-bold mb-6">Cadastro de Especialistas</h2>
+          <div class="glassmorphism p-6 hover-scale">
+            <form id="form-especialista">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" id="nome-especialista" class="p-2 border rounded" placeholder="Nome do Especialista" required>
+                <input type="text" id="cpf-especialista" class="p-2 border rounded" placeholder="CPF" required>
+                <input type="text" id="especialidade-especialista" class="p-2 border rounded" placeholder="Especialidade" required>
+                <input type="text" id="turno-especialista" class="p-2 border rounded" placeholder="Turno" required>
+                <input type="tel" id="telefone-especialista" class="p-2 border rounded" placeholder="Telefone" required>
+                <input type="email" id="email-especialista" class="p-2 border rounded" placeholder="Email" required>
+              </div>
+              <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                Cadastrar Especialista
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <!-- Seção de Cadastro de Consultas -->
+        <section id="cadastro-consultas" class="section hidden">
+          <h2 class="text-3xl font-bold mb-6">Cadastro de Consultas</h2>
+          <div class="glassmorphism p-6 hover-scale">
+            <form id="form-consulta">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="date" id="data-consulta" class="p-2 border rounded" placeholder="Data" required>
+                <input type="time" id="horario-consulta" class="p-2 border rounded" placeholder="Horário" required>
+                <input type="text" id="paciente-consulta" class="p-2 border rounded" placeholder="Paciente" required>
+                <input type="number" id="idade-consulta" class="p-2 border rounded" placeholder="Idade">
+                <input type="text" id="responsavel-consulta" class="p-2 border rounded" placeholder="Responsável">
+                <input type="tel" id="telefone-consulta" class="p-2 border rounded" placeholder="Telefone">
+                <input type="text" id="especialidade-consulta" class="p-2 border rounded" placeholder="Especialidade">
+                <input type="text" id="consultorio-consulta" class="p-2 border rounded" placeholder="Consultório">
+                <input type="text" id="especialista-consulta" class="p-2 border rounded" placeholder="Especialista">
+              </div>
+              <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                Cadastrar Consulta
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <!-- Seção de Consultas Gerais -->
+        <section id="consultas-gerais" class="section hidden">
+          <h2 class="text-3xl font-bold mb-6">Consultas Gerais</h2>
+          <div class="mb-4 flex space-x-2">
+            <input type="text" id="filter-consulta-geral-nome" placeholder="Nome do paciente" class="p-2 border rounded">
+            <input type="date" id="filter-consulta-geral-data" class="p-2 border rounded">
+            <input type="time" id="filter-consulta-geral-horario" class="p-2 border rounded">
+            <button onclick="filtrarConsultasGerais()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+              Confirmar Busca
+            </button>
+          </div>
+          <div class="glassmorphism p-6 hover-scale">
+            <table id="tabela-consultas-gerais" class="w-full text-left">
+              <thead>
+                <tr>
+                  <th class="p-2">Data</th>
+                  <th class="p-2">Horário</th>
+                  <th class="p-2">Paciente</th>
+                  <th class="p-2">Idade</th>
+                  <th class="p-2">Responsável</th>
+                  <th class="p-2">Telefone</th>
+                  <th class="p-2">Especialidade</th>
+                  <th class="p-2">Consultório</th>
+                  <th class="p-2">Especialista</th>
+                  <th class="p-2">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Dados das consultas serão preenchidos via script.js -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Seção de Consultas do Dia -->
+        <section id="consultas-dia" class="section hidden">
+          <h2 class="text-3xl font-bold mb-6">Consultas do Dia</h2>
+          <div class="mb-4 flex space-x-2">
+            <input type="text" id="filter-consulta-dia-nome" placeholder="Nome do paciente" class="p-2 border rounded">
+            <input type="date" id="filter-consulta-dia-data" class="p-2 border rounded">
+            <input type="time" id="filter-consulta-dia-horario" class="p-2 border rounded">
+            <button onclick="filtrarConsultasDia()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+              Confirmar Busca
+            </button>
+          </div>
+          <div class="glassmorphism p-6 hover-scale">
+            <table id="tabela-consultas-dia" class="w-full text-left">
+              <thead>
+                <tr>
+                  <th class="p-2">Data</th>
+                  <th class="p-2">Horário</th>
+                  <th class="p-2">Paciente</th>
+                  <th class="p-2">Idade</th>
+                  <th class="p-2">Responsável</th>
+                  <th class="p-2">Telefone</th>
+                  <th class="p-2">Especialidade</th>
+                  <th class="p-2">Consultório</th>
+                  <th class="p-2">Especialista</th>
+                  <th class="p-2">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Dados das consultas do dia serão preenchidos via script.js -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Seção de Pacientes -->
+        <section id="pacientes" class="section hidden">
+          <h2 class="text-3xl font-bold mb-6">Pacientes</h2>
+          <div class="mb-4 flex space-x-2">
+            <input type="text" id="filter-paciente-nome" placeholder="Nome do paciente" class="p-2 border rounded">
+            <button onclick="filtrarPacientes()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+              Confirmar Busca
+            </button>
+          </div>
+          <div class="glassmorphism p-6 hover-scale">
+            <table id="tabela-pacientes" class="w-full text-left">
+              <thead>
+                <tr>
+                  <th class="p-2">Nome</th>
+                  <th class="p-2">CPF</th>
+                  <th class="p-2">Idade</th>
+                  <th class="p-2">Responsável</th>
+                  <th class="p-2">Telefone</th>
+                  <th class="p-2">Email</th>
+                  <th class="p-2">Última Consulta</th>
+                  <th class="p-2">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Dados dos pacientes serão preenchidos via script.js -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Seção de Profissionais -->
+        <section id="profissionais" class="section hidden">
+          <h2 class="text-3xl font-bold mb-6">Profissionais</h2>
+          <div class="glassmorphism p-6 hover-scale">
+            <table id="tabela-profissionais" class="w-full text-left">
+              <thead>
+                <tr>
+                  <th class="p-2">Nome</th>
+                  <th class="p-2">CPF</th>
+                  <th class="p-2">Especialidade</th>
+                  <th class="p-2">Turno</th>
+                  <th class="p-2">Telefone</th>
+                  <th class="p-2">Email</th>
+                  <th class="p-2">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Dados dos profissionais serão preenchidos via script.js -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
     </div>
-  </div>
   
-  <!-- Importa o script principal como módulo -->
-  <script type="module" src="script.js"></script>
-</body>
+    <!-- Tela de Login (Overlay) -->
+    <div id="login-screen">
+      <div class="login-container">
+        <h2 class="text-2xl font-bold mb-4">Acesse o Sistema</h2>
+        <form id="login-form">
+          <input type="password" id="login-password" class="p-2 border rounded w-full" placeholder="Digite a senha" required>
+          <div id="login-error" class="hidden text-red-500 mt-2">Senha incorreta!</div>
+          <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition w-full">
+            Entrar
+          </button>
+        </form>
+      </div>
+    </div>
+  
+    <!-- Importa o script principal como módulo -->
+    <script type="module" src="script.js"></script>
+  </body>
 </html>
