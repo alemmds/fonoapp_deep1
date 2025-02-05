@@ -1,7 +1,6 @@
 import { supabase } from './supabaseClient.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-
   // MÓDULO DE LOGIN POR SENHA
   const loginScreen = document.getElementById('login-screen');
   const loginForm = document.getElementById('login-form');
@@ -10,13 +9,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Exibe a tela de login assim que a página carrega
   loginScreen.style.display = 'flex';
-  
+
+  // Adiciona log para verificar o valor da senha enviada
   loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    if (loginPassword.value === 'Clinicafono1570') {
+    const valorSenha = loginPassword.value.trim();
+    console.log('Valor digitado no login:', valorSenha); // Debug
+
+    if (valorSenha === 'Clinicafono1570') {
+      console.log('Senha correta!'); // Debug
       loginScreen.style.display = 'none';
       showSection('welcome');
     } else {
+      console.log('Senha incorreta!'); // Debug
       loginError.classList.remove('hidden');
     }
   });
@@ -69,8 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   document.getElementById('toggle-menu').addEventListener('click', toggleMenu);
 
-  // === OPERANDO COM PACIENTES NO SUPABASE ===
-
+  // ================== OPERAÇÕES COM PACIENTES ==================
   if (forms.paciente) {
     forms.paciente.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -126,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tabela = document.getElementById('tabela-pacientes');
     const tbody = tabela.querySelector('tbody');
     tbody.innerHTML = '';
-  
+
     pacientes.forEach(paciente => {
       const row = document.createElement('tr');
       row.innerHTML = `
@@ -183,20 +187,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // === OPERANDO COM ESPECIALISTAS NO SUPABASE ===
-
+  // ================== OPERAÇÕES COM ESPECIALISTAS ==================
   if (forms.especialista) {
     forms.especialista.addEventListener('submit', async (e) => {
       e.preventDefault();
       const especialista = {
         nome: document.getElementById('nome-especialista').value,
         cpf: document.getElementById('cpf-especialista').value,
-        especialidade: document.getElementById('especialidade').value,
+        especialidade: document.getElementById('especialidade-especialista').value,
         turno: document.getElementById('turno-especialista').value,
         telefone: document.getElementById('telefone-especialista').value,
         email: document.getElementById('email-especialista').value
       };
-      
+
       if (editingEspecialistaId) {
         const { error } = await supabase
           .from('especialistas')
@@ -230,15 +233,16 @@ document.addEventListener('DOMContentLoaded', () => {
       .from('especialistas')
       .select('*')
       .order('id', { ascending: false });
-  
+
     if (error) {
       console.error('Erro ao buscar especialistas:', error);
       return;
     }
+    
     const tabela = document.getElementById('tabela-profissionais');
     const tbody = tabela.querySelector('tbody');
     tbody.innerHTML = '';
-  
+
     especialistas.forEach(especialista => {
       const row = document.createElement('tr');
       row.innerHTML = `
@@ -270,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
     editingEspecialistaId = id;
     document.getElementById('nome-especialista').value = especialista.nome;
     document.getElementById('cpf-especialista').value = especialista.cpf;
-    document.getElementById('especialidade').value = especialista.especialidade;
+    document.getElementById('especialidade-especialista').value = especialista.especialidade;
     document.getElementById('turno-especialista').value = especialista.turno;
     document.getElementById('telefone-especialista').value = especialista.telefone;
     document.getElementById('email-especialista').value = especialista.email;
@@ -292,8 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // === OPERANDO COM CONSULTAS NO SUPABASE ===
-
+  // ================== OPERAÇÕES COM CONSULTAS ==================
   if (forms.consulta) {
     forms.consulta.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -308,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
         consultorio: document.getElementById('consultorio-consulta').value,
         especialista: document.getElementById('especialista-consulta').value
       };
-  
+
       if (editingConsultaId) {
         const { error } = await supabase
           .from('consultas')
@@ -336,51 +339,70 @@ document.addEventListener('DOMContentLoaded', () => {
       updateConsultasTables();
     });
   }
-  
+
   window.updateConsultasTables = async function () {
+    // Atualiza a tabela geral de consultas
     const { data: consultas, error } = await supabase
       .from('consultas')
       .select('*')
       .order('id', { ascending: false });
-  
+
     if (error) {
       console.error('Erro ao buscar consultas:', error);
       return;
     }
-  
-    const tabelaConsultasGerais = document.getElementById('tabela-consultas-gerais').querySelector('tbody');
-    const tabelaConsultasDia = document.getElementById('tabela-consultas-dia').querySelector('tbody');
-    tabelaConsultasGerais.innerHTML = '';
-    tabelaConsultasDia.innerHTML = '';
-  
-    const hoje = new Date().toISOString().split('T')[0];
-  
+    
+    const tabelaGeral = document.getElementById('tabela-consultas-gerais');
+    const tbodyGeral = tabelaGeral.querySelector('tbody');
+    tbodyGeral.innerHTML = '';
+
     consultas.forEach(consulta => {
       const row = document.createElement('tr');
       row.innerHTML = `
         <td class="p-2">${consulta.data}</td>
         <td class="p-2">${consulta.horario}</td>
         <td class="p-2">${consulta.paciente}</td>
-        <td class="p-2">${consulta.idade}</td>
-        <td class="p-2">${consulta.responsavel}</td>
-        <td class="p-2">${consulta.telefone}</td>
-        <td class="p-2">${consulta.especialidade}</td>
-        <td class="p-2">${consulta.consultorio}</td>
-        <td class="p-2">${consulta.especialista}</td>
-        <td class="p-2 flex space-x-2">
+        <td class="p-2">${consulta.idade || ''}</td>
+        <td class="p-2">${consulta.responsavel || ''}</td>
+        <td class="p-2">${consulta.telefone || ''}</td>
+        <td class="p-2">${consulta.especialidade || ''}</td>
+        <td class="p-2">${consulta.consultorio || ''}</td>
+        <td class="p-2">${consulta.especialista || ''}</td>
+        <td class="p-2">
           <button onclick="editarConsulta('${consulta.id}')" class="bg-yellow-500 text-white px-2 py-1 rounded">Editar</button>
           <button onclick="excluirConsulta('${consulta.id}')" class="bg-red-500 text-white px-2 py-1 rounded">Excluir</button>
         </td>
       `;
-      tabelaConsultasGerais.appendChild(row);
-  
-      if (consulta.data === hoje) {
-        const rowDia = row.cloneNode(true);
-        tabelaConsultasDia.appendChild(rowDia);
-      }
+      tbodyGeral.appendChild(row);
+    });
+
+    // Atualiza a tabela de consultas do dia (pode incluir filtros conforme necessário)
+    const tabelaDia = document.getElementById('tabela-consultas-dia');
+    const tbodyDia = tabelaDia.querySelector('tbody');
+    tbodyDia.innerHTML = '';
+
+    consultas.forEach(consulta => {
+      // Aqui você pode filtrar as consultas conforme a data atual, se desejar
+      const rowDia = document.createElement('tr');
+      rowDia.innerHTML = `
+        <td class="p-2">${consulta.data}</td>
+        <td class="p-2">${consulta.horario}</td>
+        <td class="p-2">${consulta.paciente}</td>
+        <td class="p-2">${consulta.idade || ''}</td>
+        <td class="p-2">${consulta.responsavel || ''}</td>
+        <td class="p-2">${consulta.telefone || ''}</td>
+        <td class="p-2">${consulta.especialidade || ''}</td>
+        <td class="p-2">${consulta.consultorio || ''}</td>
+        <td class="p-2">${consulta.especialista || ''}</td>
+        <td class="p-2">
+          <button onclick="editarConsulta('${consulta.id}')" class="bg-yellow-500 text-white px-2 py-1 rounded">Editar</button>
+          <button onclick="excluirConsulta('${consulta.id}')" class="bg-red-500 text-white px-2 py-1 rounded">Excluir</button>
+        </td>
+      `;
+      tbodyDia.appendChild(rowDia);
     });
   };
-  
+
   window.editarConsulta = async function (id) {
     const { data: consulta, error } = await supabase
       .from('consultas')
@@ -403,7 +425,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('especialista-consulta').value = consulta.especialista;
     showSection('cadastro-consultas');
   };
-  
+
   window.excluirConsulta = async function (id) {
     if (confirm('Tem certeza que deseja excluir esta consulta?')) {
       const { error } = await supabase
@@ -419,14 +441,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // === FUNÇÕES DE FILTRO (consultas e pacientes) ===
-
+  // ================== FUNÇÕES DE FILTRO ==================
   window.filtrarConsultasGerais = function() {
     const nome = document.getElementById("filter-consulta-geral-nome").value.toLowerCase();
     const data = document.getElementById("filter-consulta-geral-data").value;
     const horario = document.getElementById("filter-consulta-geral-horario").value;
-    const table = document.getElementById("tabela-consultas-gerais");
-    const tbody = table.querySelector("tbody");
+    const tabela = document.getElementById("tabela-consultas-gerais");
+    const tbody = tabela.querySelector("tbody");
     const rows = tbody.querySelectorAll("tr");
   
     rows.forEach(row => {
@@ -449,8 +470,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const nome = document.getElementById("filter-consulta-dia-nome").value.toLowerCase();
     const data = document.getElementById("filter-consulta-dia-data").value;
     const horario = document.getElementById("filter-consulta-dia-horario").value;
-    const table = document.getElementById("tabela-consultas-dia");
-    const tbody = table.querySelector("tbody");
+    const tabela = document.getElementById("tabela-consultas-dia");
+    const tbody = tabela.querySelector("tbody");
     const rows = tbody.querySelectorAll("tr");
   
     rows.forEach(row => {
@@ -471,8 +492,8 @@ document.addEventListener('DOMContentLoaded', () => {
   
   window.filtrarPacientes = function() {
     const nome = document.getElementById("filter-paciente-nome").value.toLowerCase();
-    const table = document.getElementById("tabela-pacientes");
-    const tbody = table.querySelector("tbody");
+    const tabela = document.getElementById("tabela-pacientes");
+    const tbody = tabela.querySelector("tbody");
     const rows = tbody.querySelectorAll("tr");
   
     rows.forEach(row => {
